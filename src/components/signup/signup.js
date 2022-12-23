@@ -1,10 +1,10 @@
 import React,{useEffect, useState} from 'react'
 import '../signup/signup.css'
 import axios from "axios";
-import store from '../store'
 import {signup} from '../createslice'
 import {  useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
+
 
 
 const Signup=()=>{
@@ -14,24 +14,36 @@ const Signup=()=>{
   const[email,setEmail] = useState('');
   const[password,setPassword] = useState('');
   const[phonenumber,setPhonenumber] = useState('');
-  const[role,setRole]=useState(false);
+  const[ownerRole,setOwner]=useState('');
+  const[tenantRole,setTenant]=useState('');
 
+
+const onchangeOwner =()=>{
+  setOwner('Owner')
+  setTenant('')
+}  
+const onchangeTenant =()=>{
+  setTenant('Tenant')
+  setOwner('')
+}
 const dispatch = useDispatch();
 
 const handleSubmit=(e)=>{
    e.preventDefault();
-
 }
+
 
 const onClicksignup=(e)=>{
   e.preventDefault();
-  console.log("signup",name);
+  console.log("owner",ownerRole);
+  console.log("tenant",tenantRole);
+  let role = ownerRole!==''?ownerRole:tenantRole;
   dispatch(signup({
     name:name,
     email:email,
     password:password,
     phonenumber:phonenumber,
-    role:role,
+    role
    }))
   addPosts(name, email,password,phonenumber,role);
 }
@@ -105,13 +117,13 @@ const addPosts =(name, email,password,phonenumber,role) => {
       <legend className="col-form-label col-sm-2 pt-0">Role</legend>
       <div className="col-sm-10">
         <div className="form-check">
-          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked></input>
+          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"  onChange={onchangeOwner}></input>
           <label className="form-check-label">
             Owner
           </label>
         </div>
         <div className="form-check">
-          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2"></input>
+          <input className="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2" onChange={onchangeTenant}></input>
           <label className="form-check-label" >
             Tenant
           </label>

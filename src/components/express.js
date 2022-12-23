@@ -27,8 +27,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+app.get("/userdetails", (req, res) => {
+  res.json({ message: "Welcome to bezkoder application.","request":req});
+  try{
+    client.query(`SELECT email,password FROM users `,(err,res)=>{
+        if(!err){
+            console.log("data",res.rows)
+        }
+        else{
+            console.log(err.message)
+        }
+        client.end
+        console.log(client)
+    }
+   
+    )
+   
+  }
+  catch(err){
+    console.log(err)
+}
 });
 
 // set port, listen for requests
@@ -39,20 +57,15 @@ app.listen(PORT, () => {
 
 app.post("/userdetails",(req,res)=>{
     data = req.body
-    // var name= data.name
-    // var email = data.email
-    // var phone = data.phone 
-    // var role = data.role
-    // var password = data.password
-
+    console.log(data);
     data.phonenumber = parseInt(data.phonenumber)
-    console.log(data)
     try {
                 // client.connect();           // gets connection
          client.query(
-                    `INSERT INTO "users" ("id","name", "password","role","email","phone")  
-                     VALUES ($1, $2,$3,$4,$5)`,[data.name,data.password,true,data.email,data.phonenumber]); // sends queries
+                    `INSERT INTO "users" ("name", "email","phone","role","password")  
+                     VALUES ($1,$2,$3,$4,$5)`,[data.name,data.email,data.phonenumber,data.role,data.password]); // sends queries
          }
+         
                 // return true;
                 
              catch (error) {
@@ -64,50 +77,6 @@ app.post("/userdetails",(req,res)=>{
     res.end()
 })
 
-    client.connect();           // gets connection
-//     client.query(`INSERT INTO "users" ("name", "email", "phone", "role", "password") VALUES`, [name , email, phone, role, password], 
-//     function (err, result) 
-//     {
-//         if (err) throw err;
-//         console.log("1 record inserted");
-//         res.end(result)
-//     });
-// })
+client.connect();         
 
-// const insertUser = async (
-//     data,
-    
-// //    id=2, name='harish',password='12345',role=true,email='harish@gmail.com',phonenumber='12345'
-      
-// ) => {
-//     try {
-//         // await client.connect();           // gets connection
-//         await client.query(
-//             `INSERT INTO "users" ("id","name", "password","role","email","phone")  
-//              VALUES ($1, $2,$3,$4,$5,$6)`, [data]); // sends queries
-//         return true;
-        
-//     } catch (error) {
-//         console.error(error.stack);
-//         return false;
-//     } finally {
-//         await client.end();               // closes connection
-//     }
-// };
 
-// insertUser().then(result => {
-//     if (result) {
-//         console.log('User inserted');
-//     }
-// });
-// // client.connect();
-client.query(`Select * from users`,(err,res)=>{
-    if(!err){
-        console.log(res.rows)
-    }
-    else{
-        console.log(err.message)
-    }
-    client.end
-    console.log(client)
-})
