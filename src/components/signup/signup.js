@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 const Signup=()=>{
   const navigate = useNavigate();
   const[posts,setPosts] = useState('');
@@ -17,6 +18,11 @@ const Signup=()=>{
   const[ownerRole,setOwner]=useState('');
   const[tenantRole,setTenant]=useState('');
 
+  const bcrypt = require('bcryptjs');
+  const saltRounds = 10;
+  const hash = bcrypt.hash(password,saltRounds);
+  
+  console.log(hash)
 
 const onchangeOwner =()=>{
   setOwner('Owner')
@@ -45,7 +51,10 @@ const onClicksignup=(e)=>{
     phonenumber:phonenumber,
     role
    }))
+   console.log("click",password)
   addPosts(name, email,password,phonenumber,role);
+  navigate('/login')
+
 }
 
 
@@ -62,7 +71,7 @@ const client = axios.create({
 });
 
 const addPosts =(name, email,password,phonenumber,role) => {
-  console.log('entered add post',name)
+  console.log('entered add post',password)
   client.post('', {
       name:name,
       email:email,
@@ -73,7 +82,6 @@ const addPosts =(name, email,password,phonenumber,role) => {
      .then((response) => {
         console.log("after then",response)
         setPosts([response.data, ...posts]);
-        navigate('/login')
      }).catch((err)=>{
       console.log(err);
      })

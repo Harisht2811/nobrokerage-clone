@@ -11,16 +11,31 @@ const Login=()=>{
   const [loginPassword,setloginPassword]=useState('');
   const [userDetails,setuserDetails] = useState(''); 
 
-  const fetchData =async() => {
-    console.log("harish")
-   const response = await axios.get("http://localhost:8080/userdetails")
-   setuserDetails(response.data);
-   console.log(userDetails)
-  }
-
-  useEffect(() => {
-    fetchData();
-  },[])  
+  useEffect(()=>{
+    const getData = async () => {
+      let response = await client.get('?_limit=10');
+      setuserDetails(response.data);
+   };
+   getData()
+  },[])
+  const client = axios.create({
+    baseURL: "http://localhost:8080/login" 
+  });
+  
+  const  getLogin = (email,password) => {
+    console.log('entered add post',password)
+    client.post('', {
+        email:email,
+        password:password,
+       })
+       .then((response) => {
+          console.log("after then",response)
+          setuserDetails([response.data, ...userDetails]);
+       }).catch((err)=>{
+        console.log(err);
+       })
+    
+  };
 
 const handleSubmit=(e)=>{
     e.preventDefault();
@@ -30,9 +45,8 @@ const signupDetails=useSelector(selectUser)
 console.log(signupDetails);
 
 const afterLogin=()=>{
-  if(userDetails.email===loginEmail && userDetails.password===loginPassword ){
-    navigate("/home")
-  }
+  getLogin(loginEmail,loginPassword);
+  // navigate("/home")
 }
 
 

@@ -27,26 +27,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // simple route
-app.get("/userdetails", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application.","request":req});
-  try{
-    client.query(`SELECT email,password FROM users `,(err,res)=>{
-        if(!err){
-            console.log("data",res.rows)
-        }
-        else{
-            console.log(err.message)
-        }
-        client.end
-        console.log(client)
-    }
-   
-    )
-   
-  }
-  catch(err){
-    console.log(err)
-}
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to bezkoder application."});
 });
 
 // set port, listen for requests
@@ -76,7 +58,29 @@ app.post("/userdetails",(req,res)=>{
             }
     res.end()
 })
+app.post("/login",(req,res)=>{
+  loginData = req.body
+  console.log("login Data",loginData.email)
+  client.query("SELECT * FROM users WHERE email ='abdul@gmail.com'",function (err, result) {
+    if (err) throw err;
+    console.log("login result",result);
+    //You will get an array. if no users found it will return.
+   
+  });
 
+}
+)
 client.connect();         
 
 
+client.query(`SELECT email,password FROM users `,(err,res)=>{
+        if(!err){
+            console.log("data",res.rows)
+        }
+        else{
+            console.log(err.message)
+        }
+        client.end
+        console.log(client)
+    }
+    )
