@@ -9,12 +9,10 @@ const Login=()=>{
   const navigate = useNavigate();
   const [loginEmail,setloginEmail]=useState('');
   const [loginPassword,setloginPassword]=useState('');
-  const [userDetails,setuserDetails] = useState(''); 
 
   useEffect(()=>{
     const getData = async () => {
       let response = await client.get('?_limit=10');
-      setuserDetails(response.data);
    };
    getData()
   },[])
@@ -30,24 +28,22 @@ const Login=()=>{
        })
        .then((response) => {
           console.log("after then",response)
-          setuserDetails([response.data, ...userDetails]);
+          if(response.data ==='Found'){
+            navigate("/home")
+          }
        }).catch((err)=>{
         console.log(err);
        })
     
   };
-
 const handleSubmit=(e)=>{
+  console.log("Clicked1")
     e.preventDefault();
+    getLogin(loginEmail,loginPassword);
  }
  
 const signupDetails=useSelector(selectUser)
 console.log(signupDetails);
-
-const afterLogin=()=>{
-  getLogin(loginEmail,loginPassword);
-  // navigate("/home")
-}
 
 
 
@@ -73,7 +69,8 @@ const afterLogin=()=>{
   
   <div className="form-group row">
     <div className="col-sm-10">
-      <button type="submit" className="btn btn-primary" onClick={afterLogin}>Login</button>
+      <button type="submit" className="btn btn-primary">Login</button>
+      <a className='signupLink' href="/signup">Sign up</a>
     </div>
   </div>
 </form>

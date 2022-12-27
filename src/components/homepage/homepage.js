@@ -1,8 +1,12 @@
 import React from 'react'
+import "../login/login.css"
 
-const homepage=()=> {
+const homepage = () => {
   return (
-    <div>homepage</div>
+    <>
+      <div className='homepage'>
+      </div>
+    </>
   )
 }
 

@@ -60,14 +60,24 @@ app.post("/userdetails",(req,res)=>{
 })
 app.post("/login",(req,res)=>{
   loginData = req.body
+  var email = loginData.email;
+  var password = loginData.password;
+  var postgres = 'SELECT * FROM users WHERE email= $1 AND password= $2';
   console.log("login Data",loginData.email)
-  client.query("SELECT * FROM users WHERE email ='abdul@gmail.com'",function (err, result) {
+  client.query(postgres,[email,password], function (err, result) {
     if (err) throw err;
-    console.log("login result",result);
+    if(result.rows.length === 0){
+      console.log("Check your Email and Password")
+      res.status(404).send('Not Found');
+    }
+    else{
+      console.log("login result",result);
+      res.status(200).send('Found');
+    }
     //You will get an array. if no users found it will return.
-   
   });
-
+  // console.log('we')
+  // res.end("done")
 }
 )
 client.connect();         
