@@ -1,8 +1,32 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
-.homepage{
-    background-color: #f8f9fa;
-    padding:1% 3%;
+
+
+.location{
+    padding: 5% 3%;
+}
+#locationText{
+    font-family: poppins;
+    font-weight: 600;
+    font-size: 45px;
+    margin: 0% 0 0 0;
+    color: grey;
+    text-align: center;
+}
+.uploadProperty{
+    padding: 1% 5%;
+    text-align: center;
+}
+.uploadHere{
+    margin: 1% 0 0 0;
+}
+#property{
+    font-family: poppins;
+    font-weight: 600;
+    font-size: 35px;
+    margin: 0% 0 0 0;
+    color: grey;
+    text-align: center;
 }

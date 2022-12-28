@@ -1,0 +1,32 @@
+.homepage {
+    background-color: #f8f9fa;
+    height: 8vh;
+    padding: 1% 3%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 100%;
+    display: inline-flex;
+}
+
+.leftSide {
+    width: 70%;
+    display: inline-flex;
+}
+
+.rightSide {
+    width: 30%;
+    margin: 0 0 0 20%;
+}
+.homeLogo{
+    width: 15%;
+    margin: -0.4% 0 0 0.5%;
+}
+.homeLogin{
+    margin: 0 0 0 5%;
+}
+#noText{
+    font-family: poppins;
+    font-weight: 600;
+    font-size: 45px;
+    margin: 0% 0 0 0;
+    line-height: 1;
+}
