@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const Signup=()=>{
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const[posts,setPosts] = useState('');
   const[name,setName] = useState('');
   const[email,setEmail] = useState('');
@@ -32,7 +33,6 @@ const onchangeTenant =()=>{
   setTenant('Tenant')
   setOwner('')
 }
-const dispatch = useDispatch();
 
 const handleSubmit=(e)=>{
    e.preventDefault();

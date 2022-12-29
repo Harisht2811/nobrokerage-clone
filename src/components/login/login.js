@@ -1,12 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import {  useNavigate } from 'react-router-dom';
 import '../login/login.css'
+import {login} from '../createslice'
 import {selectUser} from '../createslice'
+import {  useDispatch } from 'react-redux'
 import {  useSelector } from 'react-redux'
 import axios from 'axios';
 
 const Login=()=>{
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loginEmail,setloginEmail]=useState('');
   const [loginPassword,setloginPassword]=useState('');
 
@@ -39,6 +42,10 @@ const Login=()=>{
 const handleSubmit=(e)=>{
   console.log("Clicked1")
     e.preventDefault();
+    dispatch(login({
+      email:loginEmail,
+      password:loginPassword,
+     }))
     getLogin(loginEmail,loginPassword);
  }
  

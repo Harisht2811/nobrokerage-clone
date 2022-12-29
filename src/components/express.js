@@ -80,6 +80,16 @@ app.post("/login",(req,res)=>{
   // res.end("done")
 }
 )
+app.post("/userimages",(req,res)=>{
+  imageData = req.body
+  console.log("image",imageData)
+    // client.connect();           // gets connection
+client.query(
+        `UPDATE "users"  SET userimage= $2 WHERE email= $1`,[imageData.email,[imageData.url]]); // sends queries
+    
+res.end()
+}
+)
 client.connect();         
 
 

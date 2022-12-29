@@ -10,9 +10,9 @@ export const userSlice = createSlice({
     signup:(state,action)=>{
         state.user = action.payload
     },
-    // login:(state,action)=>{
-    //     state.user = action.payload;
-    // },
+    login:(state,action)=>{
+        state.user = action.payload;
+    },
     // logout:(state)=>{
     //     state.user = null
     // },
@@ -20,7 +20,7 @@ export const userSlice = createSlice({
 })
 
 
-export const {signup} = userSlice.actions;
+export const {signup,login} = userSlice.actions;
 
 export const selectUser = (state)=>state.user.user;
 
