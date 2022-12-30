@@ -92,7 +92,7 @@ const handleSubmit=(e)=>{
   
   <div className="form-group row">
     <div className="col-sm-10">
-      {
+      {/* {
         details.map(item=>{
           return(
             <>
@@ -100,7 +100,7 @@ const handleSubmit=(e)=>{
             </>
           )
         })
-      }
+      } */}
       <button type="submit" className="btn btn-primary">Login</button>
       <a className='signupLink' href="/signup">Sign up</a>
     </div>
