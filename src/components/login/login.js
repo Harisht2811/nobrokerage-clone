@@ -12,17 +12,33 @@ const Login=()=>{
   const dispatch = useDispatch();
   const [loginEmail,setloginEmail]=useState('');
   const [loginPassword,setloginPassword]=useState('');
+  const [details,setDetails] = useState([]);
+  const signupDetails=useSelector(selectUser)
+  // console.log(signupDetails);
+  // const role = signupDetails.role
 
   useEffect(()=>{
-    const getData = async () => {
-      let response = await client.get('?_limit=10');
-   };
-   getData()
+    // axios.get('http://localhost:8080/details').then(res=>{
+    //   setDetails(res.data)
+    //   console.log("details get",res.data)
+    fetch("http://localhost:8080/details",{headers:{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }
+
+    }).then(res=>{
+      setDetails(res.data)
+      console.log("afterApi",res)
+      return res.json()
+    }).then(data=>{
+      console.log(data)
+    })
   },[])
+
   const client = axios.create({
     baseURL: "http://localhost:8080/login" 
   });
-  
+
   const  getLogin = (email,password) => {
     console.log('entered add post',password)
     client.post('', {
@@ -45,12 +61,12 @@ const handleSubmit=(e)=>{
     dispatch(login({
       email:loginEmail,
       password:loginPassword,
+      // role:role
      }))
     getLogin(loginEmail,loginPassword);
  }
  
-const signupDetails=useSelector(selectUser)
-console.log(signupDetails);
+
 
 
 
@@ -76,6 +92,15 @@ console.log(signupDetails);
   
   <div className="form-group row">
     <div className="col-sm-10">
+      {
+        details.map(item=>{
+          return(
+            <>
+            <p>{item.role}</p>
+            </>
+          )
+        })
+      }
       <button type="submit" className="btn btn-primary">Login</button>
       <a className='signupLink' href="/signup">Sign up</a>
     </div>

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import "../homepage/homepage.css"
 import axios from 'axios';
 import Header from '../header/header.js';
-import {selectUser} from '../createslice'
+import {selectloginUser} from '../createslice'
 import {  useSelector } from 'react-redux'
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
@@ -37,7 +37,7 @@ const Homepage = () => {
        })
     
   };
-  const loginDetails=useSelector(selectUser)
+  const loginDetails=useSelector(selectloginUser)
   console.log(loginDetails);
   let loginEmail = loginDetails.email
   
@@ -136,7 +136,8 @@ const Homepage = () => {
         <div className='uploadProperty'>
           <p id='property'>Upload your property</p>
           <input type="file" onChange={(event)=>setImageUpload(event.target.files[0])}></input>
-          <button onClick={uploadImages}>Upload</button>
+          <button className='uploadBtn' onClick={uploadImages}>Upload</button>
+          <div className='displayImages'>
           {
             userImage.map(item=>{
               return(
@@ -146,6 +147,8 @@ const Homepage = () => {
               )
             })
           }
+          </div>
+      
         </div>
       </div>
     </>

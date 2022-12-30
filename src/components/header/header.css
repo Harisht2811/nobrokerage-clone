@@ -15,6 +15,7 @@
 .rightSide {
     width: 30%;
     margin: 0 0 0 20%;
+    display: inline-flex;
 }
 .homeLogo{
     width: 15%;

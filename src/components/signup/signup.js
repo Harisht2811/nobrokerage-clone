@@ -145,7 +145,7 @@ const addPosts =(name, email,password,phonenumber,role) => {
   
   <div className="form-group row">
     <div className="col-sm-10">
-      <button onClick={onClicksignup}  className="btn btn-primary">Sign in </button>
+      <button onClick={onClicksignup}  className="btn btn-primary">Sign up </button>
       <button onClick={onClicklogin}  className="btn btn-primary loginBtn">Login</button>
     </div>
   </div>
