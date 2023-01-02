@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import "../header/header.css"
 import {selectloginUser} from '../createslice'
 import {  useSelector } from 'react-redux'
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Header=()=>{
     const navigate = useNavigate();
+    const [details,setDetails] = useState([]);
     const roleDetails=useSelector(selectloginUser)
     console.log(roleDetails);
     let roleType= roleDetails.role
@@ -18,16 +19,42 @@ const Header=()=>{
     navigate("/")
 
   }
+
+  let currentUser = sessionStorage.getItem('id')
+
+  useEffect(()=>{
+    fetch(`http://localhost:8080/details/${currentUser}`,{headers:{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }
+
+    }).then(res=>{
+      console.log("afterApi",res)
+      return res.json()
+    }).then(data=>{
+      console.log("loginData",data[0].id)
+      setDetails(data)
+    })
+  },[])
+  
   return (
    <>
-   <div className='homepage'>
+   <div className='header'>
     <div className='leftSide'>
           <p id="noText">No</p>
           <img className='homeLogo' src={Homelogo} alt='logo' />
         </div>
         <div className='rightSide'>
-          <div className="col-sm-15">
-            <p>{roleType}</p>
+        {
+              details.map(item=>{
+                return(
+                  <>
+                 <p id='roleText'> Role: {item.role}</p>
+                  </>
+                )
+              })
+            }
+          <div className=" buttons">
             <button onClick={signupClick} className="btn btn-primary">Signup</button>
             <button onClick={loginClick} className="btn btn-primary homeLogin">Login</button>
           </div>

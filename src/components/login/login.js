@@ -12,33 +12,31 @@ const Login=()=>{
   const dispatch = useDispatch();
   const [loginEmail,setloginEmail]=useState('');
   const [loginPassword,setloginPassword]=useState('');
-  const [details,setDetails] = useState([]);
+  const [details,setDetails]=useState([]);
+  console.log(details)
   const signupDetails=useSelector(selectUser)
-  // console.log(signupDetails);
-  // const role = signupDetails.role
+  
+ 
+  let currentUser = sessionStorage.getItem('id')
 
   useEffect(()=>{
-    // axios.get('http://localhost:8080/details').then(res=>{
-    //   setDetails(res.data)
-    //   console.log("details get",res.data)
-    fetch("http://localhost:8080/details",{headers:{
+    fetch(`http://localhost:8080/details/${currentUser}`,{headers:{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     }
-
     }).then(res=>{
-      setDetails(res.data)
       console.log("afterApi",res)
       return res.json()
     }).then(data=>{
-      console.log(data)
+      console.log("loginData",data[0].id)
+      setDetails(data)
     })
   },[])
+  
 
   const client = axios.create({
     baseURL: "http://localhost:8080/login" 
   });
-
   const  getLogin = (email,password) => {
     console.log('entered add post',password)
     client.post('', {
@@ -47,8 +45,17 @@ const Login=()=>{
        })
        .then((response) => {
           console.log("after then",response)
-          if(response.data ==='Found'){
-            navigate("/home")
+          if(response.data.status ==='Found'){
+            let id = JSON.parse(response.data.data)
+            console.log("before navifgate",id.id)
+            sessionStorage.setItem("id",id.id)
+            // navigate('owner')
+            if(details[0].role ==='Owner'){
+              navigate("/owner")
+            }
+            else if(details[0].role === 'Tenant'){
+              navigate("/tenant")
+            }
           }
        }).catch((err)=>{
         console.log(err);
@@ -92,7 +99,7 @@ const handleSubmit=(e)=>{
   
   <div className="form-group row">
     <div className="col-sm-10">
-      {/* {
+      {
         details.map(item=>{
           return(
             <>
@@ -100,7 +107,7 @@ const handleSubmit=(e)=>{
             </>
           )
         })
-      } */}
+      }
       <button type="submit" className="btn btn-primary">Login</button>
       <a className='signupLink' href="/signup">Sign up</a>
     </div>

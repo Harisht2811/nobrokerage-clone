@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 // import { PlusOutlined } from '@ant-design/icons';
 // import { Modal, Upload } from 'antd';
-import "../homepage/homepage.css"
+import "./owner.css"
 import axios from 'axios';
 import Header from '../header/header.js';
 import {selectloginUser} from '../createslice'
@@ -60,10 +60,8 @@ const Homepage = () => {
                         fileName:imageUpload.name,
                         uploadedDate:date,
                     }
-                    updateDoc(doc(db, "user_images", loginEmail), {
-
+                    updateDoc(doc(db, "user_images", loginEmail),{
                                 userImageDetails:arrayUnion(data)
-                                
                        });  
             })
         })
@@ -71,7 +69,7 @@ const Homepage = () => {
 
     useEffect(() => {
       updateDataTable();
-      localStorage.setItem("email", JSON.stringify(loginEmail));
+      sessionStorage.setItem("email", JSON.stringify(loginEmail));
     }, []);
 
   const updateDataTable = async () => {
@@ -83,50 +81,13 @@ const Homepage = () => {
                   console.log(data)
                   if(data === undefined){
                       setDoc(doc(db, "user_images", loginEmail), {
-                      
                      }); 
                   }
                   setUserImage(data.userImageDetails);
   };
 
-  // const getBase64 = (file) =>
-  //   new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => resolve(reader.result);
-  //     reader.onerror = (error) => reject(error);
-  //   });
+ 
 
-
-  //   const handleCancel = () => setPreviewOpen(false);
-  //   const handlePreview = async (file) => {
-  //     if (!file.url && !file.preview) {
-  //       file.preview = await getBase64(file.originFileObj);
-  //     }
-  //     setPreviewImage(file.url || file.preview);
-  //     setPreviewOpen(true);
-  //     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
-
-      
-  //   };
-  //   const handleChange = ({ fileList: newFileList }) => {
-  //     // uploadImages();
-  //     setFileList(newFileList)
-
-  //   };
-
-  // const uploadButton = (
-  //   <div>
-  //     <PlusOutlined />
-  //     <div
-  //       style={{
-  //         marginTop: 8,
-  //       }}
-  //     >
-  //       Upload
-  //     </div>
-  //   </div>
-  // );
 
   return (
     <>

@@ -31,9 +31,10 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
-app.get('/details',async(req,res)=>{
+app.get('/details/:id',async(req,res)=>{
+  let currentUser = req.params.id
   res.setHeader('Content-Type', 'application/json');
-client.query(`SELECT * FROM users`,(err,result)=>{
+client.query(`SELECT * FROM users where id=${currentUser}`,(err,result)=>{
   
 if(result){
   //  console.log(result.rows,'re') 
@@ -86,11 +87,12 @@ app.post("/login", (req, res) => {
     if (err) throw err;
     if (result.rows.length === 0) {
       console.log("Check your Email and Password")
-      res.status(404).send('Not Found');
+      res.status(404).send({'status':'Not Found'});
     }
     else {
       console.log("login result", result);
-      res.status(200).send('Found');
+      let userData = JSON.stringify(result.rows[0])
+      res.status(200).send({'status':'Found','data':userData});
     }
   // res.end("done")
   });
