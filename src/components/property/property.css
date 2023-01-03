@@ -1,0 +1,34 @@
+.property{
+    padding: 3% 5%;
+    text-align: center;
+}
+select{
+    width: 50%;
+    height: 50px;
+    border: 1px solid grey;
+    outline: none;
+    background-color: white;
+    padding: 0% 1%;
+    margin: 2% 0 0 0;
+}
+#choose{
+    font-family: poppins;
+    font-weight: 600;
+    font-size: 35px;
+    margin: 0% 0 0 0;
+    color: grey;
+}
+.postBtn{
+    background-color: grey;
+    width: 150px;
+    height: 50px;
+    color: black;
+    font-size: 16px;
+    font-family: poppins;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    outline:none;
+    border-style: none;
+    margin: 2% 0 0 0;
+}

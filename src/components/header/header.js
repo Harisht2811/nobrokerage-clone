@@ -19,6 +19,11 @@ const Header=()=>{
     navigate("/")
 
   }
+  
+  const logOut =()=>{
+    sessionStorage.clear()
+    navigate("/")
+  }
 
   let currentUser = sessionStorage.getItem('id')
 
@@ -57,6 +62,8 @@ const Header=()=>{
           <div className=" buttons">
             <button onClick={signupClick} className="btn btn-primary">Signup</button>
             <button onClick={loginClick} className="btn btn-primary homeLogin">Login</button>
+            <button onClick={logOut} className="btn btn-primary homeLogin">Log out</button>
+
           </div>
         </div>
       </div>

@@ -8,12 +8,13 @@
 }
 
 .leftSide {
-    width: 70%;
+    width: 50%;
     display: inline-flex;
 }
 
 .rightSide {
-    width: 30%;
+    width: 50%;
+    margin: 0 0 0 10%;
     display: inline-flex;
 }
 .linkBtn{
@@ -28,7 +29,7 @@
     font-family: poppins;
     font-weight: 600;
     font-size: 14px;
-    margin: 3% 0 0 10%;
+    margin: 2% 0 0 10%;
 }
 .homeLogo{
     width: 15%;

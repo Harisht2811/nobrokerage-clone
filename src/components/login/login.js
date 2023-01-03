@@ -17,10 +17,17 @@ const Login=()=>{
   const signupDetails=useSelector(selectUser)
   
  
-  let currentUser = sessionStorage.getItem('id')
 
   useEffect(()=>{
-    fetch(`http://localhost:8080/details/${currentUser}`,{headers:{
+   
+  },[])
+  
+
+ 
+
+  const getdetails=(id)=>{
+    console.log("id",id)
+    fetch(`http://localhost:8080/details/${id}`,{headers:{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     }
@@ -30,13 +37,19 @@ const Login=()=>{
     }).then(data=>{
       console.log("loginData",data[0].id)
       setDetails(data)
+      if(data[0].role ==='Owner'){
+        navigate("/owner")
+      }
+      else if(data[0].role === 'Tenant'){
+        navigate("/tenant")
+      }
     })
-  },[])
-  
+  } 
 
   const client = axios.create({
     baseURL: "http://localhost:8080/login" 
   });
+  
   const  getLogin = (email,password) => {
     console.log('entered add post',password)
     client.post('', {
@@ -46,16 +59,13 @@ const Login=()=>{
        .then((response) => {
           console.log("after then",response)
           if(response.data.status ==='Found'){
+            
             let id = JSON.parse(response.data.data)
             console.log("before navifgate",id.id)
             sessionStorage.setItem("id",id.id)
+            
+            getdetails(id.id);
             // navigate('owner')
-            if(details[0].role ==='Owner'){
-              navigate("/owner")
-            }
-            else if(details[0].role === 'Tenant'){
-              navigate("/tenant")
-            }
           }
        }).catch((err)=>{
         console.log(err);
@@ -71,6 +81,8 @@ const handleSubmit=(e)=>{
       // role:role
      }))
     getLogin(loginEmail,loginPassword);
+    
+   
  }
  
 
@@ -99,15 +111,6 @@ const handleSubmit=(e)=>{
   
   <div className="form-group row">
     <div className="col-sm-10">
-      {
-        details.map(item=>{
-          return(
-            <>
-            <p>{item.role}</p>
-            </>
-          )
-        })
-      }
       <button type="submit" className="btn btn-primary">Login</button>
       <a className='signupLink' href="/signup">Sign up</a>
     </div>

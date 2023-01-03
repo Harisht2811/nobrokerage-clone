@@ -45,4 +45,12 @@
 }
 .displayImages{
     margin: 5% 0 0 0;
+    overflow-y: scroll;
+    border:2px solid black;
+    padding: 2% 2%;
+}
+.uploadedImages{
+    height: 300px;
+    width: 300px;
+    margin:0 0 5% 2%;
 }
