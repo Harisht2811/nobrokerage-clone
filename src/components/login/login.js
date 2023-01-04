@@ -38,7 +38,7 @@ const Login=()=>{
       console.log("loginData",data[0].id)
       setDetails(data)
       if(data[0].role ==='Owner'){
-        navigate("/owner")
+        navigate("/propertydetails")
       }
       else if(data[0].role === 'Tenant'){
         navigate("/tenant")
@@ -70,8 +70,8 @@ const Login=()=>{
        }).catch((err)=>{
         console.log(err);
        })
-    
   };
+  
 const handleSubmit=(e)=>{
   console.log("Clicked1")
     e.preventDefault();
@@ -111,7 +111,7 @@ const handleSubmit=(e)=>{
   
   <div className="form-group row">
     <div className="col-sm-10">
-      <button type="submit" className="btn btn-primary">Login</button>
+      <button type="submit" className="btnLogin">Login</button>
       <a className='signupLink' href="/signup">Sign up</a>
     </div>
   </div>

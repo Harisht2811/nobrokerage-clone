@@ -1,7 +1,60 @@
 .details{
     padding: 2% 5%;
+}
+#detailsTitle{
+    color: #009587;
+    font-size: 32px;
+    font-family: poppins;
+    font-weight: 600;
+}
+.details label{
+    color: #464646;
+    font-size: 16px;
+    font-family: poppins;
+    font-weight: 600;
+}
+.details select{
+    width: 100%;
+    height: 40px;
+    margin: 1% 0 0 0;
+    padding:1% 3%;
+}
+.details input{
+    width: 100%;
+    height: 40px;
+}
+.apartment{
     display: block;
 }
-#areaInput{
-    width: 40%;
+.area{
+    margin: 2% 0 0 0;
+}
+#area{
+    margin: 2% 0 0 0;
+    padding:1% 3%;
+}
+.floor{
+    grid-row-gap: 11%;
+    grid-column-gap: 3%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+.age{
+    grid-row-gap: 11%;
+    grid-column-gap: 3%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);  
+}
+.updateBtn{
+    background-color: #fd3752;
+    width: 275px;
+    height: 50px;
+    color: white;
+    font-size: 16px;
+    font-family: poppins;
+    font-weight: 600;
+    border: none;
+    outline:none;
+    border-style: none;
+    margin: 2% 0 0 0;
 }

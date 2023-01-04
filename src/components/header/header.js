@@ -32,7 +32,6 @@ const Header=()=>{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     }
-
     }).then(res=>{
       console.log("afterApi",res)
       return res.json()
@@ -60,9 +59,9 @@ const Header=()=>{
               })
             }
           <div className=" buttons">
-            <button onClick={signupClick} className="btn btn-primary">Signup</button>
-            <button onClick={loginClick} className="btn btn-primary homeLogin">Login</button>
-            <button onClick={logOut} className="btn btn-primary homeLogin">Log out</button>
+            <button onClick={signupClick} className="btnSignup">Signup</button>
+            <button onClick={loginClick} className="btnLogin homeLogin">Login</button>
+            <button onClick={logOut} className="btnLogout homeLogin">Log out</button>
 
           </div>
         </div>

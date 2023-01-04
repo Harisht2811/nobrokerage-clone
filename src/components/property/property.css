@@ -2,7 +2,7 @@
     padding: 3% 5%;
     text-align: center;
 }
-select{
+#city{
     width: 50%;
     height: 50px;
     border: 1px solid grey;
@@ -14,20 +14,19 @@ select{
 #choose{
     font-family: poppins;
     font-weight: 600;
-    font-size: 35px;
+    font-size: 32px;
     margin: 0% 0 0 0;
-    color: grey;
+    color: #009587;
 }
 .postBtn{
-    background-color: grey;
+    background-color: #fd3752;
     width: 150px;
     height: 50px;
-    color: black;
+    color: white;
     font-size: 16px;
     font-family: poppins;
     font-weight: 600;
     border: none;
-    border-radius: 8px;
     outline:none;
     border-style: none;
     margin: 2% 0 0 0;

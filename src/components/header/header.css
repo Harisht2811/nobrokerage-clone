@@ -45,3 +45,15 @@
     margin: 0% 0 0 0;
     line-height: 1;
 }
+.btnSignup,.btnLogin,.btnLogout{
+    background-color: #fd3752;
+    color: white;
+    height: 40px;
+    width: 60px;
+    font-size: 14px;
+    font-family: poppins;
+    font-weight: 600;
+    border: none;
+    outline:none;
+    border-style: none;
+}

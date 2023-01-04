@@ -112,5 +112,27 @@ app.post("/userimages", (req, res) => {
   res.end()
 }
 )
+app.post("/propertycity", (req, res) => {
+  propertyData = req.body
+  console.log("city", propertyData)
+  // client.connect();           // gets connection
+  client.query(
+    `UPDATE "users"  SET city= $2 WHERE email= $1`, [propertyData.email, propertyData.city]); // sends queries
+
+  res.end()
+}
+)
+app.post("/propertydetails", (req, res) => {
+  userpropertyData = req.body
+  console.log("dataproperty", userpropertyData.direction)
+  // client.connect();           // gets connection
+  client.query(
+    `INSERT INTO "propertydetails" ("apartment", "BHK","floor","totalfloor","direction","age","area")  
+                   VALUES ($1,$2,$3,$4,$5,$6,$7)`, [userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
+                    userpropertyData.direction,userpropertyData.age,userpropertyData.area]); // sends queries
+
+  res.end()
+}
+)
 client.connect();
 
