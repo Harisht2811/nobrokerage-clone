@@ -50,6 +50,25 @@ else{
 // res.end()
 })
 
+// app.get('/tenantdetails/:id',async(req,res)=>{
+//   let currentUser = req.params.id
+//   res.setHeader('Content-Type', 'application/json');
+// client.query(`SELECT * FROM users where id=${currentUser}`,(err,result)=>{
+  
+// if(result){
+//   //  console.log(result.rows,'re') 
+//     console.log((typeof result.rows))
+//     resu = JSON.stringify(result.rows)
+//    res.status(200).send(resu);
+//   //  res.send()
+// }
+// else{
+//   console.log(err.message)
+// }
+// });
+// // res.end()
+// })
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
@@ -104,12 +123,13 @@ app.post("/login", (req, res) => {
  
 app.post("/userimages", (req, res) => {
   imageData = req.body
-  console.log("image", imageData)
-  // client.connect();           // gets connection
+  console.log("image", imageData.url)
+  // client.connect();           
+  // gets connection
   client.query(
     `UPDATE "users"  SET userimage= $2 WHERE email= $1`, [imageData.email, [imageData.url]]); // sends queries
-
-  res.end()
+    
+     res.end()
 }
 )
 app.post("/propertycity", (req, res) => {
@@ -124,11 +144,11 @@ app.post("/propertycity", (req, res) => {
 )
 app.post("/propertydetails", (req, res) => {
   userpropertyData = req.body
-  console.log("dataproperty", userpropertyData.direction)
+  console.log("dataproperty", userpropertyData)
   // client.connect();           // gets connection
   client.query(
-    `INSERT INTO "propertydetails" ("apartment", "BHK","floor","totalfloor","direction","age","area")  
-                   VALUES ($1,$2,$3,$4,$5,$6,$7)`, [userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
+    `INSERT INTO "propertydetails" ("email","apartment", "BHK","floor","totalfloor","direction","age","area")  
+                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [userpropertyData.email,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
                     userpropertyData.direction,userpropertyData.age,userpropertyData.area]); // sends queries
 
   res.end()

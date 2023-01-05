@@ -27,18 +27,20 @@ const Homepage = () => {
     baseURL: "http://localhost:8080/userimages" 
   });
   
-  const  adduserImages = (url,email) => {
+  const  adduserImages = () => {
     client.post('', {
         email:loginEmail,
-        url:url,
+        url:imageList,
        })
        .then((response) => {
           console.log("after then",response)
        })
     
   };
+
   const loginDetails=useSelector(selectloginUser)
   console.log(loginDetails);
+
   let loginEmail = loginDetails.email
   
   const imageListRef = ref(storage, "images/");
@@ -48,21 +50,25 @@ const Homepage = () => {
         if (imageUpload == null) return;
             
             const imageRef = ref(storage, `images/${imageUpload.name + v4()}`)
+       console.log("imageRef",imageRef)
             const date = new Date().toISOString().substring(0,10);
 
             uploadBytes(imageRef, imageUpload).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
                     setImageList((prev) => [...prev, url]);
                     updateDataTable();
-                    adduserImages(url);
+                    console.log("url",url,"imageUpload",imageUpload)
                     let data={
                         url:url,
                         fileName:imageUpload.name,
                         uploadedDate:date,
                     }
                     updateDoc(doc(db, "user_images", loginEmail),{
-                                userImageDetails:arrayUnion(data)
+                                userImageDetails:arrayUnion(data),
+
                        });  
+                       adduserImages()
+
             })
         })
     };
@@ -91,6 +97,10 @@ const Homepage = () => {
 
   return (
     <>
+    {
+      console.log("imageurl",imageList,"user_images",userImage)
+
+    }
       <Header/>
       <div className='location'>
         <p id="locationText">No Brokerage Property Site</p>

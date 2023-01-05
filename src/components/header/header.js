@@ -10,7 +10,6 @@ const Header=()=>{
     const [details,setDetails] = useState([]);
     const roleDetails=useSelector(selectloginUser)
     console.log(roleDetails);
-    let roleType= roleDetails.role
 
   const signupClick = () => {
     navigate("/signup")

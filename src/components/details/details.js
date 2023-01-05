@@ -1,5 +1,7 @@
 import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom';
+import {login, selectloginUser} from '../createslice'
+import {  useSelector } from 'react-redux'
 import "./details.css"
 import axios from 'axios';
 import Header from "../../components/header/header"
@@ -14,12 +16,18 @@ const Details=()=>{
   const [direction,setDirection] = useState([]);
   const [area,setArea] = useState([]);
 
+  const loginDetails=useSelector(selectloginUser)
+  console.log("detailspage",loginDetails)
+  const email = loginDetails.email
+
   
+  
+
   const client = axios.create({
     baseURL: "http://localhost:8080/propertydetails" 
   });
   
-  const  setdetails = (apartment,BHK,floor,totalFloor,age,direction,area) => {
+  const  setdetails = (apartment,BHK,floor,totalFloor,age,direction,area,email) => {
     client.post('', {
       apartment:apartment,
       BHK:BHK,
@@ -28,6 +36,7 @@ const Details=()=>{
       age:age,
       direction:direction,
       area:area,
+      email:email,
        })
        .then((response) => {
           console.log("details of property",response)
@@ -37,7 +46,7 @@ const Details=()=>{
   };
 
   const postProperty = ()=>{
-    setdetails(apartment,BHK,floor,totalFloor,age,direction,area);
+    setdetails(apartment,BHK,floor,totalFloor,age,direction,area,email);
     navigate("/owner");
   }
 
