@@ -6,6 +6,7 @@ export const userSlice = createSlice({
    initialState:{
     user:null,
     loginUser:null,
+    userData:null,
    },
    reducers:{
     signup:(state,action)=>{
@@ -14,6 +15,9 @@ export const userSlice = createSlice({
     login:(state,action)=>{
         state.loginUser = action.payload;
     },
+    userDetails:(state,action)=>{
+        state.userData = action.payload
+    }
     // logout:(state)=>{
     //     state.user = null
     // },
@@ -21,10 +25,12 @@ export const userSlice = createSlice({
 })
 
 
-export const {signup,login} = userSlice.actions;
+export const {signup,login,userDetails} = userSlice.actions;
 
 export const selectUser = (state)=>state.user.user;
 export const selectloginUser = (state)=>state.user.loginUser;
+export const selectuserDetails = (state)=>state.user.userData;
+
 
 
 export default userSlice.reducer;

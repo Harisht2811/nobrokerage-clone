@@ -128,13 +128,31 @@ app.post("/userimages", (req, res) => {
   // gets connection
   client.query(
     `UPDATE "users"  SET userimage= $2 WHERE email= $1`, [imageData.email, [imageData.url]]); // sends queries
-    
      res.end()
 }
 )
+
+app.post("/tenantcity", (req, res) => {
+  cityData = req.body
+  console.log(cityData)
+  let postgres = `SELECT * FROM "users" WHERE city=$1`
+  client.query(
+     postgres ,[cityData.city],function(err,result){
+      if (result.rows.length === 0) {
+        res.status(404).send({'status':'Not Found'});
+      }
+      else {
+        console.log("login result", result);
+        let cityData = JSON.stringify(result.rows[0])
+        res.status(200).send({'status':'Found','data':cityData});
+      }
+    }); // sends queries
+   
+}
+)
+
 app.post("/propertycity", (req, res) => {
   propertyData = req.body
-  console.log("city", propertyData)
   // client.connect();           // gets connection
   client.query(
     `UPDATE "users"  SET city= $2 WHERE email= $1`, [propertyData.email, propertyData.city]); // sends queries
@@ -142,13 +160,15 @@ app.post("/propertycity", (req, res) => {
   res.end()
 }
 )
+
+
 app.post("/propertydetails", (req, res) => {
   userpropertyData = req.body
   console.log("dataproperty", userpropertyData)
   // client.connect();           // gets connection
   client.query(
-    `INSERT INTO "propertydetails" ("email","apartment", "BHK","floor","totalfloor","direction","age","area")  
-                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [userpropertyData.email,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
+    `INSERT INTO "propertydetails" ("city","apartment", "BHK","floor","totalfloor","direction","age","area")  
+                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
                     userpropertyData.direction,userpropertyData.age,userpropertyData.area]); // sends queries
 
   res.end()

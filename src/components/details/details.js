@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import {login, selectloginUser} from '../createslice'
+import {login, selectloginUser,selectuserDetails} from '../createslice'
 import {  useSelector } from 'react-redux'
+
 import "./details.css"
 import axios from 'axios';
 import Header from "../../components/header/header"
@@ -19,15 +20,17 @@ const Details=()=>{
   const loginDetails=useSelector(selectloginUser)
   console.log("detailspage",loginDetails)
   const email = loginDetails.email
-
   
+  const userData = useSelector(selectuserDetails)
+  console.log("userData",userData)
+  let city = userData.city
   
 
   const client = axios.create({
     baseURL: "http://localhost:8080/propertydetails" 
   });
   
-  const  setdetails = (apartment,BHK,floor,totalFloor,age,direction,area,email) => {
+  const  setdetails = (apartment,BHK,floor,totalFloor,age,direction,area,city) => {
     client.post('', {
       apartment:apartment,
       BHK:BHK,
@@ -36,7 +39,7 @@ const Details=()=>{
       age:age,
       direction:direction,
       area:area,
-      email:email,
+      city:city,
        })
        .then((response) => {
           console.log("details of property",response)
@@ -46,7 +49,7 @@ const Details=()=>{
   };
 
   const postProperty = ()=>{
-    setdetails(apartment,BHK,floor,totalFloor,age,direction,area,email);
+    setdetails(apartment,BHK,floor,totalFloor,age,direction,area,city);
     navigate("/owner");
   }
 
