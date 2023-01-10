@@ -1,10 +1,12 @@
 .tenantdetails{
     text-align: center;
 }
+
 .detailiedProps{
-    display: flex;
+    display: block;
     padding: 1% 5%;
     column-gap: 2%;
+    text-align: left;
 }
 .tenantImages{
     width: 300px;

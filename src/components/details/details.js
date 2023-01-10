@@ -24,6 +24,7 @@ const Details=()=>{
   const userData = useSelector(selectuserDetails)
   console.log("userData",userData)
   let city = userData.city
+  console.log("afterCity",city)
   
 
   const client = axios.create({

@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import "./tenantdetails.css"
 import axios from 'axios';
-import {selectloginUser,userDetails} from '../createslice'
+import {selectloginUser,} from '../createslice'
 import {  useSelector } from 'react-redux'
-import {  useDispatch } from 'react-redux'
 import cityOptions from '../../content/property.json'
 
 
@@ -12,16 +11,13 @@ const Tenantdetails = () => {
     const [imageDetails,setimageDetails]=useState([]);
     const [cityDetails,setCitydetails]=useState([]);
     const loginDetails=useSelector(selectloginUser)
-    const dispatch = useDispatch();
     
 
     const getTenant = ()=>{
         console.log(city)
         getCity()
         getProperty()
-        dispatch(userDetails({
-            city:city
-          }))
+       
     }
 
     const client = axios.create({
@@ -87,22 +83,22 @@ const Tenantdetails = () => {
                     cityDetails.map(item=>{
                         return(
                             <>
+                            <div className='wholeDetails'>
                             <div className='detailiedProps'>
-                            <p>{item.apartment}</p>
-                            <p>{item.BHK}</p>
-                            <p>{item.floor} Floor</p>
-                            <p>{item.totalfloor} Floors</p>
-                            <p>{item.age}</p>
-                            <p>{item.direction}</p>
-                            <p>{item.area}</p>
+                            <p>Type: {item.apartment}</p>
+                            <p>BHK: {item.BHK}</p>
+                            <p>Floor: {item.floor} Floor</p>
+                            <p>Total Floor: {item.totalfloor} Floor</p>
+                            <p>Age of Property: {item.age}</p>
+                            <p>Facing: {item.direction}</p>
+                            <p>Area: {item.area}</p>
                             </div>
+                            </div>
+                           
                             </>
                         )
                     })
                 }
-                {/* {
-                    cityDetails.apartment
-                } */}
             </div>
         </div>
     )

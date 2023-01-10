@@ -1,24 +1,26 @@
 import React,{useState,useEffect} from 'react'
 import Header from "../../components/header/header"
 import cityOptions  from '../../content/property.json'
-import {selectloginUser} from '../createslice'
+import {selectloginUser,userDetails} from '../createslice'
 import {  useSelector } from 'react-redux'
+import {  useDispatch } from 'react-redux'
 import axios from 'axios';
 import "./property.css"
 import {  useNavigate } from 'react-router-dom'
 
 const Property=()=>{
   const [city,setCity]=useState([]);
-  const loginDetails=useSelector(selectloginUser)
+  const dispatch = useDispatch();
   console.log(cityOptions)
   const navigate = useNavigate()
+  const loginDetails = useSelector(selectloginUser)
   const email = loginDetails.email
     
     const client = axios.create({
       baseURL: "http://localhost:8080/propertycity" 
     });
     
-    const  getcity = (email,city) => {
+    const  getcity = (email) => {
       client.post('', {
           email:email,
           city:city,
@@ -30,7 +32,10 @@ const Property=()=>{
          })
     };
     const postCity =()=>{
-      getcity(email,city);
+      getcity(email);
+      dispatch(userDetails({
+        city:city
+      }))
       navigate("/applydetails")
     }
 
