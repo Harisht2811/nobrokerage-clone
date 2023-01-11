@@ -1,11 +1,9 @@
 import React, { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import { PlusOutlined } from '@ant-design/icons';
-// import { Modal, Upload } from 'antd';
+import {login, selectloginUser,selectuserDetails} from '../createslice'
 import "./owner.css"
 import axios from 'axios';
 import Header from '../header/header.js';
-import {selectloginUser} from '../createslice'
 import {  useSelector } from 'react-redux'
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
@@ -15,13 +13,12 @@ import { ReadyForQueryMessage } from 'pg-protocol/dist/messages';
 
 const Homepage = () => {
   const navigate = useNavigate();
-  // const [previewOpen, setPreviewOpen] = useState(false);
-  // const [previewImage, setPreviewImage] = useState('');
-  // const [previewTitle, setPreviewTitle] = useState('');
-  // const [fileList, setFileList] = useState([]);
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
   const [userImage,setUserImage] = useState([]);
+  const userData = useSelector(selectuserDetails)
+  console.log("userData",userData)
+  let city = userData.city
 
   const client = axios.create({
     baseURL: "http://localhost:8080/userimages" 
@@ -62,12 +59,13 @@ const Homepage = () => {
                         url:url,
                         fileName:imageUpload.name,
                         uploadedDate:date,
+                        city:city
                     }
                     updateDoc(doc(db, "user_images", loginEmail),{
                                 userImageDetails:arrayUnion(data),
 
                        });  
-                       adduserImages()
+                    adduserImages()
 
             })
         })
@@ -84,7 +82,7 @@ const Homepage = () => {
       let sp = await getDoc(docref);
       console.log(sp)
                   let data = sp.data();
-                  console.log(data)
+                  console.log("dataRender",data)
                   if(data === undefined){
                       setDoc(doc(db, "user_images", loginEmail), {
                      }); 

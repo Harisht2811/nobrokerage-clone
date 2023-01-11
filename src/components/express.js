@@ -36,7 +36,7 @@ client.query(`SELECT * FROM users where id=${currentUser}`,(err,result)=>{
 if(result){
     console.log((typeof result.rows))
     resu = JSON.stringify(result.rows)
-   res.status(200).send(resu);
+    res.status(200).send(resu);
 }
 else{
   console.log(err.message)
