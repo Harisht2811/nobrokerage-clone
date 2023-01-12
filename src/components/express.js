@@ -91,32 +91,32 @@ app.post("/login", (req, res) => {
 
 
  
-app.post("/userimages", (req, res) => {
-  imageData = req.body
-  console.log("image", imageData.url)
-  client.query(
-    `UPDATE "users"  SET userimage= $2 WHERE email= $1`, [imageData.email, [imageData.url]]); // sends queries
-     res.end()
-}
-)
+// app.post("/userimages", (req, res) => {
+//   imageData = req.body
+//   console.log("image", imageData.url)
+//   client.query(
+//     `UPDATE "users"  SET userimage= $2 WHERE email= $1`, [imageData.email, [imageData.url]]); // sends queries
+//      res.end()
+// }
+// )
 
-app.post("/tenantcity", (req, res) => {
-  cityData = req.body
-  console.log(cityData)
-  let postgres = `SELECT * FROM "users" WHERE city=$1`
-  client.query(
-     postgres ,[cityData.city],function(err,result){
-      if (result.rows.length === 0) {
-        res.status(404).send({'status':'Not Found'});
-      }
-      else {
-        console.log("login result", result);
-        let cityData = JSON.stringify(result.rows[0])
-        res.status(200).send({'status':'Found','data':cityData});
-      }
-    }); 
-}
-)
+// app.post("/tenantcity", (req, res) => {
+//   cityData = req.body
+//   console.log(cityData)
+//   let postgres = `SELECT * FROM "users" WHERE city=$1`
+//   client.query(
+//      postgres ,[cityData.city],function(err,result){
+//       if (result.rows.length === 0) {
+//         res.status(404).send({'status':'Not Found'});
+//       }
+//       else {
+//         console.log("login result", result);
+//         let cityData = JSON.stringify(result.rows[0])
+//         res.status(200).send({'status':'Found','data':cityData});
+//       }
+//     }); 
+// }
+// )
 app.post("/getproperty",(req,res)=>{
   tenantCity = req.body
   console.log(tenantCity)
@@ -135,23 +135,23 @@ app.post("/getproperty",(req,res)=>{
   )
 }
 )
-app.post("/propertycity", (req, res) => {
-  propertyData = req.body
-  client.query(
-    `UPDATE "users"  SET city= $2 WHERE email= $1`, [propertyData.email, propertyData.city]); 
+// app.post("/propertycity", (req, res) => {
+//   propertyData = req.body
+//   client.query(
+//     `UPDATE "users"  SET city= $2 WHERE email= $1`, [propertyData.email, propertyData.city]); 
 
-  res.end()
-}
-)
+//   res.end()
+// }
+// )
 
 
 app.post("/propertydetails", (req, res) => {
   userpropertyData = req.body
   console.log("dataproperty", userpropertyData)
   client.query(
-    `INSERT INTO "propertydetails" ("city","apartment", "BHK","floor","totalfloor","direction","age","area")  
+    `INSERT INTO "propertydetails" ("city","apartment", "BHK","floor","totalfloor","direction","age","area","image","ownerid")  
                    VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
-                    userpropertyData.direction,userpropertyData.age,userpropertyData.area]); 
+                    userpropertyData.direction,userpropertyData.age,userpropertyData.area,[userpropertyData.image],userpropertyData.ownerId]); 
   res.end()
 }
 )
