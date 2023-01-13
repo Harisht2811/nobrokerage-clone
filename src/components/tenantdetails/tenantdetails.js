@@ -15,29 +15,11 @@ const Tenantdetails = () => {
 
     const getTenant = ()=>{
         console.log(city)
-        getCity()
         getProperty()
        
     }
 
-    const client = axios.create({
-        baseURL: "http://localhost:8080/tenantcity" 
-      });
-      
-      const  getCity = () => {
-        client.post('', {
-            city:city
-           })
-           .then((response) => {
-             console.log("tenant Details",response)
-             let cityData = JSON.parse(response.data.data)
-             console.log("city",cityData)
-             setimageDetails(cityData.userimage[0])
-          
-           }).catch((err)=>{
-            console.log(err);
-           })
-      };
+    
 
       const client1 = axios.create({
         baseURL: "http://localhost:8080/getproperty" 

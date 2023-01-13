@@ -26,12 +26,14 @@ const Details=()=>{
   let city = userData.city
   console.log("afterCity",city)
   
+  const idOwner = parseInt(sessionStorage.getItem("id"))
+  console.log(idOwner)
 
   const client = axios.create({
     baseURL: "http://localhost:8080/propertydetails" 
   });
   
-  const  setdetails = (apartment,BHK,floor,totalFloor,age,direction,area,city) => {
+  const  setdetails = (apartment,BHK,floor,totalFloor,age,direction,area,city,id) => {
     client.post('', {
       apartment:apartment,
       BHK:BHK,
@@ -41,6 +43,7 @@ const Details=()=>{
       direction:direction,
       area:area,
       city:city,
+      ownerid:id
        })
        .then((response) => {
           console.log("details of property",response)
@@ -50,7 +53,7 @@ const Details=()=>{
   };
 
   const postProperty = ()=>{
-    setdetails(apartment,BHK,floor,totalFloor,age,direction,area,city);
+    setdetails(apartment,BHK,floor,totalFloor,age,direction,area,city,idOwner);
     navigate("/owner");
   }
 

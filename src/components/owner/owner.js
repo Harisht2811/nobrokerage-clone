@@ -17,23 +17,25 @@ const Homepage = () => {
   const [imageList, setImageList] = useState([]);
   const [userImage,setUserImage] = useState([]);
   const userData = useSelector(selectuserDetails)
+  const userImageData = []
   console.log("userData",userData)
   let city = userData.city
 
   const client = axios.create({
-    baseURL: "http://localhost:8080/userimages" 
+    baseURL: "http://localhost:8080/propertyimage" 
   });
   
   const  adduserImages = () => {
     client.post('', {
-        email:loginEmail,
-        url:imageList,
+        city:city,
+        url:userImage,
        })
        .then((response) => {
           console.log("after then",response)
        })
     
   };
+  
 
   const loginDetails=useSelector(selectloginUser)
   console.log(loginDetails);
@@ -42,6 +44,9 @@ const Homepage = () => {
   
   const imageListRef = ref(storage, "images/");
     // const usersCollectionRef = collection(db, "user_images");
+    const addProperty = ()=>{
+      navigate("/city")
+    }
     const uploadImages =() => {
       console.log(imageUpload)
         if (imageUpload == null) return;
@@ -65,7 +70,7 @@ const Homepage = () => {
                                 userImageDetails:arrayUnion(data),
 
                        });  
-                    adduserImages()
+                    
 
             })
         })
@@ -87,7 +92,16 @@ const Homepage = () => {
                       setDoc(doc(db, "user_images", loginEmail), {
                      }); 
                   }
-                  setUserImage(data.userImageDetails);
+                  for (let i=0;i<data.userImageDetails.length;i++){
+                    if(city === data.userImageDetails[i].city){
+                  userImageData.push(data.userImageDetails[i])
+                  console.log(userImageData)
+                  console.log("imagedtatata",data.userImageDetails[i])
+                    }
+                  }
+                  setUserImage(userImageData);
+                  adduserImages()
+
   };
 
  
@@ -106,6 +120,8 @@ const Homepage = () => {
           <p id='property'>Upload your property</p>
           <input type="file" onChange={(event)=>setImageUpload(event.target.files[0])}></input>
           <button className='uploadBtn' onClick={uploadImages}>Upload</button>
+          <button className='addBtn' onClick={addProperty}>Add Property</button>
+
           <div className='displayImages'>
           {
             userImage.map(item=>{

@@ -18,8 +18,8 @@ function App() {
     <Route exact path='/signup' element={<Signup/>}></Route>
     <Route exact path='/owner' element={<Owner/>}></Route>
     <Route exact path='/tenant' element={<Tenant/>}></Route>
-    <Route exact path='/propertydetails' element={<Property/>}></Route>
-    <Route exact path='/applydetails' element={<Details/>}></Route>
+    <Route exact path='/city' element={<Property/>}></Route>
+    <Route exact path='/details' element={<Details/>}></Route>
    </Routes>
    </BrowserRouter>
     

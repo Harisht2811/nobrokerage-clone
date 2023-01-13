@@ -38,7 +38,7 @@ const Login=()=>{
       console.log("loginData",data[0].id)
       setDetails(data)
       if(data[0].role ==='Owner'){
-        navigate("/propertydetails")
+        navigate("/city")
       }
       else if(data[0].role === 'Tenant'){
         navigate("/tenant")
