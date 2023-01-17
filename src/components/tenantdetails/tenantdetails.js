@@ -33,8 +33,9 @@ const Tenantdetails = () => {
               console.log("after then",response)
               console.log("tenant Details",response)
               let cityDataprop = JSON.parse(response.data.data)
-              console.log("city",cityDataprop)
+              console.log("city",cityDataprop[0].image)
               setCitydetails(cityDataprop)
+              setimageDetails(cityDataprop[0].image)
            })
         
       };

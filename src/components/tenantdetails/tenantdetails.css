@@ -8,22 +8,28 @@
 .specificDetails{
     padding: 3% 5%;
     display: inline-flex;
+    width: 100%;
+    grid-row-gap: 11%;
+    grid-column-gap: 3%;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    padding: 5% 3%;
 }
 .wholeDetails{
-    height: 330px;
-    width: 365px;
-    padding: 3.5% 2%;
+    height: 300px;
+    padding: 1% 2%;
     box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
     background-color: #fd3752;
     display: flex;
-    margin: 0 0 0 5%;
+    margin: 0 0 0 2%;
 }
 .detailiedProps{
     display: block;
-    padding: 1% 5%;
+    padding: 5% 5%;
     column-gap: 2%;
     text-align: left;
     color: white;
     font-family: poppins;
     font-weight: 500;
+    width: 100%;
 }

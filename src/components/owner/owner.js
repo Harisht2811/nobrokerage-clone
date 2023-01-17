@@ -1,6 +1,7 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {login, selectloginUser,selectuserDetails} from '../createslice'
+import Deleteicon from "../../images/owner/close.svg"
 import "./owner.css"
 import axios from 'axios';
 import Header from '../header/header.js';
@@ -17,6 +18,7 @@ const Homepage = () => {
   const [imageList, setImageList] = useState([]);
   const [userImage,setUserImage] = useState([]);
   const userData = useSelector(selectuserDetails)
+  const dataFetchedRef = useRef(false);
   const userImageData = []
   console.log("userData",userData)
   let city = userData.city
@@ -28,7 +30,7 @@ const Homepage = () => {
   const  adduserImages = () => {
     client.post('', {
         city:city,
-        url:userImage,
+        url:userImageData,
        })
        .then((response) => {
           console.log("after then",response)
@@ -77,6 +79,8 @@ const Homepage = () => {
     };
 
     useEffect(() => {
+      if (dataFetchedRef.current) return;
+      dataFetchedRef.current = true;
       updateDataTable();
       sessionStorage.setItem("email", JSON.stringify(loginEmail));
     }, []);
@@ -94,9 +98,8 @@ const Homepage = () => {
                   }
                   for (let i=0;i<data.userImageDetails.length;i++){
                     if(city === data.userImageDetails[i].city){
-                  userImageData.push(data.userImageDetails[i])
+                  userImageData.push(data.userImageDetails[i].url)
                   console.log(userImageData)
-                  console.log("imagedtatata",data.userImageDetails[i])
                     }
                   }
                   setUserImage(userImageData);
@@ -104,14 +107,10 @@ const Homepage = () => {
 
   };
 
- 
-
 
   return (
     <>
     {
-      console.log("imageurl",imageList,"user_images",userImage)
-
     }
       <Header/>
       <div className='location'>
@@ -127,7 +126,7 @@ const Homepage = () => {
             userImage.map(item=>{
               return(
                 <>
-                <img className='uploadedImages' alt='images' src={item.url}></img>
+                <img className='uploadedImages' alt='images' src={item}></img>
                 </>
               )
             })

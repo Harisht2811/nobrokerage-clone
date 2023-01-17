@@ -131,11 +131,9 @@ app.post("/propertyimage", (req, res) => {
   userpropertyimageData = req.body
   console.log("dataproperty", userpropertyimageData.url)
   let userCity = userpropertyimageData.city
-  console.log("upperer",userCity)
-  const postgres = `UPDATE "propertydetails" SET image=$1 WHERE city=${userpropertyimageData.city}`
-  console.log("pg",postgres)
+  const postgres = `UPDATE "propertydetails" SET image=$1 WHERE city='${userCity}'`
   client.query(
-   postgres, [[userpropertyimageData.url]]); 
+   postgres, [userpropertyimageData.url]); 
   res.end()
 }
 )
