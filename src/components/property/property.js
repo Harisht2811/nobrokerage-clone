@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import Header from "../../components/header/header"
 import cityOptions  from '../../content/property.json'
 import {selectloginUser,userDetails} from '../createslice'
@@ -6,14 +6,42 @@ import {  useSelector } from 'react-redux'
 import {  useDispatch } from 'react-redux'
 import "./property.css"
 import {  useNavigate } from 'react-router-dom'
+import { storage,db } from "../firebase";
+import { addDoc, collection, doc, Firestore, getDocs, getFirestore, setDoc, getDoc, arrayUnion,updateDoc } from 'firebase/firestore';
+
 
 const Property=()=>{
   const [city,setCity]=useState([]);
+  const [propImage,setpropImage]=useState([]);
+
   const dispatch = useDispatch();
+  const dataFetchedRef = useRef(false);
+
   console.log(cityOptions)
   const navigate = useNavigate()
   const loginDetails = useSelector(selectloginUser)
   const email = loginDetails.email
+
+  useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
+    updateDataTable();
+  }, []);
+
+  const updateDataTable = async () => {
+    let docref = doc(db, 'user_images', email);
+    console.log(docref);
+    let sp = await getDoc(docref);
+    console.log(sp)
+                let data = sp.data();
+                console.log("dataRender",data)
+                if(data === undefined){
+                    setDoc(doc(db, "user_images", email), {
+                   }); 
+                }
+                setpropImage(data.userImageDetails);
+
+};
     
     const postCity =()=>{
       dispatch(userDetails({
@@ -40,6 +68,25 @@ const Property=()=>{
   </select>
   </div>
   <button className='postBtn' onClick={postCity}>Post Now</button>
+
+  </div>
+  <p id='titleText'>My properties :</p>
+
+  <div className='myProps'>
+    {
+     propImage.map(item=>{
+      return(
+        <>
+        <div className='properties'>
+          <div>
+          <p id='mypropText'>{item.city}</p>
+          <img className='myImages' src={item.url} alt='Images'></img>
+          </div>
+        </div>
+        </>
+      )
+     })
+    }
   </div>
  </>
 

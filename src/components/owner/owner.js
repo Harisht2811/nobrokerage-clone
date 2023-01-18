@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {login, selectloginUser,selectuserDetails} from '../createslice'
-import Deleteicon from "../../images/owner/close.svg"
+// import Deleteicon from "../../images/owner/"
 import "./owner.css"
 import axios from 'axios';
 import Header from '../header/header.js';
@@ -9,7 +9,7 @@ import {  useSelector } from 'react-redux'
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { storage,db } from "../firebase";
-import { addDoc, collection, doc, Firestore, getDocs, getFirestore, setDoc, getDoc, arrayUnion,updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, Firestore,deleteDoc, getDocs, getFirestore, setDoc, getDoc, arrayUnion,updateDoc } from 'firebase/firestore';
 import { ReadyForQueryMessage } from 'pg-protocol/dist/messages';
 
 const Homepage = () => {
@@ -108,6 +108,11 @@ const Homepage = () => {
   };
 
 
+  const deleteDataTable =(urlData)=>{
+    console.log(urlData)
+    
+  }
+
   return (
     <>
     {
@@ -126,7 +131,7 @@ const Homepage = () => {
             userImage.map(item=>{
               return(
                 <>
-                <img className='uploadedImages' alt='images' src={item}></img>
+                <img onClick={()=>deleteDataTable(item)} className='uploadedImages' alt='images' src={item}></img>
                 </>
               )
             })

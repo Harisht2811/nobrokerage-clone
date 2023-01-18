@@ -31,3 +31,27 @@
     border-style: none;
     margin: 2% 0 0 0;
 }
+#mypropText{
+    font-family: poppins;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0% 0 0 0;
+    color: #009587;
+}
+#titleText{
+    font-family: poppins;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0% 0 0 4%;
+    color:black;
+}
+.myImages{
+    width: 250px;
+    height: 250px;
+    margin: 10% 0 0 0;
+}
+.properties{
+    display: inline-flex;
+    margin: 2% 0 0 1%;
+    padding:1% 3%;
+}

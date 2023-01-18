@@ -56,16 +56,22 @@ const Tenantdetails = () => {
                 </div>
                 <button className='postBtn' onClick={getTenant} >Get Details</button>
             </div>
-            <div className='specificDetails'>
+            <p id='propText'>Property Images :</p>
+            <div className='wholeImages'>
                 {
                     imageDetails.map(item=>{
                         return <img className='tenantImages' src={item} alt='images'></img>
                     })
                 }
+                </div>
+            <div className='specificDetails'>
+               
+               
                 {
                     cityDetails.map(item=>{
                         return(
                             <>
+                            <div style={{"display":"block"}}>
                             <div className='wholeDetails'>
                             <div className='detailiedProps'>
                             <p>Type: {item.apartment}</p>
@@ -76,8 +82,10 @@ const Tenantdetails = () => {
                             <p>Facing: {item.direction}</p>
                             <p>Area: {item.area}</p>
                             </div>
+
                             </div>
-                           
+                            <button className='rentButton'>Get Owner Details</button>
+                            </div>
                             </>
                         )
                     })
