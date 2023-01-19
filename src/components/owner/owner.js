@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {login, selectloginUser,selectuserDetails} from '../createslice'
-// import Deleteicon from "../../images/owner/"
+import Deleteicon from "../../images/owner/close.svg"
 import "./owner.css"
 import axios from 'axios';
 import Header from '../header/header.js';
@@ -9,7 +9,7 @@ import {  useSelector } from 'react-redux'
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { storage,db } from "../firebase";
-import { addDoc, collection, doc, Firestore,deleteDoc, getDocs, getFirestore, setDoc, getDoc, arrayUnion,updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, Firestore,deleteDoc, getDocs, getFirestore, setDoc, getDoc, arrayUnion,updateDoc,deleteField,arrayRemove } from 'firebase/firestore';
 import { ReadyForQueryMessage } from 'pg-protocol/dist/messages';
 
 const Homepage = () => {
@@ -96,6 +96,7 @@ const Homepage = () => {
                       setDoc(doc(db, "user_images", loginEmail), {
                      }); 
                   }
+
                   for (let i=0;i<data.userImageDetails.length;i++){
                     if(city === data.userImageDetails[i].city){
                   userImageData.push(data.userImageDetails[i].url)
@@ -110,8 +111,12 @@ const Homepage = () => {
 
   const deleteDataTable =(urlData)=>{
     console.log(urlData)
-    
+    console.log('fjgdjh')
+    setUserImage(userImage.filter(item=>item !== urlData))
   }
+
+
+
 
   return (
     <>
@@ -131,7 +136,11 @@ const Homepage = () => {
             userImage.map(item=>{
               return(
                 <>
-                <img onClick={()=>deleteDataTable(item)} className='uploadedImages' alt='images' src={item}></img>
+                <div className='view'>
+                <img  className='uploadedImages' alt='images' src={item}></img>
+                <img onClick={()=>deleteDataTable(item)} className='deleteIcon' src={Deleteicon} alt='close-image'></img>
+                </div>
+               
                 </>
               )
             })

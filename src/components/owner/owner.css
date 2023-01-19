@@ -51,7 +51,21 @@
 .uploadedImages{
     height: 300px;
     width: 300px;
-    margin:0 0 5% 2%;
+    margin:0 35px 10% 5%;
+    position: relative;
+}
+.view{
+    position: relative;
+    display: inline-flex;
+}
+.view:hover{
+    opacity: .6;
+}
+.view:hover .deleteIcon {
+    position: absolute;
+    left: 260px;
+    top: 25px;
+    display: block;
 }
 .addBtn{
     background-color: #fd3752;
@@ -66,7 +80,6 @@
     border-style: none;
     margin: 0 0 0 3%;
 }
-.uploadedImages:hover{
-    background-image: url('../../images/owner/close.svg');
-    opacity: 0.5;
+.view .deleteIcon{
+    display: none;
 }
