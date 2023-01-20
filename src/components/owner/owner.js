@@ -99,11 +99,13 @@ const Homepage = () => {
 
                   for (let i=0;i<data.userImageDetails.length;i++){
                     if(city === data.userImageDetails[i].city){
-                  userImageData.push(data.userImageDetails[i].url)
-                  console.log(userImageData)
+                      userImageData.push(data.userImageDetails[i].url)
+                      console.log(userImageData)
                     }
+                    setUserImage(data.userImageDetails);
+                  console.log("beforeDelete",userImage)
+
                   }
-                  setUserImage(userImageData);
                   adduserImages()
 
   };
@@ -112,12 +114,12 @@ const Homepage = () => {
   const deleteDataTable =(urlData)=>{
     console.log(urlData)
     console.log('fjgdjh')
-    setUserImage(userImage.filter(item=>item !== urlData))
+    setUserImage(userImage.filter(item=>item.url !== urlData))
+    updateDoc(doc(db, "user_images", loginEmail),{
+      userImageDetails:userImage,
+     }); 
+     console.log("afterDelete",userImage)
   }
-
-
-
-
   return (
     <>
     {
@@ -137,8 +139,8 @@ const Homepage = () => {
               return(
                 <>
                 <div className='view'>
-                <img  className='uploadedImages' alt='images' src={item}></img>
-                <img onClick={()=>deleteDataTable(item)} className='deleteIcon' src={Deleteicon} alt='close-image'></img>
+                <img  className='uploadedImages' alt='images' src={item.url}></img>
+                <img onClick={()=>deleteDataTable(item.url)} className='deleteIcon' src={Deleteicon} alt='close-image'></img>
                 </div>
                
                 </>

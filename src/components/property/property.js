@@ -17,7 +17,6 @@ const Property=()=>{
   const dispatch = useDispatch();
   const dataFetchedRef = useRef(false);
 
-  console.log(cityOptions)
   const navigate = useNavigate()
   const loginDetails = useSelector(selectloginUser)
   const email = loginDetails.email
