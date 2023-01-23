@@ -9,7 +9,6 @@ const Header=()=>{
     const navigate = useNavigate();
     const [details,setDetails] = useState([]);
     const roleDetails=useSelector(selectloginUser)
-    console.log(roleDetails);
 
   const signupClick = () => {
     navigate("/signup")

@@ -13,7 +13,6 @@ const Login=()=>{
   const [loginEmail,setloginEmail]=useState('');
   const [loginPassword,setloginPassword]=useState('');
   const [details,setDetails]=useState([]);
-  console.log(details)
   const signupDetails=useSelector(selectUser)
   
  
@@ -26,7 +25,6 @@ const Login=()=>{
  
 
   const getdetails=(id)=>{
-    console.log("id",id)
     fetch(`http://localhost:8080/details/${id}`,{headers:{
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -51,7 +49,6 @@ const Login=()=>{
   });
   
   const  getLogin = (email,password) => {
-    console.log('entered add post',password)
     client.post('', {
         email:email,
         password:password,

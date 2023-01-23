@@ -33,7 +33,6 @@ const Property=()=>{
     let sp = await getDoc(docref);
     console.log(sp)
                 let data = sp.data();
-                console.log("dataRender",data)
                 if(data === undefined){
                     setDoc(doc(db, "user_images", email), {
                    }); 

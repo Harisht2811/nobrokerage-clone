@@ -51,7 +51,6 @@ const onClicksignup=(e)=>{
     phonenumber:phonenumber,
     role
    }))
-   console.log("click",password)
   addPosts(name, email,password,phonenumber,role);
   navigate('/')
 
@@ -73,7 +72,6 @@ const client = axios.create({
 });
 
 const addPosts =(name, email,password,phonenumber,role) => {
-  console.log('entered add post',password)
   client.post('', {
       name:name,
       email:email,
