@@ -138,19 +138,20 @@ app.post("/propertyimage", (req, res) => {
 }
 )
 
-// app.delete("/deleteimage",(req,res)=>{
-//   const removeData = req.body
-//   const postgres = `DELETE FROM "propertydetails" WHERE id=${id}`
-//   client.query(
-//     postgres,function(result,err){
-//       if(result.rows.length === 0){
-//         res.status(404).send({'status':'Not Found'})
-//       }
-//       else{
-//         console.log("prop result", result);
-//         let tenantData = JSON.stringify(result.rows)
-//         res.status(200).send({'status':'Found','data':tenantData});
-//       }
-//     }
-//   )
-// })
+app.delete("/deleteimage",(req,res)=>{
+  const removeData = req.body
+  console.log(removeData)
+  const postgres = `DELETE FROM "propertydetails" WHERE id=${id}`
+  client.query(
+    postgres,function(result,err){
+      if(result.rows.length === 0){
+        res.status(404).send({'status':'Not Found'})
+      }
+      else{
+        console.log("prop result", result);
+        let tenantData = JSON.stringify(result.rows)
+        res.status(200).send({'status':'Found','data':tenantData});
+      }
+    }
+  )
+})

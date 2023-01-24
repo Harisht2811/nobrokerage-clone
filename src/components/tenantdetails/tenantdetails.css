@@ -6,7 +6,7 @@
 .tenantImages{
     width: 300px;
     height: 300px;
-    margin: 0 0 3% 3%;
+    margin: 0 0 2% 3%;
 }
 .specificDetails{
     padding: 3% 5%;
@@ -41,7 +41,7 @@
     font-weight: 600;
     border: none;
     border-style: none;
-    margin: 0 0 0 3.5%;
+    margin: 0 0 2% 3.5%;
 }
 
 .wholeDetails{

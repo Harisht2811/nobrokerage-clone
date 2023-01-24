@@ -47,9 +47,10 @@ const Tenantdetails = () => {
         centered
         open={modal2Open}
         onOk={() => setModal2Open(false)}
+        okText = "Confirm"
         onCancel={() => setModal2Open(false)}
       >
-        <p id='bookText'>Booked Sucessfully</p>
+        <p id='bookText'>Are you sure that book the property?</p>
       </Modal>
         <div className='tenantdetails'>
             <div className='property'>

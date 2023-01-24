@@ -16,6 +16,7 @@ const Homepage = () => {
   const navigate = useNavigate();
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
+  const [delurl,setDelurl] = useState([]);
   const [userImage, setUserImage] = useState([]);
   const userData = useSelector(selectuserDetails)
   const dataFetchedRef = useRef(false);
@@ -31,6 +32,20 @@ const Homepage = () => {
     client.post('', {
       city: city,
       url: userImageData,
+    })
+      .then((response) => {
+        console.log("after then", response)
+      })
+
+  };
+
+
+  const client1 = axios.create({
+    baseURL: `http://localhost:8080/deleteimage?url=${delurl}`
+  });
+
+  const delpropImages = () => {
+    client1.delete('', {
     })
       .then((response) => {
         console.log("after then", response)
@@ -107,12 +122,14 @@ const Homepage = () => {
 
 
   const deleteDataTable = (urlData) => {
+    delpropImages();
     console.log(urlData)
+    setDelurl(urlData)
     setUserImage(userImage.filter(item => item.url !== urlData))
+    let ownerProps = userImage.filter(item => item.url !== urlData)
     updateDoc(doc(db, "user_images", loginEmail), {
-      userImageDetails: userImage,
+      userImageDetails: ownerProps,
     });
-    console.log("afterDelete", userImage)
   }
   return (
     <>
