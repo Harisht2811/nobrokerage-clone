@@ -10,6 +10,7 @@ import cityOptions from '../../content/property.json'
 const Tenantdetails = () => {
     const [city, setCity] = useState([]);
     const [imageDetails, setimageDetails] = useState([]);
+    const [tenantId, setTenantid] = useState([]);
     const [cityDetails, setCitydetails] = useState([]);
     const loginDetails = useSelector(selectloginUser)
     const [modal2Open, setModal2Open] = useState(false);
@@ -32,6 +33,7 @@ const Tenantdetails = () => {
             .then((response) => {
                 let cityDataprop = JSON.parse(response.data.data)
                 setCitydetails(cityDataprop)
+                console.log(cityDataprop)
                 setimageDetails(cityDataprop[0].image.map(item => {
                     return JSON.parse(item).url
                 }))
@@ -39,7 +41,26 @@ const Tenantdetails = () => {
 
     };
 
- 
+
+    const open = (tenantd)=>{
+        setModal2Open(true)
+        console.log(tenantd);
+        setTenantid(tenantd)
+        delpropImages();
+        // window.location.reload();
+    }
+    const client2 = axios.create({
+        baseURL: `http://localhost:8080/deleteimage/${tenantId}`
+      });
+    
+      const delpropImages = () => {
+        client2.delete('', {
+        })
+          .then((response) => {
+            console.log("after then", response)
+          })
+    
+      };
     return (
         <>
 
@@ -47,10 +68,10 @@ const Tenantdetails = () => {
         centered
         open={modal2Open}
         onOk={() => setModal2Open(false)}
-        okText = "Confirm"
+        okText = "Call"
         onCancel={() => setModal2Open(false)}
       >
-        <p id='bookText'>Are you sure that book the property?</p>
+        <p id='bookText'>Shall i make a call?</p>
       </Modal>
         <div className='tenantdetails'>
             <div className='property'>
@@ -76,7 +97,7 @@ const Tenantdetails = () => {
                             <>
                             <div className='booking'>
                             <img className='tenantImages' src={item} alt='images'></img>
-                            <button className='bookBtn'  onClick={() => setModal2Open(true)}>Book Now</button>
+                            <button className='bookBtn'  onClick={() => setModal2Open(true)}>Get Owner Details</button>
                             </div>
                             </>
                         ) 
@@ -92,7 +113,7 @@ const Tenantdetails = () => {
                             <>
                                 <div style={{ "display": "block" }}>
                                     <div className='wholeDetails'>
-                                        <div className='detailiedProps'>
+                                        <div className='detailiedProps' >
                                             <p>Type: {item.apartment}</p>
                                             <p>BHK: {item.BHK}</p>
                                             <p>Floor: {item.floor} Floor</p>
@@ -103,7 +124,7 @@ const Tenantdetails = () => {
                                         </div>
 
                                     </div>
-                                    <button className='rentButton'>Get Owner Details</button>
+                                    <button className='rentButton'  onClick={()=>{open(item.id)}}>Book Now</button>
                                 </div>
                             </>
                         )

@@ -11,6 +11,7 @@ import Details from './components/details/details';
 
 
 function App() {
+  
   return (
     <BrowserRouter>
     <Routes>
