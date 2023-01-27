@@ -5,6 +5,7 @@ import axios from 'axios';
 import { selectloginUser, } from '../createslice'
 import { useSelector } from 'react-redux'
 import cityOptions from '../../content/property.json'
+import { json } from 'react-router-dom';
 
 
 const Tenantdetails = () => {
@@ -33,7 +34,7 @@ const Tenantdetails = () => {
             .then((response) => {
                 let cityDataprop = JSON.parse(response.data.data)
                 setCitydetails(cityDataprop)
-                console.log(cityDataprop)
+                console.log(cityDataprop.data)
                 setimageDetails(cityDataprop[0].image.map(item => {
                     return JSON.parse(item).url
                 }))
@@ -42,25 +43,41 @@ const Tenantdetails = () => {
     };
 
 
+    const client2 = axios.create({
+        baseURL:"http://localhost:8080/booking"
+    })
+    const bookProperty = (id) => {
+        const bookingId = parseInt(id)
+        client2.post('', {
+            bookingId:bookingId,
+            status:'Booked'
+        })
+            .then((response) => {
+                let cityDataprop = JSON.parse(response.data.data)
+                console.log(cityDataprop)
+            })
+            // open()
+
+    };
     const open = (tenantd)=>{
         setModal2Open(true)
         console.log(tenantd);
         setTenantid(tenantd)
-        delpropImages();
+        // delpropImages();
         // window.location.reload();
     }
-    const client2 = axios.create({
-        baseURL: `http://localhost:8080/deleteimage/${tenantId}`
-      });
+    // const client3 = axios.create({
+    //     baseURL: `http://localhost:8080/deleteimage/${tenantId}`
+    //   });
     
-      const delpropImages = () => {
-        client2.delete('', {
-        })
-          .then((response) => {
-            console.log("after then", response)
-          })
+    //   const delpropImages = () => {
+    //     client2.delete('', {
+    //     })
+    //       .then((response) => {
+    //         console.log("after then", response)
+    //       })
     
-      };
+    //   };
     return (
         <>
 
@@ -68,10 +85,10 @@ const Tenantdetails = () => {
         centered
         open={modal2Open}
         onOk={() => setModal2Open(false)}
-        okText = "Call"
+        okText = "Confirm"
         onCancel={() => setModal2Open(false)}
       >
-        <p id='bookText'>Shall i make a call?</p>
+        <p id='bookText'>Shall i book this?</p>
       </Modal>
         <div className='tenantdetails'>
             <div className='property'>
@@ -91,7 +108,8 @@ const Tenantdetails = () => {
             </div>
             <p id='propText'>Property Images :</p>
             <div className='wholeImages'>
-                {
+                {  
+                
                     imageDetails.map(item => {
                         return(
                             <>
@@ -124,7 +142,9 @@ const Tenantdetails = () => {
                                         </div>
 
                                     </div>
-                                    <button className='rentButton'  onClick={()=>{open(item.id)}}>Book Now</button>
+                                    {/* <button className='rentButton'  onClick={()=>{open(item.id)}}>Book Now</button> */}
+                                    <button className='rentButton' onClick={()=>{bookProperty(item.id)}} >Book Now</button>
+
                                 </div>
                             </>
                         )

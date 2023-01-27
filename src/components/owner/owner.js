@@ -40,18 +40,6 @@ const Homepage = () => {
   };
 
 
-  const client1 = axios.create({
-    baseURL: `http://localhost:8080/deleteimage?url=${delurl}`
-  });
-
-  const delpropImages = () => {
-    client1.delete('', {
-    })
-      .then((response) => {
-        console.log("after then", response)
-      })
-
-  };
 
 
   const loginDetails = useSelector(selectloginUser)
@@ -114,7 +102,6 @@ const Homepage = () => {
         console.log(userImageData)
       }
       setUserImage(userImageData);
-      console.log("beforeDelete", userImage)
     }
     adduserImages()
 
@@ -122,7 +109,6 @@ const Homepage = () => {
 
 
   const deleteDataTable = (urlData) => {
-    delpropImages();
     console.log(urlData)
     setDelurl(urlData)
     setUserImage(userImage.filter(item => item.url !== urlData))
@@ -133,8 +119,7 @@ const Homepage = () => {
   }
   return (
     <>
-      {
-      }
+      
       <Header />
       <div className='location'>
         <p id="locationText">No Brokerage Property Site</p>

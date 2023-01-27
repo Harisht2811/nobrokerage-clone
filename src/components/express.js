@@ -154,3 +154,22 @@ app.delete("/deleteimage/:id",(req,res)=>{
     }
   )
 })
+
+
+app.post("/booking", (req, res) => {
+   bookingStatus = req.body
+  console.log("dataproperty", bookingStatus)
+  const postgres = `UPDATE "propertydetails" SET status=$1 WHERE id='${bookingStatus.bookingId}'`
+  client.query(
+    postgres,[bookingStatus.status],function(err,result){
+      if(!err){
+        console.log(result)
+      }
+      else{
+        console.log(err)
+      }
+    }
+  );
+  res.end()
+}
+)
