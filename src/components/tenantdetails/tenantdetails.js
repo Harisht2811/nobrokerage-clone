@@ -34,32 +34,30 @@ const Tenantdetails = () => {
             .then((response) => {
                 let cityDataprop = JSON.parse(response.data.data)
                 setCitydetails(cityDataprop)
-                console.log(cityDataprop.data)
+                console.log(cityDataprop.rent)
                 setimageDetails(cityDataprop[0].image.map(item => {
                     return JSON.parse(item).url
                 }))
             })
 
     };
-
-
     const client2 = axios.create({
-        baseURL:"http://localhost:8080/booking"
+        baseURL: "http://localhost:8080/booking"
     })
     const bookProperty = (id) => {
         const bookingId = parseInt(id)
         client2.post('', {
-            bookingId:bookingId,
-            status:'Booked'
+            bookingId: bookingId,
+            status: 'Booked'
         })
             .then((response) => {
                 let cityDataprop = JSON.parse(response.data.data)
                 console.log(cityDataprop)
             })
-            // open()
+        // open()
 
     };
-    const open = (tenantd)=>{
+    const open = (tenantd) => {
         setModal2Open(true)
         console.log(tenantd);
         setTenantid(tenantd)
@@ -69,89 +67,94 @@ const Tenantdetails = () => {
     // const client3 = axios.create({
     //     baseURL: `http://localhost:8080/deleteimage/${tenantId}`
     //   });
-    
+
     //   const delpropImages = () => {
     //     client2.delete('', {
     //     })
     //       .then((response) => {
     //         console.log("after then", response)
     //       })
-    
+
     //   };
     return (
         <>
 
-      <Modal
-        centered
-        open={modal2Open}
-        onOk={() => setModal2Open(false)}
-        okText = "Confirm"
-        onCancel={() => setModal2Open(false)}
-      >
+            <Modal
+                centered
+                open={modal2Open}
+                onOk={() => setModal2Open(false)}
+                okText="Confirm"
+                onCancel={() => setModal2Open(false)}
+            >
+                {/* <p id='bookText'>Shall</p>
         <p id='bookText'>Shall i book this?</p>
-      </Modal>
-        <div className='tenantdetails'>
-            <div className='property'>
-                <div className='propertyForm'>
-                    <p id="choose">Choose your city</p>
-                    <select id='city' onChange={(e) => setCity(e.target.value)}>
-                        {
-                            cityOptions.map(item => {
-                                return (
-                                    <option value={item.value}>{item.label}</option>
-                                )
-                            })
-                        }
-                    </select>
+        <p id='bookText'>Shall i book this?</p>
+        <p id='bookText'>Shall i book this?</p> */}
+            </Modal>
+            <div className='tenantdetails'>
+                <div className='property'>
+                    <div className='propertyForm'>
+                        <p id="choose">Choose your city</p>
+                        <select id='city' onChange={(e) => setCity(e.target.value)}>
+                            {
+                                cityOptions.map(item => {
+                                    return (
+                                        <option value={item.value}>{item.label}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </div>
+                    <button className='postBtn' onClick={getTenant} >Get Details</button>
                 </div>
-                <button className='postBtn' onClick={getTenant} >Get Details</button>
-            </div>
-            <p id='propText'>Property Images :</p>
-            <div className='wholeImages'>
-                {  
-                
-                    imageDetails.map(item => {
-                        return(
-                            <>
-                            <div className='booking'>
-                            <img className='tenantImages' src={item} alt='images'></img>
-                            <button className='bookBtn'  onClick={() => setModal2Open(true)}>Get Owner Details</button>
-                            </div>
-                            </>
-                        ) 
-                    })
-                }
-            </div>
-            <div className='specificDetails'>
+                <p id='propText'>Property Images :</p>
+                <div className='wholeImages'>
+                    {
+
+                        imageDetails.map(item => {
+                            return (
+                                <>
+                                    <div className='booking'>
+                                        <img className='tenantImages' src={item} alt='images'></img>
+                                        <button className='bookBtn' onClick={() => setModal2Open(true)}>Get Owner Details</button>
+                                    </div>
+                                </>
+                            )
+                        })
+                    }
+                </div>
+                <div className='specificDetails'>
 
 
-                {
-                    cityDetails.map(item => {
-                        return (
-                            <>
-                                <div style={{ "display": "block" }}>
-                                    <div className='wholeDetails'>
-                                        <div className='detailiedProps' >
-                                            <p>Type: {item.apartment}</p>
-                                            <p>BHK: {item.BHK}</p>
-                                            <p>Floor: {item.floor} Floor</p>
-                                            <p>Total Floor: {item.totalfloor} Floor</p>
-                                            <p>Age of Property: {item.age}</p>
-                                            <p>Facing: {item.direction}</p>
-                                            <p>Area: {item.area}</p>
+                    {
+                        cityDetails.map(item => {
+                            return (
+                                <>
+                                    <div style={{ "display": "block" }}>
+                                        <div className='wholeDetails'>
+                                            <div className='detailiedProps' >
+                                                <p>Type: {item.apartment}</p>
+                                                <p>BHK: {item.BHK}</p>
+                                                <p>Floor: {item.floor} Floor</p>
+                                                <p>Total Floor: {item.totalfloor} Floor</p>
+                                                <p>Age of Property: {item.age}</p>
+                                                <p>Facing: {item.direction}</p>
+                                                <p>Area: {item.area}</p>
+                                                <p>Rent Amount: &#x20a8;. {item.rent}/-</p>
+
+                                            </div>
+
                                         </div>
+                                        {/* <button className='rentButton'  onClick={()=>{open(item.id)}}>Book Now</button> */}
+                                        <button className='rentButton' onClick={() => { bookProperty(item.id) }} >Book Now</button>
 
                                     </div>
-                                    {/* <button className='rentButton'  onClick={()=>{open(item.id)}}>Book Now</button> */}
-                                    <button className='rentButton' onClick={()=>{bookProperty(item.id)}} >Book Now</button>
-
-                                </div>
-                            </>
-                        )
-                    })
-                }
+                                </>
+                            )
+                        })
+                    }
+                </div>
             </div>
-        </div>
         </>
     )
 }

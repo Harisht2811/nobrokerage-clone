@@ -16,6 +16,8 @@ const Details=()=>{
   const [age,setAge] = useState([]);
   const [direction,setDirection] = useState([]);
   const [area,setArea] = useState([]);
+  const [rent,setRent] = useState([]);
+
 
   const loginDetails=useSelector(selectloginUser)
   console.log("detailspage",loginDetails)
@@ -43,7 +45,8 @@ const Details=()=>{
       direction:direction,
       area:area,
       city:city,
-      ownerid:id
+      ownerid:id,
+      rent:rent
        })
        .then((response) => {
           console.log("details of property",response)
@@ -123,10 +126,16 @@ const Details=()=>{
       </div>
 
       <div className='area'>
-      <label for="apartment">Built up area* 
+      <label for="area">Built up area* 
        <input id='area' onChange={(e)=>{setArea(e.target.value)}} ></input>
       </label>
+      <div className='rent'>
+      <label for="rent">Rent* 
+       <input id='rent' type='number' onChange={(e)=>{setRent(e.target.value)}} ></input>
+      </label>
       </div>
+      </div>
+     
       <button className='updateBtn' onClick={postProperty}>Update Property Details</button>
     </div>
     </>

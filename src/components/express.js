@@ -46,6 +46,7 @@ else{
 
 
 
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
@@ -114,14 +115,31 @@ app.post("/getproperty",(req,res)=>{
 )
 
 
+app.get("/getbookedprops",(req,res)=>{
+  let postgres = `SELECT * FROM "propertydetails"` 
+  client.query(
+    postgres,function(err,result){
+      if(result.rows.length === 0){
+        res.status(404).send({'status':'Not Found'})
+      }
+      else{
+        console.log("prop result", result);
+        let bookedData = JSON.stringify(result.rows)
+        res.status(200).send({'status':'Found','data':bookedData});
+      }
+    }
+  )
+}
+)
+
 
 app.post("/propertydetails", (req, res) => {
   userpropertyData = req.body
   console.log("dataproperty", userpropertyData)
   client.query(
-    `INSERT INTO "propertydetails" ("city","apartment", "BHK","floor","totalfloor","direction","age","area","ownerid")  
-                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
-                    userpropertyData.direction,userpropertyData.age,userpropertyData.area,userpropertyData.ownerid]); 
+    `INSERT INTO "propertydetails" ("city","apartment", "BHK","floor","totalfloor","direction","age","area","ownerid","rent")  
+                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
+                    userpropertyData.direction,userpropertyData.age,userpropertyData.area,userpropertyData.ownerid,userpropertyData.rent]); 
   res.end()
 }
 )

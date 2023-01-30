@@ -49,6 +49,22 @@
     width: 250px;
     height: 250px;
     margin: 10% 0 0 0;
+    position: relative;
+}
+.fullData{
+    position: relative;
+}
+.fullData .deleteIcon{
+    display: none;
+}
+.fullData:hover{
+    opacity: .6;
+}
+.fullData:hover .deleteIcon {
+    position: absolute;
+    left: 200px;
+    top: 70px;
+    display: block;
 }
 .properties{
     display: inline-flex;
