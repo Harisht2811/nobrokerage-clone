@@ -31,22 +31,9 @@ const Property=()=>{
     }).then(data=>{
       console.log(JSON.parse(data.data))
     })
-    updateDataTable();
   }, []);
 
-  const updateDataTable = async () => {
-    let docref = doc(db, 'user_images', email);
-    console.log(docref);
-    let sp = await getDoc(docref);
-    console.log(sp)
-                let data = sp.data();
-                if(data === undefined){
-                    setDoc(doc(db, "user_images", email), {
-                   }); 
-                }
-                setpropImage(data.userImageDetails);
-
-};
+ 
     
     const postCity =()=>{
       dispatch(userDetails({
@@ -75,25 +62,8 @@ const Property=()=>{
   <button className='postBtn' onClick={postCity}>Post Now</button>
 
   </div>
-  <p id='titleText'>My properties :</p>
 
-  <div className='myProps'>
-    {
-     propImage.map(item=>{
-      return(
-        <>
-        <div className='properties'>
-          <div className='fullData'>
-          <p id='mypropText'>{item.city}</p>
-          <img className='myImages' src={item.url} alt='Images'></img>
-          <img  className='deleteIcon' src={Deleteicon} alt='close-image'></img>
-          </div>
-        </div>
-        </>
-      )
-     })
-    }
-  </div>
+  
  </>
 
   )

@@ -64,3 +64,73 @@
     border-style: none;
     margin: 2% 0 0 0;
 }
+.uploadProperty input{
+    width: 15%;
+}
+.uploadProperty{
+    padding: 3% 0%;
+}
+.uploadHere{
+    margin: 1% 0 0 0;
+}
+#property{
+    font-family: poppins;
+    font-weight: 600;
+    font-size: 35px;
+    margin: 0% 0 0 0;
+    color: grey;
+    text-align: center;
+}
+.uploadBtn{
+    background-color: #fd3752;
+    width: 150px;
+    height: 50px;
+    color: white;
+    font-size: 16px;
+    font-family: poppins;
+    font-weight: 600;
+    border: none;
+    outline:none;
+    border-style: none;
+}
+.displayImages{
+    margin: 5% 0 0 0;
+    overflow-y: scroll;
+    border:2px solid black;
+    padding: 2% 2%;
+}
+.uploadedImages{
+    height: 300px;
+    width: 300px;
+    margin:0 35px 10% 5%;
+    position: relative;
+}
+.view{
+    position: relative;
+    display: inline-flex;
+}
+.view:hover{
+    opacity: .6;
+}
+.view:hover .deleteIcon {
+    position: absolute;
+    left: 260px;
+    top: 25px;
+    display: block;
+}
+.addBtn{
+    background-color: #fd3752;
+    width: 150px;
+    height: 50px;
+    color: white;
+    font-size: 16px;
+    font-family: poppins;
+    font-weight: 600;
+    border: none;
+    outline:none;
+    border-style: none;
+    margin: 0 0 0 3%;
+}
+.view .deleteIcon{
+    display: none;
+}

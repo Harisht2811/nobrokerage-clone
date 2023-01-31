@@ -5,12 +5,12 @@ import axios from 'axios';
 import { selectloginUser, } from '../createslice'
 import { useSelector } from 'react-redux'
 import cityOptions from '../../content/property.json'
-import { json } from 'react-router-dom';
 
 
 const Tenantdetails = () => {
     const [city, setCity] = useState([]);
     const [imageDetails, setimageDetails] = useState([]);
+    const [ownerDetails, setOwnerDetails] = useState([]);
     const [tenantId, setTenantid] = useState([]);
     const [cityDetails, setCitydetails] = useState([]);
     const loginDetails = useSelector(selectloginUser)
@@ -34,10 +34,16 @@ const Tenantdetails = () => {
             .then((response) => {
                 let cityDataprop = JSON.parse(response.data.data)
                 setCitydetails(cityDataprop)
-                console.log(cityDataprop.rent)
+                console.log(cityDataprop)
                 setimageDetails(cityDataprop[0].image.map(item => {
-                    return JSON.parse(item).url
+                    return JSON.parse(item)
                 }))
+                setOwnerDetails(cityDataprop[0].ownerdetails.map(item => {
+                    console.log(JSON.parse(item))
+                    return (JSON.parse(item))
+                   
+                }))
+                
             })
 
     };
@@ -76,6 +82,7 @@ const Tenantdetails = () => {
     //       })
 
     //   };
+    console.log(ownerDetails)
     return (
         <>
 
@@ -83,13 +90,20 @@ const Tenantdetails = () => {
                 centered
                 open={modal2Open}
                 onOk={() => setModal2Open(false)}
-                okText="Confirm"
                 onCancel={() => setModal2Open(false)}
             >
-                {/* <p id='bookText'>Shall</p>
-        <p id='bookText'>Shall i book this?</p>
-        <p id='bookText'>Shall i book this?</p>
-        <p id='bookText'>Shall i book this?</p> */}
+             {
+                ownerDetails.map(item=>{
+                    return(
+                        <>
+                        <p>Name :  {item.name}</p>
+                        <p>Phone Number : {item.phone}</p>
+                        <p>Email : {item.email}</p>
+
+                        </>
+                    )
+                })
+             }
             </Modal>
             <div className='tenantdetails'>
                 <div className='property'>
