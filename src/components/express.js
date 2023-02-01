@@ -115,10 +115,48 @@ app.post("/getproperty",(req,res)=>{
 )
 
 
+app.post("/ownerproperty",(req,res)=>{
+  ownerProps = req.body
+  let ownerid = ownerProps.ownerid
+  let postgres = `SELECT * FROM "propertydetails" WHERE ownerid=${ownerid}` 
+  client.query(
+    postgres,function(err,result){
+      if(result.rows.length === 0){
+        res.status(404).send({'status':'Not Found'})
+      }
+      else{
+        console.log("prop result", result);
+        let ownerPropData = JSON.stringify(result.rows)
+        res.status(200).send({'status':'Found','data':ownerPropData});
+      }
+    }
+  )
+}
+)
+
 app.post("/ownerdetails",(req,res)=>{
   ownerdata = req.body
   console.log(ownerdata)
   let postgres = `SELECT * FROM "users" WHERE id=${ownerdata.ownerid}` 
+  client.query(
+    postgres,function(err,result){
+      if(result.rows.length === 0){
+        res.status(404).send({'status':'Not Found'})
+      }
+      else{
+        console.log("prop result", result);
+        let ownerData = JSON.stringify(result.rows)
+        res.status(200).send({'status':'Found','data':ownerData});
+      }
+    }
+  )
+}
+)
+
+app.post("/ownerpropertydetails",(req,res)=>{
+  propdata = req.body
+  console.log(propdata)
+  let postgres = `SELECT * FROM "propertydetails" WHERE id=${propdata.propid}` 
   client.query(
     postgres,function(err,result){
       if(result.rows.length === 0){
@@ -156,26 +194,14 @@ app.post("/propertydetails", (req, res) => {
   userpropertyData = req.body
   console.log("dataproperty", userpropertyData)
   client.query(
-    `INSERT INTO "propertydetails" ("city","apartment", "BHK","floor","totalfloor","direction","age","area","rent","ownerdetails","ownerid")  
-                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
-                    userpropertyData.direction,userpropertyData.age,userpropertyData.area,userpropertyData.rent,userpropertyData.ownerdetails,userpropertyData.ownerId]); 
+    `INSERT INTO "propertydetails" ("city","apartment", "BHK","floor","totalfloor","direction","age","area","image","rent","ownerdetails","ownerid")  
+                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
+                    userpropertyData.direction,userpropertyData.age,userpropertyData.area,userpropertyData.imageurl,userpropertyData.rent,userpropertyData.ownerdetails,userpropertyData.ownerId]); 
   res.end()
 }
 )
 client.connect();
 
-app.post("/propertyimage", (req, res) => {
-  userpropertyimageData = req.body
-  console.log("dataproperty", userpropertyimageData.url)
-  let userCity = userpropertyimageData.city
-  let idOwner = userpropertyimageData.ownerid
-console.log(idOwner)
-  const postgres = `UPDATE "propertydetails" SET image=$1 WHERE city='${userCity}' AND ownerid='${idOwner}'`
-  client.query(
-   postgres, [userpropertyimageData.url]); 
-  res.end()
-}
-)
 
 app.delete("/deleteimage/:id",(req,res)=>{
   const removeId = req.params.id

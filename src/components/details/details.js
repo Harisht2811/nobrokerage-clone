@@ -23,7 +23,6 @@ const Details = () => {
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
 
-console.log(imageList)
 
   const loginDetails = useSelector(selectloginUser)
   console.log("detailspage", loginDetails)
@@ -52,9 +51,11 @@ console.log(imageList)
       direction: direction,
       area: area,
       city: city,
+      imageurl: imageList,
       ownerdetails: details,
       rent: rent,
-      ownerId: idOwner
+      ownerId: idOwner,
+
     })
       .then((response) => {
         console.log("details of property", response)
@@ -62,18 +63,13 @@ console.log(imageList)
         console.log(err);
       })
   };
-  const uploadImages =() => {
+  const uploadImages = () => {
 
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`)
-    let groupUrls ;
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-      
+
         setImageList((prev) => [...prev, url]);
-        // setImageList(...imageList,url);
-        groupUrls = [...imageList,url];
-        console.log(groupUrls)
-     adduserImages(groupUrls);
 
       })
     })
@@ -95,23 +91,9 @@ console.log(imageList)
   }, [])
   const postProperty = () => {
     setdetails(apartment, BHK, floor, totalFloor, age, direction, area, city);
-    alert('Updated Successfully please upload the property images')
+    alert('Updated Successfully')
   }
-  const client1 = axios.create({
-    baseURL: "http://localhost:8080/propertyimage"
-  });
 
-  const adduserImages = (imageUrl) => {
-    client1.post('', {
-      city: city,
-      url: imageUrl,
-      ownerid: idOwner,
-    })
-      .then((response) => {
-        console.log("after then", response)
-      })
-
-  };
 
 
   const addProperty = () => {
@@ -194,14 +176,14 @@ console.log(imageList)
             </label>
           </div>
         </div>
-
-        <button className='updateBtn' onClick={postProperty}>Update Property Details</button>
         <div className='uploadProperty'>
           <input type="file" onChange={(event) => setImageUpload(event.target.files[0])}></input>
           <button className='uploadBtn' onClick={uploadImages}>Upload</button>
           <button className='addBtn' onClick={addProperty}>Add Property</button>
 
         </div>
+        <button className='updateBtn' onClick={postProperty}>Update Property Details</button>
+
       </div>
     </>
   )

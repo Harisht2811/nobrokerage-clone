@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'antd';
+import { Carousel } from 'antd';
 import "./tenantdetails.css"
 import axios from 'axios';
 import { selectloginUser, } from '../createslice'
@@ -9,8 +10,8 @@ import cityOptions from '../../content/property.json'
 
 const Tenantdetails = () => {
     const [city, setCity] = useState([]);
-    const [imageDetails, setimageDetails] = useState([]);
-    const [ownerDetails, setOwnerDetails] = useState([]);
+    // const [imageDetails, setimageDetails] = useState([]);
+    // const [ownerDetails, setOwnerDetails] = useState([]);
     const [tenantId, setTenantid] = useState([]);
     const [cityDetails, setCitydetails] = useState([]);
     const loginDetails = useSelector(selectloginUser)
@@ -20,7 +21,13 @@ const Tenantdetails = () => {
         console.log(city)
         getProperty()
     }
-
+    const contentStyle = {
+        height: '160px',
+        color: '#fff',
+        lineHeight: '160px',
+        textAlign: 'center',
+        background: '#364d79',
+      };
 
 
     const client1 = axios.create({
@@ -35,15 +42,6 @@ const Tenantdetails = () => {
                 let cityDataprop = JSON.parse(response.data.data)
                 setCitydetails(cityDataprop)
                 console.log(cityDataprop)
-                setimageDetails(cityDataprop[0].image.map(item => {
-                    return JSON.parse(item)
-                }))
-                setOwnerDetails(cityDataprop[0].ownerdetails.map(item => {
-                    console.log(JSON.parse(item))
-                    return (JSON.parse(item))
-                   
-                }))
-                
             })
 
     };
@@ -82,7 +80,6 @@ const Tenantdetails = () => {
     //       })
 
     //   };
-    console.log(ownerDetails)
     return (
         <>
 
@@ -92,18 +89,7 @@ const Tenantdetails = () => {
                 onOk={() => setModal2Open(false)}
                 onCancel={() => setModal2Open(false)}
             >
-             {
-                ownerDetails.map(item=>{
-                    return(
-                        <>
-                        <p>Name :  {item.name}</p>
-                        <p>Phone Number : {item.phone}</p>
-                        <p>Email : {item.email}</p>
-
-                        </>
-                    )
-                })
-             }
+                
             </Modal>
             <div className='tenantdetails'>
                 <div className='property'>
@@ -123,11 +109,13 @@ const Tenantdetails = () => {
                 </div>
                 <p id='propText'>Property Images :</p>
                 <div className='wholeImages'>
+                    
                     {
-
-                        imageDetails.map(item => {
+                            cityDetails.map(item => {
+                                        return item.image.map(item=>{
                             return (
                                 <>
+
                                     <div className='booking'>
                                         <img className='tenantImages' src={item} alt='images'></img>
                                         <button className='bookBtn' onClick={() => setModal2Open(true)}>Get Owner Details</button>
@@ -135,8 +123,11 @@ const Tenantdetails = () => {
                                 </>
                             )
                         })
-                    }
+                    })
+                }
                 </div>
+                
+               
                 <div className='specificDetails'>
 
 

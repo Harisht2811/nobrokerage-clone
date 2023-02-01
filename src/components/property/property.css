@@ -71,3 +71,43 @@
     margin: 2% 0 0 1%;
     padding:1% 3%;
 }
+#cityText{
+    font-family: poppins;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 3% 4%;
+    color: black;
+}
+.myProps{
+    position: relative;
+    display: inline-flex;
+    padding: 0 5%;
+}
+.ownerImages{
+    width: 300px;
+    height: 300px;
+    margin: 0 0 2% 5%;
+}
+.myProps:hover{
+    opacity: 0.5;
+}
+.myProps:hover .propsBtn{
+    display: block;
+    background-color: #fd3752;
+    width: 150px;
+    height: 50px;
+    color: white;
+    font-size: 16px;
+    font-family: poppins;
+    font-weight: 600;
+    border: none;
+    outline:none;
+    border-style: none;
+    margin: 2% 0 0 0;
+    position:absolute;
+    top: 115px;
+    left: 160px;
+}
+.propsBtn{
+    display: none;
+}
