@@ -75,13 +75,13 @@
     font-family: poppins;
     font-weight: 600;
     font-size: 16px;
-    margin: 0 0 3% 4%;
+    margin: 0 0 1% 4%;
     color: black;
 }
 .myProps{
     position: relative;
     display: inline-flex;
-    padding: 0 5%;
+    padding: 0 2%;
 }
 .ownerImages{
     width: 300px;
@@ -106,7 +106,20 @@
     margin: 2% 0 0 0;
     position:absolute;
     top: 115px;
-    left: 160px;
+    left: 130px;
+}
+.deleteBtn{
+    background-color: #fd3752;
+    width: 150px;
+    height: 50px;
+    color: white;
+    font-size: 16px;
+    font-family: poppins;
+    font-weight: 600;
+    border: none;
+    outline:none;
+    border-style: none;
+    margin: 2% 0 0 0;
 }
 .propsBtn{
     display: none;

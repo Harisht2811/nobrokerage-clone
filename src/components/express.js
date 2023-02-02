@@ -202,6 +202,28 @@ app.post("/propertydetails", (req, res) => {
 )
 client.connect();
 
+app.post("/editpropertydetails", (req, res) => {
+  editedData = req.body
+  let id=editedData.id
+  let apartment = editedData.apartment
+  let BHK = editedData.BHK
+  let floor = editedData.floor
+  let totalfloor = editedData.totalFloor
+  let age = editedData.age
+  let direction = editedData.direction
+  let area = editedData.area
+  let rent = editedData.rent
+  console.log("dataproperty",editedData)
+  client.query(
+    `UPDATE "propertydetails" SET apartment=${apartment},BHK=${BHK},floor=${floor},totalfloor=${totalfloor}
+    ,age=${age},direction=${direction},area=${area},rent=${rent}
+                   WHERE id=${id}`); 
+  res.end()
+}
+)
+
+
+
 
 app.delete("/deleteimage/:id",(req,res)=>{
   const removeId = req.params.id

@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom'
 const Header=()=>{
     const navigate = useNavigate();
     const [details,setDetails] = useState([]);
-    const roleDetails=useSelector(selectloginUser)
 
   const signupClick = () => {
     navigate("/signup")

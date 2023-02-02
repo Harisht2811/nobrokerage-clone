@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { login, selectloginUser, selectuserDetails } from '../createslice'
 import { useSelector } from 'react-redux'
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
@@ -22,11 +22,13 @@ const Details = () => {
   const [details, setDetails] = useState([]);
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
+  const location = useLocation();
+  const data = location.state
+  console.log(data)
 
 
-  const loginDetails = useSelector(selectloginUser)
-  console.log("detailspage", loginDetails)
-  const email = loginDetails.email
+  // const loginDetails = useSelector(selectloginUser)
+  // console.log("detailspage", loginDetails)
 
   const userData = useSelector(selectuserDetails)
   console.log("userData", userData)
@@ -63,6 +65,34 @@ const Details = () => {
         console.log(err);
       })
   };
+
+  const client1 = axios.create({
+    baseURL: "http://localhost:8080/editpropertydetails"
+  });
+
+  const editeddetails = () => {
+    client1.post('', {
+      id: parseInt(data.id),
+      apartment: data.apartment,
+      BHK: data.BHK,
+      floor: data.floor,
+      totalfloor: data.totalFloor,
+      age: data.age,
+      direction: data.direction,
+      area: data.area,
+      city: data.city,
+      ownerdetails: details,
+      rent: parseInt(data.rent),
+      ownerId: idOwner,
+
+    })
+      .then((response) => {
+        console.log("details of property", response)
+      }).catch((err) => {
+        console.log(err);
+      })
+  };
+
   const uploadImages = () => {
 
     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`)
@@ -75,6 +105,7 @@ const Details = () => {
     })
     alert('Posted Successfully ')
   };
+
   useEffect(() => {
     fetch(`http://localhost:8080/details/${idOwner}`, {
       headers: {
@@ -89,9 +120,16 @@ const Details = () => {
       setDetails(data)
     })
   }, [])
+
   const postProperty = () => {
-    setdetails(apartment, BHK, floor, totalFloor, age, direction, area, city);
+    if(data.id === null){
+      setdetails(apartment, BHK, floor, totalFloor, age, direction, area, city);
+    }
+    else{
+    editeddetails();
+    }
     alert('Updated Successfully')
+    navigate("/city")
   }
 
 
@@ -108,7 +146,7 @@ const Details = () => {
         <p id='detailsTitle'>Property Details</p>
         <div className='apartment'>
           <label for="apartment">Apartment Type*
-            <select name="apartment" id="apartment" onChange={(e) => { setApartment(e.target.value) }}>
+            <select name="apartment" id="apartment" defaultValue={data?.apartment} onChange={(e) => { setApartment(e.target.value) }}>
               <option value="">------</option>
               <option value="Apartment">Apartment</option>
               <option value="Independant Villa">Independant Villa</option>
@@ -119,7 +157,7 @@ const Details = () => {
 
         <div className='floor'>
           <label for="vhk">BHK Type*
-            <select name="bhk" id="bhk" onChange={(e) => { setBHK(e.target.value) }} class="required">
+            <select name="bhk" id="bhk" defaultValue={data?.BHK} onChange={(e) => { setBHK(e.target.value) }} class="required">
               <option value="">------</option>
               <option value="1 BHK">1 BHK</option>
               <option value="2 BHK">2 BHK</option>
@@ -129,7 +167,7 @@ const Details = () => {
             </select>
           </label>
           <label for="floor">Floor*
-            <select name="floor" id="floor" onChange={(e) => { setFloor(e.target.value) }}>
+            <select name="floor" id="floor" defaultValue={data?.floor} onChange={(e) => { setFloor(e.target.value) }}>
               <option value="">------</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -137,7 +175,7 @@ const Details = () => {
             </select>
           </label>
           <label for="total">Total Floor*
-            <select name="total" id="total" onChange={(e) => { setTotalfloor(e.target.value) }}>
+            <select name="total" id="total" defaultValue={data?.totalfloor} onChange={(e) => { setTotalfloor(e.target.value) }}>
               <option value="">------</option>
               <option value="1">1</option>
               <option value="2">2 </option>
@@ -148,7 +186,7 @@ const Details = () => {
 
         <div className='age'>
           <label for="years">Property Age*
-            <select name="years" id="years" onChange={(e) => { setAge(e.target.value) }}>
+            <select name="years" id="years" defaultValue={data?.age} onChange={(e) => { setAge(e.target.value) }}>
               <option value="">------</option>
               <option value="1 years">1 years</option>
               <option value="2 years">2 years</option>
@@ -156,7 +194,7 @@ const Details = () => {
             </select>
           </label>
           <label for="direction">Facing
-            <select name="direction" id="direction" onChange={(e) => { setDirection(e.target.value) }}>
+            <select name="direction" id="direction" defaultValue={data?.direction} onChange={(e) => { setDirection(e.target.value) }}>
               <option value="">------</option>
               <option value="South">South</option>
               <option value="North">North </option>
@@ -168,11 +206,11 @@ const Details = () => {
 
         <div className='area'>
           <label for="area">Built up area*
-            <input id='area' onChange={(e) => { setArea(e.target.value) }} ></input>
+            <input id='area' defaultValue={data?.area} onChange={(e) => { setArea(e.target.value) }} ></input>
           </label>
           <div className='rent'>
             <label for="rent">Rent*
-              <input id='rent' type='number' onChange={(e) => { setRent(e.target.value) }} ></input>
+              <input id='rent' defaultValue={data?.rent} type='number' onChange={(e) => { setRent(e.target.value) }} ></input>
             </label>
           </div>
         </div>

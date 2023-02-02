@@ -65,21 +65,9 @@ const Tenantdetails = () => {
         setModal2Open(true)
         console.log(tenantd);
         setTenantid(tenantd)
-        // delpropImages();
-        // window.location.reload();
+       
     }
-    // const client3 = axios.create({
-    //     baseURL: `http://localhost:8080/deleteimage/${tenantId}`
-    //   });
-
-    //   const delpropImages = () => {
-    //     client2.delete('', {
-    //     })
-    //       .then((response) => {
-    //         console.log("after then", response)
-    //       })
-
-    //   };
+ 
     return (
         <>
 

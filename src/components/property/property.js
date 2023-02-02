@@ -25,7 +25,6 @@ const Property=()=>{
 
   const navigate = useNavigate()
   const loginDetails = useSelector(selectloginUser)
-  const email = loginDetails.email
 
   useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -58,8 +57,24 @@ const propertyDetails=(id)=>{
   let propertyId = parseInt(id)
   getOwnerProps(propertyId)
   setModal2Open(true)
-
-
+}
+const editDetails = ()=>{
+  setModal2Open(false)
+  ownerPropsDetails.map(item=>{
+    const data ={
+      id:item.id,
+      apartment:item.apartment,
+      BHK:item.BHK,
+      floor:item.floor,
+      totalfloor:item.totalfloor,
+      age:item.age,
+      direction:item.direction,
+      area:item.area,
+      city:item.city,
+      rent:item.rent,
+    }
+    navigate("/details",{state:data})
+  })
 }
 const client2 = axios.create({
   baseURL: "http://localhost:8080/ownerpropertydetails"
@@ -82,7 +97,20 @@ const getOwnerProps = (id) => {
       }))
       navigate("/details")
     }
+   
 
+      const deleteProp = (id) => {
+        console.log(id)
+        const client3 = axios.create({
+        baseURL: `http://localhost:8080/deleteimage/${id}`
+      });
+        client3.delete('', {
+        })
+          .then((response) => {
+            console.log("after then", response)
+          })
+          window.location.reload();
+      };
   return (
     <>
   
@@ -90,7 +118,7 @@ const getOwnerProps = (id) => {
            <Modal
                 centered
                 open={modal2Open}
-                onOk={() => setModal2Open(false)}
+                onOk={editDetails}
                 okText="Edit"
                 onCancel={() => setModal2Open(false)}
             >
@@ -142,10 +170,11 @@ const getOwnerProps = (id) => {
               return(
                 <>
                 <div className='myProps'>
+                <p>{item.status}</p>
                 <img  className='ownerImages' src={url} alt='images'></img>
-               <button onClick={()=>{propertyDetails(item.id)}} className='propsBtn'>Property details</button>
+                <button onClick={()=>{propertyDetails(item.id)}} className='propsBtn'>Property details</button>
                 </div>
-              
+                <button onClick={()=>{deleteProp(item.id)}} className='deleteBtn'>Delete Property</button>
                 </>
               ) 
             })
