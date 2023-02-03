@@ -24,7 +24,6 @@ const Property=()=>{
   let currentUser = parseInt(sessionStorage.getItem('id'))
 
   const navigate = useNavigate()
-  const loginDetails = useSelector(selectloginUser)
 
   useEffect(() => {
     if (dataFetchedRef.current) return;
@@ -55,6 +54,12 @@ const getProperty = () => {
 };
 const propertyDetails=(id)=>{
   let propertyId = parseInt(id)
+  dispatch(userDetails({
+    city:ownerPropsDetails.map(item=>{
+      console.log(item.city)
+      return item.city
+    })
+  }))
   getOwnerProps(propertyId)
   setModal2Open(true)
 }
@@ -64,7 +69,7 @@ const editDetails = ()=>{
     const data ={
       id:item.id,
       apartment:item.apartment,
-      BHK:item.BHK,
+      BHK:item.bhk,
       floor:item.floor,
       totalfloor:item.totalfloor,
       age:item.age,
@@ -91,6 +96,7 @@ const getOwnerProps = (id) => {
       })
 
 };
+
     const postCity =()=>{
       dispatch(userDetails({
         city:city
@@ -127,7 +133,7 @@ const getOwnerProps = (id) => {
                 return(
                   <>
                   <p>Apartment : {item.apartment}</p>
-                  <p>BHK : {item.BHK}</p>
+                  <p>BHK : {item.bhk}</p>
                   <p>Floor : {item.floor}</p>
                   <p>Total Floor : {item.totalfloor}</p>
                   <p>Property Age : {item.age}</p>

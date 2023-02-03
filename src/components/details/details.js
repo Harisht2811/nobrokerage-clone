@@ -10,22 +10,23 @@ import axios from 'axios';
 import Header from "../../components/header/header"
 
 const Details = () => {
-  const navigate = useNavigate();
-  const [apartment, setApartment] = useState([]);
-  const [BHK, setBHK] = useState([]);
-  const [floor, setFloor] = useState([]);
-  const [totalFloor, setTotalfloor] = useState([]);
-  const [age, setAge] = useState([]);
-  const [direction, setDirection] = useState([]);
-  const [area, setArea] = useState([]);
-  const [rent, setRent] = useState([]);
-  const [details, setDetails] = useState([]);
-  const [imageUpload, setImageUpload] = useState(null);
-  const [imageList, setImageList] = useState([]);
   const location = useLocation();
   const data = location.state
   console.log(data)
 
+  const navigate = useNavigate();
+  const [apartment, setApartment] = useState(data?data.apartment:'');
+  const [BHK, setBHK] = useState(data?data.BHK:'');
+  const [floor, setFloor] = useState(data?data.floor:'');
+  const [totalFloor, setTotalfloor] = useState(data?data.totalfloor:'');
+  const [age, setAge] = useState(data?data.age:'');
+  const [direction, setDirection] = useState(data?data.direction:'');
+  const [area, setArea] = useState(data?data.area:'');
+  const [rent, setRent] = useState(data?data.rent:'');
+  const [details, setDetails] = useState([]);
+  const [imageUpload, setImageUpload] = useState(null);
+  const [imageList, setImageList] = useState([]);
+ 
 
   // const loginDetails = useSelector(selectloginUser)
   // console.log("detailspage", loginDetails)
@@ -71,18 +72,19 @@ const Details = () => {
   });
 
   const editeddetails = () => {
+    console.log("aprtment",apartment)
     client1.post('', {
       id: parseInt(data.id),
       apartment:apartment,
       BHK:BHK,
-      floor: data.floor,
-      totalfloor: data.totalFloor,
-      age: data.age,
-      direction: data.direction,
-      area: data.area,
+      floor: floor,
+      totalfloor:totalFloor,
+      age: age,
+      direction: direction,
+      area: area,
       city: data.city,
       ownerdetails: details,
-      rent: parseInt(data.rent),
+      rent: rent,
       ownerId: idOwner,
 
     })
@@ -122,17 +124,16 @@ const Details = () => {
   }, [])
 
   const postProperty = () => {
-    if(data.id === null){
-      setdetails(apartment, BHK, floor, totalFloor, age, direction, area, city);
+    console.log("data",data,parseInt(data?.id))
+    if(data?.id!=null){
+    editeddetails();
     }
     else{
-    editeddetails();
+      setdetails(apartment, BHK, floor, totalFloor, age, direction, area, city);
     }
     alert('Updated Successfully')
     navigate("/city")
   }
-
-
 
   const addProperty = () => {
     navigate("/city")

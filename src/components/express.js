@@ -194,7 +194,7 @@ app.post("/propertydetails", (req, res) => {
   userpropertyData = req.body
   console.log("dataproperty", userpropertyData)
   client.query(
-    `INSERT INTO "propertydetails" ("city","apartment", "BHK","floor","totalfloor","direction","age","area","image","rent","ownerdetails","ownerid")  
+    `INSERT INTO "propertydetails" ("city","apartment", "bhk","floor","totalfloor","direction","age","area","image","rent","ownerdetails","ownerid")  
                    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
                     userpropertyData.direction,userpropertyData.age,userpropertyData.area,userpropertyData.imageurl,userpropertyData.rent,userpropertyData.ownerdetails,userpropertyData.ownerId]); 
   res.end()
@@ -208,21 +208,27 @@ app.post("/editpropertydetails", (req, res) => {
   let apartment = editedData.apartment
   let BHK = editedData.BHK
   let floor = editedData.floor
-  let totalfloor = editedData.totalFloor
+  let totalfloor = editedData.totalfloor
   let age = editedData.age
   let direction = editedData.direction
   let area = editedData.area
   let rent = editedData.rent
   console.log("dataproperty",editedData)
+  console.log(id)
+  const postgres = `UPDATE "propertydetails" SET apartment=$1,bhk=$2,floor=$3,totalfloor=$4,age=$5,direction=$6,area=$7,rent=$8 WHERE id=${id}`
   client.query(
-    `UPDATE "propertydetails" SET apartment=${apartment},BHK=${BHK},floor=${floor},totalfloor=${totalfloor}
-    ,age=${age},direction=${direction},area=${area},rent=${rent}
-                   WHERE id=${id}`); 
+    postgres,[apartment,BHK,floor,totalfloor,age,direction,area,rent],function(err,result){
+      if(!err){
+        console.log(result)
+      }
+      else{
+        console.log(err)
+      }
+    }
+    ); 
   res.end()
 }
 )
-
-
 
 
 app.delete("/deleteimage/:id",(req,res)=>{

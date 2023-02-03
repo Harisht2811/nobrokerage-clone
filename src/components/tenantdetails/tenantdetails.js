@@ -127,7 +127,7 @@ const Tenantdetails = () => {
                                         <div className='wholeDetails'>
                                             <div className='detailiedProps' >
                                                 <p>Type: {item.apartment}</p>
-                                                <p>BHK: {item.BHK}</p>
+                                                <p>BHK: {item.bhk}</p>
                                                 <p>Floor: {item.floor} Floor</p>
                                                 <p>Total Floor: {item.totalfloor} Floor</p>
                                                 <p>Age of Property: {item.age}</p>
