@@ -73,8 +73,8 @@ const Details = () => {
   const editeddetails = () => {
     client1.post('', {
       id: parseInt(data.id),
-      apartment: data.apartment,
-      BHK: data.BHK,
+      apartment:apartment,
+      BHK:BHK,
       floor: data.floor,
       totalfloor: data.totalFloor,
       age: data.age,
