@@ -51,21 +51,6 @@
     margin: 10% 0 0 0;
     position: relative;
 }
-.fullData{
-    position: relative;
-}
-.fullData .deleteIcon{
-    display: none;
-}
-.fullData:hover{
-    opacity: .6;
-}
-.fullData:hover .deleteIcon {
-    position: absolute;
-    left: 200px;
-    top: 70px;
-    display: block;
-}
 .properties{
     display: inline-flex;
     margin: 2% 0 0 1%;
@@ -78,9 +63,14 @@
     margin: 0 0 1% 4%;
     color: black;
 }
+#statusText{
+    font-family: poppins;
+    font-weight: 500;
+    font-size: 16px;
+    margin: 0 0 0% 2%;
+    color: black;
+}
 .myProps{
-    position: relative;
-    display: inline-flex;
     padding: 0 2%;
 }
 .ownerImages{
@@ -88,11 +78,8 @@
     height: 300px;
     margin: 0 0 2% 5%;
 }
-.myProps:hover{
-    opacity: 0.5;
-}
-.myProps:hover .propsBtn{
-    display: block;
+
+.propsBtn{
     background-color: #fd3752;
     width: 150px;
     height: 50px;
@@ -103,10 +90,10 @@
     border: none;
     outline:none;
     border-style: none;
-    margin: 2% 0 0 0;
-    position:absolute;
+    margin: 2% 0 0 1%;
+    /* position:absolute;
     top: 115px;
-    left: 130px;
+    left: 130px; */
 }
 .deleteBtn{
     background-color: #fd3752;
@@ -119,8 +106,11 @@
     border: none;
     outline:none;
     border-style: none;
-    margin: 2% 0 0 0;
+    margin: 2% 0 0 2%;
 }
-.propsBtn{
+.carousel-indicators {
+    display: none;
+}
+.visually-hidden{
     display: none;
 }

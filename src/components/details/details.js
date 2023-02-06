@@ -173,6 +173,7 @@ const Details = () => {
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
+              <option value="ground">Ground only</option>
             </select>
           </label>
           <label for="total">Total Floor*
@@ -189,9 +190,12 @@ const Details = () => {
           <label for="years">Property Age*
             <select name="years" id="years" defaultValue={data?.age} onChange={(e) => { setAge(e.target.value) }}>
               <option value="">------</option>
-              <option value="1 years">1 years</option>
-              <option value="2 years">2 years</option>
-              <option value="3 years">3 years</option>
+              <option value="1-3 years">1-3 years</option>
+              <option value="3-5  years">3-5 years</option>
+              <option value="5-10 years">5-10 years</option>
+              <option value="Less than a year">Less than a year</option>
+              <option value="More than 10 years">More than 10 years</option>
+
             </select>
           </label>
           <label for="direction">Facing
@@ -200,7 +204,10 @@ const Details = () => {
               <option value="South">South</option>
               <option value="North">North </option>
               <option value="East">East</option>
-              <option value="West">West</option>
+              <option value="South-West">South-West</option>
+              <option value="North-West">North-West</option>
+              <option value="South-East">South-East</option>
+              <option value="North-East">North-East</option>
             </select>
           </label>
         </div>

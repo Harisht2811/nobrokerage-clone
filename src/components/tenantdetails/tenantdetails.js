@@ -1,21 +1,27 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'antd';
-import { Carousel } from 'antd';
+import {Table } from 'antd';
+
 import "./tenantdetails.css"
 import axios from 'axios';
 import { selectloginUser, } from '../createslice'
 import { useSelector } from 'react-redux'
 import cityOptions from '../../content/property.json'
+import Carousel from 'react-bootstrap/Carousel';
+
 
 
 const Tenantdetails = () => {
     const [city, setCity] = useState([]);
-    // const [imageDetails, setimageDetails] = useState([]);
-    // const [ownerDetails, setOwnerDetails] = useState([]);
-    const [tenantId, setTenantid] = useState([]);
+    const [owner, setOwner] = useState([]);
     const [cityDetails, setCitydetails] = useState([]);
     const loginDetails = useSelector(selectloginUser)
     const [modal2Open, setModal2Open] = useState(false);
+    const [index, setIndex] = useState(0);
+
+    const handleSelect = (selectedIndex, e) => {
+        setIndex(selectedIndex);
+    };
 
     const getTenant = () => {
         console.log(city)
@@ -27,7 +33,7 @@ const Tenantdetails = () => {
         lineHeight: '160px',
         textAlign: 'center',
         background: '#364d79',
-      };
+    };
 
 
     const client1 = axios.create({
@@ -50,6 +56,7 @@ const Tenantdetails = () => {
     })
     const bookProperty = (id) => {
         const bookingId = parseInt(id)
+        alert("Booked Successfully")
         client2.post('', {
             bookingId: bookingId,
             status: 'Booked'
@@ -61,13 +68,24 @@ const Tenantdetails = () => {
         // open()
 
     };
-    const open = (tenantd) => {
+    const getOwnerDetails = (ownerid) => {
+        let currentUser = parseInt(ownerid);
+        fetch(`http://localhost:8080/details/${currentUser}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).then(res => {
+            console.log("afterApi", res)
+            return res.json()
+        }).then(data => {
+            console.log(data)
+            setOwner(data)
+        })
         setModal2Open(true)
-        console.log(tenantd);
-        setTenantid(tenantd)
-       
+
     }
- 
+
     return (
         <>
 
@@ -77,7 +95,17 @@ const Tenantdetails = () => {
                 onOk={() => setModal2Open(false)}
                 onCancel={() => setModal2Open(false)}
             >
-                
+                {
+                    owner.map(item => {
+                        return (
+                            <>
+                                <p>Name: {item.name}</p>
+                                <p>Email: {item.email}</p>
+                                <p>Phone: {item.phone}</p>
+                            </>
+                        )
+                    })
+                }
             </Modal>
             <div className='tenantdetails'>
                 <div className='property'>
@@ -97,25 +125,35 @@ const Tenantdetails = () => {
                 </div>
                 <p id='propText'>Property Images :</p>
                 <div className='wholeImages'>
-                    
-                    {
-                            cityDetails.map(item => {
-                                        return item.image.map(item=>{
+                 {
+                    cityDetails.map(item=>{
+                        return(
+                            <>
+                        <Carousel activeIndex={index} onSelect={handleSelect} style={{width:'325px'}}>
+                 
+                        {
+    
+                          item.image.map(url => {
                             return (
-                                <>
-
-                                    <div className='booking'>
-                                        <img className='tenantImages' src={item} alt='images'></img>
-                                        <button className='bookBtn' onClick={() => setModal2Open(true)}>Get Owner Details</button>
-                                    </div>
-                                </>
+                                <Carousel.Item>
+                                <div className='booking'>
+                                    <img className='ownerImages' src={url} alt='images'></img>
+                                </div>
+                                </Carousel.Item>
                             )
-                        })
+                          })
+    
+                        }
+                        </Carousel>
+                        <button className='ownerBtn' onClick={() => getOwnerDetails(item.ownerid)}>Get Owner Details</button>
+                        </>
+                     ) 
+
                     })
-                }
+                 }
                 </div>
-                
-               
+
+
                 <div className='specificDetails'>
 
 
