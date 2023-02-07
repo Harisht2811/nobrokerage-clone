@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'antd';
-import {Table } from 'antd';
-
+import { Table } from 'antd';
 import "./tenantdetails.css"
 import axios from 'axios';
 import { selectloginUser, } from '../createslice'
 import { useSelector } from 'react-redux'
 import cityOptions from '../../content/property.json'
 import Carousel from 'react-bootstrap/Carousel';
-
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 
 const Tenantdetails = () => {
@@ -17,11 +17,7 @@ const Tenantdetails = () => {
     const [cityDetails, setCitydetails] = useState([]);
     const loginDetails = useSelector(selectloginUser)
     const [modal2Open, setModal2Open] = useState(false);
-    const [index, setIndex] = useState(0);
 
-    const handleSelect = (selectedIndex, e) => {
-        setIndex(selectedIndex);
-    };
 
     const getTenant = () => {
         console.log(city)
@@ -124,42 +120,105 @@ const Tenantdetails = () => {
                     <button className='postBtn' onClick={getTenant} >Get Details</button>
                 </div>
                 <p id='propText'>Property Images :</p>
-                <div className='wholeImages'>
-                 {
-                    cityDetails.map(item=>{
-                        return(
-                            <>
-                        <Carousel activeIndex={index} onSelect={handleSelect} style={{width:'325px'}}>
-                 
-                        {
-    
-                          item.image.map(url => {
-                            return (
-                                <Carousel.Item>
-                                <div className='booking'>
-                                    <img className='ownerImages' src={url} alt='images'></img>
+                    {
+                        cityDetails.map(props=>{
+                            return(
+                                <>
+                <Card style={{ width: '50%',margin:'0 0 5% 10%',padding:'1% 0% 0% 0%' }}>
+
+                                    <ListGroup variant="flush" className='gridItems'> 
+                                    <ListGroup.Item>  <Card.Title>Rent Amount</Card.Title> <i class="fa fa-inr" aria-hidden="true"></i> {props.rent}/- <p>(Rent Negotiable)</p></ListGroup.Item>
+                                    <ListGroup.Item> <Card.Title>Area</Card.Title>{props.area}</ListGroup.Item>
+                                    <ListGroup.Item>  <Card.Title>Apartment type</Card.Title><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.apartment}</ListGroup.Item>
+                                    <ListGroup.Item>  <Card.Title>Location</Card.Title><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.city}</ListGroup.Item>
+                                </ListGroup>
+                                <hr></hr>
+                                <div style={{display:'flex' }}>
+                              <Carousel style={{ width: '330px' }} interval={null} >
+
+                                    {
+                                        cityDetails.map(props=>{
+                                            return props.image.map((url,index)=>{
+                                                return(
+                                        <Carousel.Item  >
+                                                <img className='tenantImages'  key={index} src={url} alt='images'></img>
+                                        </Carousel.Item>
+                                                )
+                                            })
+                                        })
+                                    }
+                                 </Carousel>
+                                 <ListGroup variant="flush" className='gridItems1'> 
+                                <div>
+                                <ListGroup.Item>  <Card.Title>Floor</Card.Title><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.floor}</ListGroup.Item>
+                                    <ListGroup.Item>  <Card.Title>Total floors </Card.Title><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.totalfloor}</ListGroup.Item>
                                 </div>
-                                </Carousel.Item>
+                                   <div>
+                                   <ListGroup.Item> <Card.Title>BHK</Card.Title><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.bhk}</ListGroup.Item>
+                                    <ListGroup.Item>  <Card.Title>Facing </Card.Title><i class="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; {props.direction}</ListGroup.Item>
+                                   </div>
+                                </ListGroup>
+                                 <hr></hr>
+                                
+                                </div>
+                                
+                               
+                                <hr></hr>
+                               <div style={{display:'flex'}}>
+                               <button className='ownerBtn' onClick={() => getOwnerDetails(props.ownerid)}>Get Owner Details</button>
+                               <button className='rentButton' onClick={() => { bookProperty(props.id) }} >Book Now</button>
+                               </div>
+                </Card>
+
+                                </>
+                          
                             )
-                          })
-    
-                        }
-                        </Carousel>
-                        <button className='ownerBtn' onClick={() => getOwnerDetails(item.ownerid)}>Get Owner Details</button>
-                        </>
-                     ) 
+                        })
+                    }
 
-                    })
-                 }
-                </div>
+            </div>
+        </>
+    )
+}
+
+export default Tenantdetails
 
 
-                <div className='specificDetails'>
 
+{/* <Card.Img variant="top" src="holder.js/100px180" />
+<Card.Body>
+  <Card.Title>Card Title</Card.Title>
+  <Card.Text>
+    Some quick example text to build on the card title and make up the
+    bulk of the card's content.
+  </Card.Text>
+  <Button variant="primary">Go somewhere</Button>
+</Card.Body> */}
+
+{/* <div className='wholeImages'>
+{
+    cityDetails.map(item => {
+        return (
+            <>
+                <Carousel style={{ width: '330px' }} >
 
                     {
-                        cityDetails.map(item => {
+
+                        item.image.map((url, index) => {
                             return (
+                                <Carousel.Item >
+                                    <div className='booking'>
+                                        <img className='ownerImages' key={index} src={url} alt='images'></img>
+                                    </div>
+                                </Carousel.Item>
+                            )
+                        })
+
+                    }
+                </Carousel>
+                
+
+                <div className='specificDetails'>
                                 <>
                                     <div style={{ "display": "block" }}>
                                         <div className='wholeDetails'>
@@ -177,20 +236,16 @@ const Tenantdetails = () => {
 
                                         </div>
                                         {/* <button className='rentButton'  onClick={()=>{open(item.id)}}>Book Now</button> */}
-                                        <button className='rentButton' onClick={() => { bookProperty(item.id) }} >Book Now</button>
+//                                         
 
-                                    </div>
-                                </>
-                            )
-                        })
-                    }
-                </div>
-            </div>
-        </>
-    )
-}
+//                                     </div>
+//                                 </>
+//                 </div>
+//             </>
+            
+//         )
 
-export default Tenantdetails
+//     })
+// }
 
-
-
+// </div> */}
