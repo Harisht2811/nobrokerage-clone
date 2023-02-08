@@ -2,6 +2,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from '@firebase/firestore';
 import { getStorage }   from "firebase/storage";
+import {getAuth} from 'firebase/auth';
+
 
 
 
@@ -16,7 +18,39 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
 const analytics = getAnalytics(app);
 export const db =getFirestore(app);
 export const storage = getStorage(app);
+export const auth = getAuth(app);
 
+
+// const admin = require('firebase-admin')
+// admin.initializeApp();
+// const functions = require('firebase-functions')
+
+
+// exports.addAdminRole = functions.https.onCall((data, context) => {
+//   // get user and add admin custom claim
+//   return admin.auth().getUserByEmail(data.email).then(user => {
+//     return admin.auth().setCustomUserClaims(user.uid, {
+//       admin: true
+//     })
+//   }).then(() => {
+//     return {
+//       message: `Success! ${data.email} has been made an admin.`
+//     }
+//   }).catch(err => {
+//     return err;
+//   });
+// });
+
+// exports.setAdminClaims = functions.https.onCall(async (data, context) => {
+
+//   const adminUIDs = ['2jfow4fd3H2ZqYLWZI2s1YdqOPB42', '767fjdhshd3H2ZqYLWZI2suyyqOPB42'];
+
+//   await Promise.all(adminUIDs.map(uid => admin.auth().setCustomUserClaims(uid, { admin: true })));
+  
+//   return { result: "Operation completed" }
+  
+// });

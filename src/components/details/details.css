@@ -62,7 +62,7 @@
     border: none;
     outline:none;
     border-style: none;
-    margin: 2% 0 0 0;
+    margin: 0% 0 0 5%;
 }
 .uploadProperty input{
     width: 15%;
@@ -131,6 +131,21 @@
     border-style: none;
     margin: 0 0 0 3%;
 }
-.view .deleteIcon{
+.imageList{
+    display: inline-flex;
+    position: relative;
+    margin: 0 0 0 2%;
+}
+.imageList .deleteIcon{
     display: none;
+}
+.imageList:hover .deleteIcon{
+    display: block;
+    top: 10px;
+    left: 260px;
+    position: absolute;
+}
+.belowImages{
+    width: 300px;
+    height: 300px;
 }

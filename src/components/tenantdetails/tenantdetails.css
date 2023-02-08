@@ -111,3 +111,6 @@
     border-top: 0;
     border-bottom: 0;
 }
+ .ant-btn-default{
+    display: none;
+ }

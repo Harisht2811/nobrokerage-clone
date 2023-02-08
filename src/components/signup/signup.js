@@ -4,6 +4,7 @@ import axios from "axios";
 import {signup} from '../createslice'
 import {  useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
+import { useUserAuth } from '../userAuth';
 
 
 
@@ -18,6 +19,9 @@ const Signup=()=>{
   const[phonenumber,setPhonenumber] = useState('');
   const[ownerRole,setOwner]=useState('');
   const[tenantRole,setTenant]=useState('');
+  const [error, setError] = useState("");
+  const { signUp } = useUserAuth();
+
 
   const bcrypt = require('bcryptjs');
   const saltRounds = 10;
@@ -34,16 +38,23 @@ const onchangeTenant =()=>{
   setOwner('')
 }
 
-const handleSubmit=(e)=>{
+const handleSubmit=async(e)=>{
    e.preventDefault();
 }
 
 
-const onClicksignup=(e)=>{
+const onClicksignup=async(e)=>{
   e.preventDefault();
   console.log("owner",ownerRole);
   console.log("tenant",tenantRole);
   let role = ownerRole!==''?ownerRole:tenantRole;
+  try {
+    let role = ownerRole!==''?ownerRole:tenantRole;
+     await signUp(email, password,role);
+   } catch (err) {
+     setError(err.message);
+ 
+   }
   dispatch(signup({
     name:name,
     email:email,
@@ -155,3 +166,7 @@ const addPosts =(name, email,password,phonenumber,role) => {
 }
 
 export default Signup
+
+
+
+

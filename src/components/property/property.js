@@ -85,6 +85,7 @@ const Property = () => {
         area: item.area,
         city: item.city,
         rent: item.rent,
+        imageUrl:item.image,
       }
       navigate("/details", { state: data })
     })

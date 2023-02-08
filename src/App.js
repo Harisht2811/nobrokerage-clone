@@ -5,6 +5,7 @@ import Login from '../src/components/login/login'
 import Tenant from '../src/components/tenant/tenant'
 import Property from './components/property/property';
 import Details from './components/details/details';
+import { UserAuthContextProvider } from './components/userAuth';
 
 
 
@@ -13,6 +14,7 @@ function App() {
   
   return (
     <BrowserRouter>
+    <UserAuthContextProvider>
     <Routes>
     <Route exact path='/' element={<Login/>}></Route>
     <Route exact path='/signup' element={<Signup/>}></Route>
@@ -20,6 +22,7 @@ function App() {
     <Route exact path='/city' element={<Property/>}></Route>
     <Route exact path='/details' element={<Details/>}></Route>
    </Routes>
+   </UserAuthContextProvider>
    </BrowserRouter>
     
 

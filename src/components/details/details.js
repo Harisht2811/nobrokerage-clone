@@ -8,6 +8,7 @@ import { storage, db } from "../firebase";
 import "./details.css"
 import axios from 'axios';
 import Header from "../../components/header/header"
+import Deleteicon from '../../images/owner/close.svg'
 
 const Details = () => {
   const location = useLocation();
@@ -25,7 +26,7 @@ const Details = () => {
   const [rent, setRent] = useState(data?data.rent:'');
   const [details, setDetails] = useState([]);
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageList, setImageList] = useState([]);
+  const [imageList, setImageList] = useState(data?data.imageUrl:[]);
  
 
   // const loginDetails = useSelector(selectloginUser)
@@ -86,6 +87,7 @@ const Details = () => {
       ownerdetails: details,
       rent: rent,
       ownerId: idOwner,
+      image:imageList
 
     })
       .then((response) => {
@@ -139,6 +141,10 @@ const Details = () => {
     navigate("/city")
   }
 
+  const deleteImages =(url)=>{
+    console.log(url)
+    setImageList(imageList.filter(imageList=>url!==imageList))
+  }
 
   return (
     <>
@@ -160,11 +166,11 @@ const Details = () => {
           <label for="vhk">BHK Type*
             <select name="bhk" id="bhk" defaultValue={data?.BHK} onChange={(e) => { setBHK(e.target.value) }} class="required">
               <option value="">------</option>
-              <option value="1 BHK">1 BHK</option>
-              <option value="2 BHK">2 BHK</option>
-              <option value="3 BHK">3 BHK</option>
-              <option value="4 BHK">4 BHK</option>
-              <option value="4+ BHK">4+ BHK</option>
+              <option value="1 ">1 BHK</option>
+              <option value="2 ">2 BHK</option>
+              <option value="3 ">3 BHK</option>
+              <option value="4 ">4 BHK</option>
+              <option value="4+ ">4+ BHK</option>
             </select>
           </label>
           <label for="floor">Floor*
@@ -223,14 +229,28 @@ const Details = () => {
           </div>
         </div>
         <div className='uploadProperty'>
-          <input type="file" onChange={(event) => setImageUpload(event.target.files[0])}></input>
+          <input type="file"  onChange={(e) => setImageUpload(e.target.files[0])}></input>
           <button className='uploadBtn' onClick={uploadImages}>Upload</button>
           <button className='addBtn' onClick={addProperty}>Add Property</button>
 
         </div>
-        <button className='updateBtn' onClick={postProperty}>Update Property Details</button>
+        {
+          imageList.map((url,index)=>{
+             return(
+              <>
+              <div className='imageList' key={index}>
+              <img className='belowImages' alt='images' src={url}></img>
+              <img className='deleteIcon' alt='close' defaultValue={data?.imageUrl} onClick={()=>deleteImages(url)} src={Deleteicon}></img>
+              </div>
+              </>
+             )
+          })
+          
+        }
 
       </div>
+      <button className='updateBtn' onClick={postProperty}>Update Property Details</button>
+
     </>
   )
 }

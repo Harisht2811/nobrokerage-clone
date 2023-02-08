@@ -213,11 +213,12 @@ app.post("/editpropertydetails", (req, res) => {
   let direction = editedData.direction
   let area = editedData.area
   let rent = editedData.rent
+  let imageUrl = editedData.image
   console.log("dataproperty",editedData)
   console.log(id)
-  const postgres = `UPDATE "propertydetails" SET apartment=$1,bhk=$2,floor=$3,totalfloor=$4,age=$5,direction=$6,area=$7,rent=$8 WHERE id=${id}`
+  const postgres = `UPDATE "propertydetails" SET apartment=$1,bhk=$2,floor=$3,totalfloor=$4,age=$5,direction=$6,area=$7,rent=$8,image=$9 WHERE id=${id}`
   client.query(
-    postgres,[apartment,BHK,floor,totalfloor,age,direction,area,rent],function(err,result){
+    postgres,[apartment,BHK,floor,totalfloor,age,direction,area,rent,imageUrl],function(err,result){
       if(!err){
         console.log(result)
       }

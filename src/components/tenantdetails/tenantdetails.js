@@ -9,6 +9,7 @@ import cityOptions from '../../content/property.json'
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+// import Filters from '../../components/filters/filters'
 
 
 const Tenantdetails = () => {
@@ -84,7 +85,6 @@ const Tenantdetails = () => {
 
     return (
         <>
-
             <Modal
                 centered
                 open={modal2Open}
@@ -124,6 +124,8 @@ const Tenantdetails = () => {
                         cityDetails.map(props=>{
                             return(
                                 <>
+            {/* <Filters/> */}
+
                 <Card style={{ width: '50%',margin:'0 0 5% 10%',padding:'1% 0% 0% 0%' }}>
 
                                     <ListGroup variant="flush" className='gridItems'> 
@@ -168,7 +170,7 @@ const Tenantdetails = () => {
                                <button className='ownerBtn' onClick={() => getOwnerDetails(props.ownerid)}>Get Owner Details</button>
                                <button className='rentButton' onClick={() => { bookProperty(props.id) }} >Book Now</button>
                                </div>
-                </Card>
+                              </Card>
 
                                 </>
                           
@@ -184,68 +186,3 @@ const Tenantdetails = () => {
 export default Tenantdetails
 
 
-
-{/* <Card.Img variant="top" src="holder.js/100px180" />
-<Card.Body>
-  <Card.Title>Card Title</Card.Title>
-  <Card.Text>
-    Some quick example text to build on the card title and make up the
-    bulk of the card's content.
-  </Card.Text>
-  <Button variant="primary">Go somewhere</Button>
-</Card.Body> */}
-
-{/* <div className='wholeImages'>
-{
-    cityDetails.map(item => {
-        return (
-            <>
-                <Carousel style={{ width: '330px' }} >
-
-                    {
-
-                        item.image.map((url, index) => {
-                            return (
-                                <Carousel.Item >
-                                    <div className='booking'>
-                                        <img className='ownerImages' key={index} src={url} alt='images'></img>
-                                    </div>
-                                </Carousel.Item>
-                            )
-                        })
-
-                    }
-                </Carousel>
-                
-
-                <div className='specificDetails'>
-                                <>
-                                    <div style={{ "display": "block" }}>
-                                        <div className='wholeDetails'>
-                                            <div className='detailiedProps' >
-                                                <p>Type: {item.apartment}</p>
-                                                <p>BHK: {item.bhk}</p>
-                                                <p>Floor: {item.floor} Floor</p>
-                                                <p>Total Floor: {item.totalfloor} Floor</p>
-                                                <p>Age of Property: {item.age}</p>
-                                                <p>Facing: {item.direction}</p>
-                                                <p>Area: {item.area}</p>
-                                                <p>Rent Amount: &#x20a8;. {item.rent}/-</p>
-
-                                            </div>
-
-                                        </div>
-                                        {/* <button className='rentButton'  onClick={()=>{open(item.id)}}>Book Now</button> */}
-//                                         
-
-//                                     </div>
-//                                 </>
-//                 </div>
-//             </>
-            
-//         )
-
-//     })
-// }
-
-// </div> */}
