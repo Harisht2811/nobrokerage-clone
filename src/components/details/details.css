@@ -27,16 +27,19 @@
     display: block;
 }
 .area{
-    margin: 2% 0 0 0;
+    margin: 1% 0 0 0;
     grid-row-gap: 11%;
     grid-column-gap: 3%;
     display: grid;
-    grid-template-columns: repeat(2,1fr);  
+    grid-template-columns: repeat(4,1fr);  
 }
 #area{
     padding:1% 3%;
 }
 #rent{
+    padding:1% 3%;
+}
+#deposit{
     padding:1% 3%;
 }
 .floor{
@@ -50,6 +53,12 @@
     grid-column-gap: 3%;
     display: grid;
     grid-template-columns: repeat(2,1fr);  
+}
+.parking{
+    grid-row-gap: 5%;
+    grid-column-gap: 3%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);  
 }
 .updateBtn{
     background-color: #fd3752;

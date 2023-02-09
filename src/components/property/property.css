@@ -76,7 +76,7 @@
 .ownerImages{
     width: 300px;
     height: 300px;
-    margin: 0 0 2% 5%;
+    margin: 5% 0 2% 2%;
 }
 
 .propsBtn{
@@ -113,4 +113,9 @@
 }
 .visually-hidden{
     display: none;
+}
+.gridProps{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    padding: 0 2%;
 }

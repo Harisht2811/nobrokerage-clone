@@ -194,9 +194,11 @@ app.post("/propertydetails", (req, res) => {
   userpropertyData = req.body
   console.log("dataproperty", userpropertyData)
   client.query(
-    `INSERT INTO "propertydetails" ("city","apartment", "bhk","floor","totalfloor","direction","age","area","image","rent","ownerdetails","ownerid")  
-                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
-                    userpropertyData.direction,userpropertyData.age,userpropertyData.area,userpropertyData.imageurl,userpropertyData.rent,userpropertyData.ownerdetails,userpropertyData.ownerId]); 
+    `INSERT INTO "propertydetails" ("city","apartment", "bhk","floor","totalfloor","direction","age","area","image","rent","ownerdetails","ownerid","deposit","prefered",
+    "parking","furnish","availability")  
+                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
+                    userpropertyData.direction,userpropertyData.age,userpropertyData.area,userpropertyData.imageurl,userpropertyData.rent,userpropertyData.ownerdetails,userpropertyData.ownerId,
+                  userpropertyData.deposit,userpropertyData.prefered,userpropertyData.parking,userpropertyData.furnish,userpropertyData.available]); 
   res.end()
 }
 )
@@ -214,11 +216,19 @@ app.post("/editpropertydetails", (req, res) => {
   let area = editedData.area
   let rent = editedData.rent
   let imageUrl = editedData.image
+  let prefered = editedData.prefered
+  let furnish = editedData.furnish
+  let parking = editedData.parking
+  let availability = editedData.available
+  let deposit = editedData.deposit
+
   console.log("dataproperty",editedData)
   console.log(id)
-  const postgres = `UPDATE "propertydetails" SET apartment=$1,bhk=$2,floor=$3,totalfloor=$4,age=$5,direction=$6,area=$7,rent=$8,image=$9 WHERE id=${id}`
+  const postgres = `UPDATE "propertydetails" SET apartment=$1,bhk=$2,floor=$3,totalfloor=$4,age=$5,direction=$6,area=$7,rent=$8,image=$9,prefered=$10,
+  furnish=$11,parking=$12,availability=$13,deposit=$14 WHERE id=${id}`
   client.query(
-    postgres,[apartment,BHK,floor,totalfloor,age,direction,area,rent,imageUrl],function(err,result){
+    postgres,[apartment,BHK,floor,totalfloor,age,direction,area,rent,imageUrl,prefered,furnish,parking,
+    availability,deposit],function(err,result){
       if(!err){
         console.log(result)
       }

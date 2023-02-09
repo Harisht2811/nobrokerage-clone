@@ -16,12 +16,7 @@ const Property = () => {
   const [ownerProps, setOwnerProps] = useState([]);
   const [ownerPropsDetails, setOwnerPropsDetails] = useState([]);
   const [modal2Open, setModal2Open] = useState(false);
-  const [index, setIndex] = useState(0);
-
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
-
+ 
 
   const dispatch = useDispatch();
   const dataFetchedRef = useRef(false);
@@ -86,6 +81,12 @@ const Property = () => {
         city: item.city,
         rent: item.rent,
         imageUrl:item.image,
+        deposit:item.deposit,
+        parking:item.parking,
+        furnish:item.furnish,
+        prefered:item.prefered,
+        available:item.availability,
+
       }
       navigate("/details", { state: data })
     })
@@ -151,6 +152,10 @@ const Property = () => {
                 <p>City : {item.city}</p>
                 <p>Status : {item.status}</p>
                 <p>Rent : {item.rent} /-</p>
+                <p>Deposit : {item.deposit} </p>
+                <p>Furnishing : {item.furnish} </p>
+                <p>Parking : {item.parking} </p>
+                <p>Availability : {item.availability} </p>
               </>
             )
           })
@@ -174,10 +179,13 @@ const Property = () => {
 
       <div className='uploadedProps'>
         <p id='propText'>My Properties:</p>
+        <div className='gridProps'>
+
         {
           ownerProps.map(item => {
             return (
               <>
+              <div style={{display:'block'}}>
                 <div style={{ display: 'flex' }}>
                   <p id='cityText'>{item.city}</p>
                   <p id='statusText'>{item.status}</p>
@@ -187,14 +195,17 @@ const Property = () => {
                 <div className='myProps'>
 
 
-                <Carousel activeIndex={index} onSelect={handleSelect} style={{width:'325px'}}>
+                <Carousel  style={{width:'325px'}}>
                  
                     {
 
-                      item.image.map(url => {
+                      item.image.map((url,index) => {
+                        
                         return (
+                          url.length === 1?
+                          <img className='ownerImages' key={index} src={url} alt='images'></img>:
                             <Carousel.Item>
-                              <img className='ownerImages' src={url} alt='images'></img>
+                              <img className='ownerImages' key={index} src={url} alt='images'></img>
                             </Carousel.Item>
                         )
                       })
@@ -207,12 +218,13 @@ const Property = () => {
                 <button onClick={() => { propertyDetails(item.id) }} className='propsBtn'>Property details</button>
                 <button onClick={() => { deleteProp(item.id) }} className='deleteBtn'>Delete Property</button>
                 </div>
-
+                </div>
               </>
 
             )
           })
         }
+        </div>
       </div>
     </>
 

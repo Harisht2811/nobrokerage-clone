@@ -24,6 +24,11 @@ const Details = () => {
   const [direction, setDirection] = useState(data?data.direction:'');
   const [area, setArea] = useState(data?data.area:'');
   const [rent, setRent] = useState(data?data.rent:'');
+  const [deposit, setDeposit] = useState(data?data.deposit:'');
+  const [furnish, setFurnish] = useState(data?data.furnish:'');
+  const [parking, setParking] = useState(data?data.parking:'');
+  const [availablility, setAvailability] = useState(data?data.available:'');
+  const [prefered, setPrefered] = useState(data?data.prefered:'');
   const [details, setDetails] = useState([]);
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState(data?data.imageUrl:[]);
@@ -58,6 +63,11 @@ const Details = () => {
       imageurl: imageList,
       ownerdetails: details,
       rent: rent,
+      deposit: deposit,
+      prefered: prefered,
+      parking: parking,
+      furnish: furnish,
+      available: availablility,
       ownerId: idOwner,
 
     })
@@ -86,8 +96,14 @@ const Details = () => {
       city: data.city,
       ownerdetails: details,
       rent: rent,
+      deposit: deposit,
+      prefered: prefered,
+      parking: parking,
+      furnish: furnish,
+      available: availablility,
       ownerId: idOwner,
-      image:imageList
+      image:imageList,
+
 
     })
       .then((response) => {
@@ -204,7 +220,7 @@ const Details = () => {
 
             </select>
           </label>
-          <label for="direction">Facing
+          <label for="direction">Facing*
             <select name="direction" id="direction" defaultValue={data?.direction} onChange={(e) => { setDirection(e.target.value) }}>
               <option value="">------</option>
               <option value="South">South</option>
@@ -217,8 +233,41 @@ const Details = () => {
             </select>
           </label>
         </div>
-
+        <div className='parking'>
+          <label for="parking">Parking*
+            <select name="parking" id="parking" defaultValue={data?.parking} onChange={(e) => { setParking(e.target.value) }}>
+              <option value="">------</option>
+              <option value="2">2-Wheeler</option>
+              <option value="4">4-Wheeler</option>
+            </select>
+          </label>
+          <label for="availabledays">Availability*
+            <select name="availabledays" id="availabledays" defaultValue={data?.available} onChange={(e) => { setAvailability(e.target.value) }}>
+              <option value="">------</option>
+              <option value="Immediate">Immediate</option>
+              <option value="Within 15 days">Within 15 days</option>
+              <option value="Within 30 days">Within 30 days</option>
+              <option value="More than 30 days">More than 30 days</option>
+            </select>
+          </label>
+          <label for="preferedTenants">Prefered-Tenants*
+            <select name="preferedTenants" id="preferedTenants" defaultValue={data?.prefered} onChange={(e) => { setPrefered(e.target.value) }}>
+              <option value="">------</option>
+              <option value="All">All</option>
+              <option value="Family">Family</option>
+              <option value="Bachelor">Bachelor</option>
+            </select>
+          </label>
+        </div>
         <div className='area'>
+        <label for="furnish">Furnishing
+            <select name="furnish" id="furnish" defaultValue={data?.furnish} onChange={(e) => { setFurnish(e.target.value) }}>
+              <option value="">------</option>
+              <option value="Full">Full-Furnished</option>
+              <option value="Semi">Semi-Furnished</option>
+              <option value="None">None</option>
+            </select>
+          </label>
           <label for="area">Built up area*
             <input id='area' defaultValue={data?.area} onChange={(e) => { setArea(e.target.value) }} ></input>
           </label>
@@ -227,7 +276,13 @@ const Details = () => {
               <input id='rent' defaultValue={data?.rent} type='number' onChange={(e) => { setRent(e.target.value) }} ></input>
             </label>
           </div>
+          <div className='deposit'>
+            <label for="deposit">Deposit*
+              <input id='deposit' defaultValue={data?.deposit} type='number' onChange={(e) => { setDeposit(e.target.value) }} ></input>
+            </label>
+          </div>
         </div>
+       
         <div className='uploadProperty'>
           <input type="file"  onChange={(e) => setImageUpload(e.target.files[0])}></input>
           <button className='uploadBtn' onClick={uploadImages}>Upload</button>

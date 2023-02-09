@@ -1,0 +1,36 @@
+.filters .card{
+    padding: 2% 3%;
+    height: 30%;
+}
+input[type=radio]{
+    accent-color: #009587;
+}
+input[type=checkbox]{
+    accent-color: #009587;
+}
+/* .apartmentType{
+    display: block;
+} */
+#rentRange{
+    width: 100%;
+}
+.gridBhk{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+.gridDays{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+.gridTenants{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+.gridParking{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+.gridFurnishing{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
