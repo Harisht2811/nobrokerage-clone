@@ -150,7 +150,7 @@ const Property = () => {
                 <p>Direction : {item.direction}</p>
                 <p>Area : {item.area}</p>
                 <p>City : {item.city}</p>
-                <p>Status : {item.status}</p>
+                <p>Status : {item.status?item.status:'Not Booked'}</p>
                 <p>Rent : {item.rent} /-</p>
                 <p>Deposit : {item.deposit} </p>
                 <p>Furnishing : {item.furnish} </p>
@@ -186,9 +186,9 @@ const Property = () => {
             return (
               <>
               <div style={{display:'block'}}>
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: 'flex',width:'80%'}}>
                   <p id='cityText'>{item.city}</p>
-                  <p id='statusText'>{item.status}</p>
+                  <p id='statusText'>{item.status?item.status:'Not Booked'}</p>
                 </div>
 
 

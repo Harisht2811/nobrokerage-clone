@@ -16,9 +16,11 @@ const Tenantdetails = () => {
     const [city, setCity] = useState([]);
     const [owner, setOwner] = useState([]);
     const [cityDetails, setCitydetails] = useState([]);
-    const loginDetails = useSelector(selectloginUser)
     const [modal2Open, setModal2Open] = useState(false);
 
+    const filterData = (data)=>{
+    console.log("datat",data.apartmentType)
+    }
 
     const getTenant = () => {
         console.log(city)
@@ -119,16 +121,18 @@ const Tenantdetails = () => {
                     </div>
                     <button className='postBtn' onClick={getTenant} >Get Details</button>
                 </div>
-                <p id='propText'>Property Images :</p>
+                <p id='propText'>Properties:</p>
+                <div style={{display:'inline-flex',width:'100%',padding:'0 5%'}}>
+                                    <div style={{width:'30%'}}>
+                                    <Filters filterDetails={filterData}/>
+                                    </div>
+                              <div style={{display:'block',width: '50%',height:'30%', margin: '0 0 5% 10%'}}>
+
                 {
                     cityDetails.map(props => {
                         return (
                             <>
-                                <div style={{display:'inline-flex',width:'100%',padding:'0 5%'}}>
-                                    <div style={{width:'30%'}}>
-                                    <Filters/>
-                                    </div>
-                                <Card style={{ width: '50%',height:'30%', margin: '0 0 5% 10%', padding: '1% 0% 0% 0%' }}>
+                                <Card style={{margin:'0 0 3% 0'}}>
 
                                     <ListGroup variant="flush" className='gridItems' style={{width:'100%'}}>
                                         <ListGroup.Item>  <Card.Title>Rent Amount</Card.Title> <i class="fa fa-inr" aria-hidden="true"></i> {props.rent} /- <p>(Rent Negotiable)</p></ListGroup.Item>
@@ -141,8 +145,7 @@ const Tenantdetails = () => {
                                         <Carousel style={{ width: '330px' }} interval={null} >
 
                                             {
-                                                cityDetails.map(props => {
-                                                    return props.image.map((url, index) => {
+                                                     props.image.map((url, index) => {
                                                         return (
                                                             url.length === 1?
                                                             <img className='tenantImages' key={index} src={url} alt='images'></img>:
@@ -151,7 +154,6 @@ const Tenantdetails = () => {
                                                             </Carousel.Item>
                                                         )
                                                     })
-                                                })
                                             }
                                         </Carousel>
                                         <ListGroup variant="flush" className='gridItems1'>
@@ -175,12 +177,15 @@ const Tenantdetails = () => {
                                         <button className='rentButton' onClick={() => { bookProperty(props.id) }} >Book Now</button>
                                     </div>
                                 </Card>
-                                </div>
                             </>
 
                         )
                     })
+
                 }
+                                </div>
+
+                    </div>
 
             </div>
         </>
