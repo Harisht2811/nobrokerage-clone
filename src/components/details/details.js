@@ -50,6 +50,9 @@ const Details = () => {
     baseURL: "http://localhost:8080/propertydetails"
   });
 
+
+ 
+  
   const setdetails = (apartment, BHK, floor, totalFloor, age, direction, area, city) => {
     client.post('', {
       apartment: apartment,
@@ -182,11 +185,11 @@ const Details = () => {
           <label for="vhk">BHK Type*
             <select name="bhk" id="bhk" defaultValue={data?.BHK} onChange={(e) => { setBHK(e.target.value) }} class="required">
               <option value="">------</option>
-              <option value="1 ">1 BHK</option>
-              <option value="2 ">2 BHK</option>
-              <option value="3 ">3 BHK</option>
-              <option value="4 ">4 BHK</option>
-              <option value="4+ ">4+ BHK</option>
+              <option value="1">1 BHK</option>
+              <option value="2">2 BHK</option>
+              <option value="3">3 BHK</option>
+              <option value="4">4 BHK</option>
+              <option value="4+">4+ BHK</option>
             </select>
           </label>
           <label for="floor">Floor*

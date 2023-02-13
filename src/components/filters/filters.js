@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../filters/filters.css'
 import Card from 'react-bootstrap/Card';
+import e from 'cors';
 
 const Filters = ({ filterDetails }) => {
 
@@ -43,6 +44,7 @@ const Filters = ({ filterDetails }) => {
   let fFourPlus = fourPlus;
 
   let fRent = rentRange;
+  console.log(rentRange)
 
   let fImmediate = immediate;
   let fWithin15 = within15;
@@ -213,15 +215,15 @@ const Filters = ({ filterDetails }) => {
         </div>
         <hr></hr>
         <div className='rent'>
-          <Card.Title>Rent Range</Card.Title>
-          <input type="range" id="rentRange" onChange={(e) => filtersOnChange(e, "Rent")} name="vol" min="0" max="50" />
+          <Card.Title>Rent - <label>{rentRange}/-</label></Card.Title>
+          <input type="range" id="rentRange" onChange={(e) => filtersOnChange(e, "Rent")} name="vol" min="0" max="5000" />
         </div>
         <hr></hr>
         <div className='availability'>
           <Card.Title>Availability</Card.Title>
           <div className='gridDays'>
             <p> <input type="radio" onChange={(e) => filtersOnChange(e, "Immediate")} value="Immediate" name='available' />&nbsp;Immediate</p>
-            <p>  <input type="radio" onChange={(e) => filtersOnChange("Within 15 days")} value="Within 15 Days" name='available' /> &nbsp;Within 15 Days</p>
+            <p>  <input type="radio" onChange={(e) => filtersOnChange(e,"Within 15 days")} value="Within 15 Days" name='available' /> &nbsp;Within 15 Days</p>
           </div>
           <div className='gridDays'>
             <p> <input type="radio" onChange={(e) => filtersOnChange(e, "Within 30 days")} value="Within 30 Days" name='available' /> &nbsp;Within 30 Days</p>
