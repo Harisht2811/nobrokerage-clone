@@ -44,7 +44,6 @@ const Filters = ({ filterDetails }) => {
   let fFourPlus = fourPlus;
 
   let fRent = rentRange;
-  console.log(rentRange)
 
   let fImmediate = immediate;
   let fWithin15 = within15;

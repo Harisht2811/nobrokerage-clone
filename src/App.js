@@ -5,6 +5,7 @@ import Login from '../src/components/login/login'
 import Tenant from '../src/components/tenant/tenant'
 import Property from './components/property/property';
 import Details from './components/details/details';
+import Carousel from './components/carousel'
 import { UserAuthContextProvider } from './components/userAuth';
 
 
@@ -21,6 +22,7 @@ function App() {
     <Route exact path='/tenant' element={<Tenant/>}></Route>
     <Route exact path='/city' element={<Property/>}></Route>
     <Route exact path='/details' element={<Details/>}></Route>
+    <Route exact path='/carousel' element={<Carousel/>}></Route>
    </Routes>
    </UserAuthContextProvider>
    </BrowserRouter>

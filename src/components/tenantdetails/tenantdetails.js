@@ -12,6 +12,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Filters from '../../components/filters/filters'
 
 
+
 const Tenantdetails = () => {
     const [city, setCity] = useState([]);
     const [owner, setOwner] = useState([]);
@@ -23,36 +24,37 @@ const Tenantdetails = () => {
     let IndianRupees = new Intl.NumberFormat('en-IN', {
         style: 'currency',
         currency: 'INR',
-        maximumSignificantDigits: 3 
+        maximumSignificantDigits: 3
     });
 
 
     const filterData = (data) => {
         console.log("datat", data)
         if (data.apartmentType.filterVilla === 'Independant Villa' || data.apartmentType.filterApartment === 'Apartment' || data.apartmentType.filterGated === 'Gated Community Villa') {
-            return setCitydetails(cityDetails.filter(item => 
+            return setCitydetails(cityDetails.filter(item =>
                 item.apartment === data.apartmentType.filterVilla || item.apartment === data.apartmentType.filterGated || item.apartment === data.apartmentType.filterApartment))
         }
         if (data.bhkType.oneBHK === '1' || data.bhkType.twoBHK === '2' || data.bhkType.threeBHK === '3' || data.bhkType.fourBHK === '4' || data.bhkType.fourPlusBHK === '4+') {
-            return setCitydetails(cityDetails.filter(item => 
+            return setCitydetails(cityDetails.filter(item =>
                 item.bhk === data.bhkType.oneBHK || item.bhk === data.bhkType.twoBHK || item.bhk === data.bhkType.threeBHK || item.bhk === data.bhkType.fourBHK || item.bhk === data.bhkType.fourPlusBHK))
         }
         if (data.parking.twoWheeler === '2' || data.parking.fourWheeler === '4') {
             return setCitydetails(cityDetails.filter(item => item.parking === data.parking.twoWheeler || item.parking === data.parking.fourWheeler))
         }
         if (data.furnish.fullFurnish === 'Full' || data.furnish.semiFurnish === 'Semi' || data.furnish.none === 'None') {
-            return setCitydetails(cityDetails.filter(item => 
+            return setCitydetails(cityDetails.filter(item =>
                 item.furnish === data.furnish.fullFurnish || item.furnish === data.furnish.semiFurnish || item.furnish === data.furnish.None))
         }
         if (data.preferedTenants.all === 'All' || data.preferedTenants.bachelor === 'Bachelor' || data.preferedTenants.family === 'Family') {
-            return setCitydetails(cityDetails.filter(item => 
+            return setCitydetails(cityDetails.filter(item =>
                 item.prefered === data.preferedTenants.all || item.prefered === data.preferedTenants.bachelor || item.prefered === data.preferedTenants.family))
         }
         if (data.availability.after30days === 'After 30 Days' || data.availability.immediate === 'Immediate' || data.availability.within15days === 'Within 15 days' || data.availability.within30days === 'Within 30 Days') {
-            return setCitydetails(cityDetails.filter(item => 
+            return setCitydetails(cityDetails.filter(item =>
                 item.availability === data.availability.immediate || item.availability === data.availability.after30days || item.availability === data.availability.within30days || item.availability === data.availability.within15days))
         }
-        
+        return cityDetails;
+
     }
 
     const getTenant = () => {
@@ -175,7 +177,8 @@ const Tenantdetails = () => {
                                             </ListGroup>
                                             <hr></hr>
                                             <div style={{ display: 'flex' }}>
-                                                <Carousel style={{ width: '330px' }} interval={null} >
+
+                                                {/* <Carousel style={{ width: '330px' }} interval={null} >
 
                                                     {
                                                         props.image.map((url, index) => {
@@ -188,7 +191,44 @@ const Tenantdetails = () => {
                                                             )
                                                         })
                                                     }
-                                                </Carousel>
+                                                </Carousel> */}
+
+
+
+
+
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                <Carousel style={{ width: '330px' }} interval={null} >
+
+                                                                    {
+                                                                        props.image.map((url, index) => {
+                                                                            return (
+                                                                                url.length === 1 ?
+                                                                                    <img className='tenantImages' key={index} src={url} alt='images'></img> :
+                                                                                    <Carousel.Item  >
+                                                                                        <img className='tenantImages' key={index} src={url} alt='images'></img>
+                                                                                    </Carousel.Item>
+                                                                            )
+                                                                        })
+                                                                    }
+                                                                </Carousel>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <ListGroup variant="flush" className='gridItems1'>
                                                     <div>
                                                         <ListGroup.Item>  <Card.Title>Furnished</Card.Title><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.furnish}</ListGroup.Item>
