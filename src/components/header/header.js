@@ -51,16 +51,15 @@ const Header=()=>{
                 return(
                   <>
                  <p id='roleText'> Role: {item.role}</p>
+                 {
+                  item.role === 'Owner' || 'Tenant'?
+                  <button onClick={logOut} className="btnLogout homeLogin">Log out</button>:''
+                 }
                   </>
                 )
               })
             }
-          <div className=" buttons">
-            <button onClick={signupClick} className="btnSignup">Signup</button>
-            <button onClick={loginClick} className="btnLogin homeLogin">Login</button>
-            <button onClick={logOut} className="btnLogout homeLogin">Log out</button>
-
-          </div>
+         
         </div>
       </div>
 

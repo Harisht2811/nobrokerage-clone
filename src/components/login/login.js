@@ -6,6 +6,7 @@ import {selectUser} from '../createslice'
 import {  useDispatch } from 'react-redux'
 import {  useSelector } from 'react-redux'
 import axios from 'axios';
+import Header from '../header/header';
 
 const Login=()=>{
   const navigate = useNavigate();
@@ -88,7 +89,7 @@ const handleSubmit=(e)=>{
 
   return (
     <>
-
+<Header/>
   <div className='login'>
       <h1>Login</h1>
     <form onSubmit={(e)=>handleSubmit(e)}> 
