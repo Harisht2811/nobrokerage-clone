@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'antd';
+import Modal1 from 'react-bootstrap/Modal';
+import Button1 from 'react-bootstrap/Button';
 import { Table } from 'antd';
 import "./tenantdetails.css"
 import axios from 'axios';
@@ -10,6 +12,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Filters from '../../components/filters/filters'
+import  CloseButton from '../../images/owner/close.svg';
 
 
 
@@ -19,6 +22,10 @@ const Tenantdetails = () => {
     const [cityDetails, setCityDetails] = useState([]);
     const [filterDetails, setfilterDetails] = useState([]);
     const [modal2Open, setModal2Open] = useState(false);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
 
 
@@ -29,49 +36,58 @@ const Tenantdetails = () => {
     });
 
     // const storeTrueObject = (state, trueObject) => {
-
     //     for (let key in state) {
-
 
     //         if (state[key]) {
     //             // obj[key] = state[key];
     //             return true
     //         }
     //     }
-        
+
     //     return false;
     // }
 
     const filterData = (data) => {
         let count = 0;
         console.log("datat", data)
-        for (let key in data){
-            if(data[key]){
+        for (let key in data) {
+            if (data[key]) {
                 count++
             }
 
         }
-        if(!count){
+        if (!count) {
             setCityDetails(filterDetails)
-            return 
+            return
         }
-       
+
         const filterArray = filterDetails.filter((item, index) => {
             let trueKeys = {};
             for (let key in data) {
-                
+
                 if (data[key]) {
-                    if (( (key === 'Apartment') && (item.apartment === 'Apartment')) || ((key === 'GVilla') && (item.apartment === 'Gated Community Villa')) ||(key === 'IVilla' )&& (item.apartment === "Independant Villa"))
-                     {
+                    if (((key === 'Apartment') && (item.apartment === 'Apartment')) || ((key === 'GVilla') && (item.apartment === 'Gated Community Villa')) || (key === 'IVilla') && (item.apartment === "Independant Villa")) {
                         trueKeys[key] = data[key]
                     }
-                    if (( (key === '1BHK') && (item.BHK === '1 BHK')) || ((key === '2BHK') && (item.BHK === '2 BHK')) ||(key === '3BHK' )&& (item.BHK === "3 BHK") ||(key === '4BHK' )&& (item.BHK === "4 BHK") ||(key === '4+BHK' )&& (item.BHK === "4+ BHK"))
-                     {
+                    if (((key === '1BHK') && (item.bhk === '1')) || ((key === '2BHK') && (item.bhk === '2')) || (key === '3BHK') && (item.bhk === "3") || (key === '4BHK') && (item.bhk === "4") || (key === '4+BHK') && (item.bhk === "4+")) {
                         trueKeys[key] = data[key]
                     }
+                    if (((key === 'immediate') && (item.availability === 'Immediate')) || ((key === 'within15') && (item.availability === 'Within 15 Days')) || (key === 'within30') && (item.availability === "Within 30 Days") || (key === 'after30') && (item.availability === "After 30 Days")) {
+                        trueKeys[key] = data[key]
+                    }
+                    if (((key === 'all') && (item.prefered === 'All')) || ((key === 'family') && (item.prefered === 'Family')) || (key === 'bachelor') && (item.prefered === "Bachelor")) {
+                        trueKeys[key] = data[key]
+                    }
+                    if (((key === '2parking') && (item.parking === '2')) || ((key === '4parking') && (item.parking === '4'))) {
+                        trueKeys[key] = data[key]
+                    }
+                    if (((key === 'full') && (item.furnish === 'Full')) || ((key === 'semi') && (item.furnish === 'Semi')) || (key === 'none') && (item.furnish === "None")) {
+                        trueKeys[key] = data[key]
+                    }
+
                 }
             }
-            return Object.keys(trueKeys).length>0
+            return Object.keys(trueKeys).length > 0
 
         });
         setCityDetails(filterArray)
@@ -164,6 +180,8 @@ const Tenantdetails = () => {
                 }
             </Modal>
             <div className='tenantdetails'>
+
+
                 <div className='property'>
                     <div className='propertyForm'>
                         <p id="choose">Choose your city</p>
@@ -177,7 +195,7 @@ const Tenantdetails = () => {
                             }
                         </select>
                     </div>
-                    <button className='postBtn' onClick={getTenant} >Get Details</button>
+                    <button className='searchBtn' onClick={getTenant} ><i class="fa fa-search" aria-hidden="true"></i>  Search</button>
                 </div>
                 <p id='propText'>Properties:</p>
                 <div style={{ display: 'inline-flex', width: '100%', padding: '0 5%' }}>
@@ -201,7 +219,8 @@ const Tenantdetails = () => {
                                             <hr></hr>
                                             <div style={{ display: 'flex' }}>
 
-                                                {/* <Carousel style={{ width: '330px' }} interval={null} >
+
+                                                <Carousel style={{ width: '330px' }} interval={null} >
 
                                                     {
                                                         props.image.map((url, index) => {
@@ -209,49 +228,36 @@ const Tenantdetails = () => {
                                                                 url.length === 1 ?
                                                                     <img className='tenantImages' key={index} src={url} alt='images'></img> :
                                                                     <Carousel.Item  >
-                                                                        <img className='tenantImages' key={index} src={url} alt='images'></img>
+                                                                        <img className='tenantImages' key={index} src={url} alt='images' onClick={handleShow}></img>
                                                                     </Carousel.Item>
                                                             )
                                                         })
                                                     }
-                                                </Carousel> */}
+                                                </Carousel>
+                                                <Modal1 show={show} onHide={handleClose} animation={false}>
+                                                    <Modal1.Header >
+                                                        <img className='closeImg' src={CloseButton} onClick={handleClose}></img>
+                                                    </Modal1.Header>
+                                                    <Modal1.Body>
+                                                <Carousel style={{ width: '600px' }} interval={null} >
 
+                                                    {
+                                                        props.image.map((url, index) => {
+                                                            return (
+                                                                    url.length === 1 ?
+                                                                        <img className='zoomImages' key={index} src={url} alt='images' onClick={handleShow}></img>:
+                                                                    <Carousel.Item  >
+                                                                        <img className='zoomImages' key={index} src={url} alt='images' onClick={handleShow}></img>
+                                                                    </Carousel.Item>
 
+                                                            )
+                                                        })
+                                                    }
+                                                </Carousel  >
 
-
-
-                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">×</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-
-                                                                <Carousel style={{ width: '330px' }} interval={null} >
-
-                                                                    {
-                                                                        props.image.map((url, index) => {
-                                                                            return (
-                                                                                url.length === 1 ?
-                                                                                    <img className='tenantImages' key={index} src={url} alt='images'></img> :
-                                                                                    <Carousel.Item  >
-                                                                                        <img className='tenantImages' key={index} src={url} alt='images'></img>
-                                                                                    </Carousel.Item>
-                                                                            )
-                                                                        })
-                                                                    }
-                                                                </Carousel>
-                                                            </div>
-
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    </Modal1.Body>
+                                                  
+                                                </Modal1>
                                                 <ListGroup variant="flush" className='gridItems1'>
                                                     <div>
                                                         <ListGroup.Item>  <Card.Title>Furnished</Card.Title><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.furnish}</ListGroup.Item>
