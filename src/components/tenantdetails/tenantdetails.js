@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'antd';
 import Modal1 from 'react-bootstrap/Modal';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import Button1 from 'react-bootstrap/Button';
 import { Table } from 'antd';
 import "./tenantdetails.css"
@@ -12,7 +14,8 @@ import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Filters from '../../components/filters/filters'
-import  CloseButton from '../../images/owner/close.svg';
+import Premium from '../../components/premium/premium'
+import CloseButton from '../../images/owner/close.svg';
 
 
 
@@ -23,6 +26,7 @@ const Tenantdetails = () => {
     const [filterDetails, setfilterDetails] = useState([]);
     const [modal2Open, setModal2Open] = useState(false);
     const [show, setShow] = useState(false);
+    const [key, setKey] = useState('home');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -199,8 +203,22 @@ const Tenantdetails = () => {
                 </div>
                 <p id='propText'>Properties:</p>
                 <div style={{ display: 'inline-flex', width: '100%', padding: '0 5%' }}>
-                    <div style={{ width: '30%' }}>
-                        <Filters filterDetails={filterData} />
+                    <div style={{ width: '25%' }}>
+
+                        <Tabs
+                            id="controlled-tab-example"
+                            activeKey={key}
+                            onSelect={(k) => setKey(k)}
+                            className="mb-3"
+                        >
+                            <Tab eventKey="home" title="Filters">
+                            <Filters filterDetails={filterData} />
+
+                            </Tab>
+                            <Tab eventKey="profile" title="Premium Filters">
+                                <Premium/>
+                            </Tab>
+                        </Tabs>
                     </div>
                     <div style={{ display: 'block', width: '50%', height: '30%', margin: '0 0 5% 10%' }}>
 
@@ -211,10 +229,10 @@ const Tenantdetails = () => {
                                         <Card style={{ margin: '0 0 3% 0' }}>
 
                                             <ListGroup variant="flush" className='gridItems' style={{ width: '100%' }}>
-                                                <ListGroup.Item>  <Card.Title>Rent Amount</Card.Title> {IndianRupees.format(Math.round(parseInt(props.rent)))} /- <p>(Rent Negotiable)</p></ListGroup.Item>
-                                                <ListGroup.Item>  <Card.Title>Deposit</Card.Title>{IndianRupees.format(props.deposit)} /-</ListGroup.Item>
-                                                <ListGroup.Item> <Card.Title>Area</Card.Title><i class="fa fa-arrows-h" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.area}  sq.ft</ListGroup.Item>
-                                                <ListGroup.Item>  <Card.Title>Location</Card.Title><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.city}</ListGroup.Item>
+                                                <ListGroup.Item >  <Card.Title>Rent Amount</Card.Title> {IndianRupees.format(Math.round(parseInt(props.rent)))} /- <p>(Rent Negotiable)</p></ListGroup.Item>
+                                                <ListGroup.Item >  <Card.Title>Deposit</Card.Title>{IndianRupees.format(props.deposit)} /-</ListGroup.Item>
+                                                <ListGroup.Item > <Card.Title>Area</Card.Title><i class="fa fa-arrows-h" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.area}  sq.ft</ListGroup.Item>
+                                                <ListGroup.Item >  <Card.Title>Location</Card.Title><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.city}</ListGroup.Item>
                                             </ListGroup>
                                             <hr></hr>
                                             <div style={{ display: 'flex' }}>
@@ -239,39 +257,38 @@ const Tenantdetails = () => {
                                                         <img className='closeImg' src={CloseButton} onClick={handleClose}></img>
                                                     </Modal1.Header>
                                                     <Modal1.Body>
-                                                <Carousel style={{ width: '600px' }} interval={null} >
+                                                        <Carousel style={{ width: '600px' }} interval={null} >
 
-                                                    {
-                                                        props.image.map((url, index) => {
-                                                            return (
-                                                                    url.length === 1 ?
-                                                                        <img className='zoomImages' key={index} src={url} alt='images' onClick={handleShow}></img>:
-                                                                    <Carousel.Item  >
-                                                                        <img className='zoomImages' key={index} src={url} alt='images' onClick={handleShow}></img>
-                                                                    </Carousel.Item>
+                                                            {
+                                                                props.image.map((url, index) => {
+                                                                    return (
+                                                                        url.length === 1 ?
+                                                                            <img className='zoomImages' key={index} src={url} alt='images' onClick={handleShow}></img> :
+                                                                            <Carousel.Item  >
+                                                                                <img className='zoomImages' key={index} src={url} alt='images' onClick={handleShow}></img>
+                                                                            </Carousel.Item>
 
-                                                            )
-                                                        })
-                                                    }
-                                                </Carousel  >
+                                                                    )
+                                                                })
+                                                            }
+                                                        </Carousel  >
 
                                                     </Modal1.Body>
-                                                  
+
                                                 </Modal1>
                                                 <ListGroup variant="flush" className='gridItems1'>
-                                                    <div>
+                                                    <div className='item1'>
                                                         <ListGroup.Item>  <Card.Title>Furnished</Card.Title><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.furnish}</ListGroup.Item>
                                                         <ListGroup.Item> <Card.Title>Prefered</Card.Title><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.prefered}</ListGroup.Item>
                                                     </div>
-                                                    <div>
+                                                    <div className='item2'>
                                                         <ListGroup.Item>  <Card.Title>Apartment type</Card.Title><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.bhk} BHK</ListGroup.Item>
                                                         <ListGroup.Item>  <Card.Title>Facing </Card.Title><i class="fa fa-location-arrow" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp; {props.direction}</ListGroup.Item>
                                                     </div>
+                                                 
                                                 </ListGroup>
                                                 <hr></hr>
-
                                             </div>
-
 
                                             <hr></hr>
                                             <div style={{ display: 'flex' }}>

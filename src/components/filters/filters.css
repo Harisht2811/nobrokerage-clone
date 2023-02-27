@@ -1,3 +1,4 @@
+
 .filters .card{
     padding: 2% 3%;
     height: 30%;
@@ -33,4 +34,71 @@ input[type=checkbox]{
 .gridFurnishing{
     display: grid;
     grid-template-columns: repeat(2,1fr);
+}
+.slider{
+    height: 5px;
+    border-radius: 5px;
+    background-color: #ddd;
+    position: relative;
+}
+.slider .progress{
+    height: 5px;
+    border-radius: 5px;
+    background-color: #ddd;
+    position: absolute;
+    background-color: #009587;
+    left:0;
+    right: 0;
+}
+.range-input input{
+   position: absolute;
+   top:0px;
+   height: 5px;
+   width: 100%;
+   background:none;
+   -webkit-appearance:none;
+   pointer-events: none;
+}
+input[type="range"]::-webkit-slider-thumb{
+    height: 17px;
+    width: 17px;
+    background:#009587;
+    -webkit-appearance:none;
+    border-radius: 50%;
+    pointer-events: auto;
+}
+input[type="range"]::-moz-slider-thumb{
+    height: 17px;
+    width: 17px;
+    background:#009587;
+    border: none;
+    -moz-appearance:none;
+    border-radius: 50%;
+    pointer-events: auto;
+}
+.nav{
+    width: 100%;
+}
+.nav-item{
+    width: 50%;
+}
+.nav-tabs .nav-link.active {
+    color:#009587;
+    width: 100%;
+  }
+  .nav-tabs .nav-link {
+    width: 100%;
+    height: 56px;
+  }
+  .btn{
+    background-color: #fd3752;
+    width: 180px;
+    height: 50px;
+    color: white;
+    font-size: 16px;
+    font-family: poppins;
+    font-weight: 600;
+    border: none;
+    border-style: none;
+    margin: 0% 0 2% 2%;
 }

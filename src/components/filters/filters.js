@@ -4,6 +4,8 @@ import Card from 'react-bootstrap/Card';
 
 const Filters = ({ filterDetails  }) => {
  
+
+
   
   const [rentRange, setRentRange] = useState('');
   const [checkbox, setCheckBox] = useState({
@@ -46,6 +48,23 @@ useEffect(()=>{
     checkbox
   )
 },[JSON.stringify(checkbox)])
+
+
+const rangeInput =  document.querySelectorAll(".range-input input"),
+progress = document.querySelector(".slider .progress");
+
+rangeInput.forEach(input=>{
+  input.addEventListener("input",()=>{
+    let minVal = parseInt(rangeInput[0].value),
+     maxVal = parseInt(rangeInput[1].value);
+     console.log(minVal,maxVal)
+
+     progress.style.left=minVal;
+     progress.style.right=maxVal;
+
+  })
+})
+
   return (
     <div className='filters'>
       <Card style={{ height: '30%',margin:'3% 0 0 0 ' }}>
@@ -69,7 +88,15 @@ useEffect(()=>{
     <hr></hr>
       <div className='rent'>
         <Card.Title>Rent - <label>{rentRange}/-</label></Card.Title>
-        <input type="range" id="rentRange" onChange={handleChange}  min="0" max="5000" />
+        {/* <input type="range" id="rentRange" onChange={handleChange}  min="0" max="5000" /> */}
+        <div className='slider'>
+          <div className='progress'></div>
+          <div className='range-input'>
+          <input type='range' className='range_min' min='0' max='1000' ></input>
+          <input type='range' className='range_max' min='0' max='1000' ></input>
+        </div>
+        </div>
+       
       </div>
       <hr></hr>
       <div className='availability'>
