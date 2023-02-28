@@ -88,7 +88,12 @@ input[type="range"]::-moz-slider-thumb{
   }
   .nav-tabs .nav-link {
     width: 100%;
-    height: 56px;
+    height: 54px;
+  }
+  .nav-tabs .nav-link.active{
+    width: 100%;
+    height: 54px;
+    border-bottom: 4px solid #009587;
   }
   .btn{
     background-color: #fd3752;

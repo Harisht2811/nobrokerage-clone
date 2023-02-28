@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import Header from "../../components/header/header"
 import cityOptions from '../../content/property.json'
 import { Button, Modal } from 'antd';
+import Modal1 from 'react-bootstrap/Modal';
+
 import { selectloginUser, userDetails } from '../createslice'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
@@ -9,6 +11,7 @@ import "./property.css"
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Carousel from 'react-bootstrap/Carousel';
+import CloseButton from '../../images/owner/close.svg';
 
 
 const Property = () => {
@@ -16,7 +19,9 @@ const Property = () => {
   const [ownerProps, setOwnerProps] = useState([]);
   const [ownerPropsDetails, setOwnerPropsDetails] = useState([]);
   const [modal2Open, setModal2Open] = useState(false);
- 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
 
   const dispatch = useDispatch();
   const dataFetchedRef = useRef(false);
@@ -80,12 +85,12 @@ const Property = () => {
         area: item.area,
         city: item.city,
         rent: item.rent,
-        imageUrl:item.image,
-        deposit:item.deposit,
-        parking:item.parking,
-        furnish:item.furnish,
-        prefered:item.prefered,
-        available:item.availability,
+        imageUrl: item.image,
+        deposit: item.deposit,
+        parking: item.parking,
+        furnish: item.furnish,
+        prefered: item.prefered,
+        available: item.availability,
 
       }
       navigate("/details", { state: data })
@@ -150,7 +155,7 @@ const Property = () => {
                 <p>Direction : {item.direction}</p>
                 <p>Area : {item.area}</p>
                 <p>City : {item.city}</p>
-                <p>Status : {item.status?item.status:'Not Booked'}</p>
+                <p>Status : {item.status ? item.status : 'Not Booked'}</p>
                 <p>Rent : {item.rent} /-</p>
                 <p>Deposit : {item.deposit} </p>
                 <p>Furnishing : {item.furnish} </p>
@@ -181,49 +186,80 @@ const Property = () => {
         <p id='propText'>My Properties:</p>
         <div className='gridProps'>
 
-        {
-          ownerProps.map(item => {
-            return (
-              <>
-              <div style={{display:'block'}}>
-                <div style={{ display: 'flex',width:'80%'}}>
-                  <p id='cityText'>{item.city}</p>
-                  <p id='statusText'>{item.status?item.status:'Not Booked'}</p>
-                </div>
+          {
+            ownerProps.map(item => {
+              return (
+                <>
+                  <div style={{ display: 'block' }}>
+                    <div style={{ display: 'flex', width: '80%' }}>
+                      <p id='cityText'>{item.city}</p>
+                      <p id='statusText'>{item.status ? item.status : 'Not Booked'}</p>
+                    </div>
 
 
-                <div className='myProps'>
+                    <div className='myProps'>
 
 
-                <Carousel  style={{width:'325px'}}>
-                 
-                    {
+                      <Carousel style={{ width: '325px' }}>
 
-                      item.image.map((url,index) => {
-                        
-                        return (
-                          url.length === 1?
-                          <img className='ownerImages' key={index} src={url} alt='images'></img>:
-                            <Carousel.Item>
-                              <img className='ownerImages' key={index} src={url} alt='images'></img>
-                            </Carousel.Item>
-                        )
-                      })
+                        {
+
+                          item.image.map((url, index) => {
+
+                            return (
+                              url.length === 1 ?
+                                <img className='ownerImages' key={index} src={url} alt='images'></img> :
+                                <Carousel.Item>
+                                  <img className='ownerImages' key={index} src={url} alt='images'
+                                  onClick={()=>{
+                                    setShow(true)
+                                    getOwnerProps(item.id)
+                                }}></img>
+                                </Carousel.Item>
+                            )
+                          })
 
 
-                    }
-                    </Carousel>
+                        }
+                      </Carousel>
 
+                      {
+                        ownerPropsDetails.map((prop, index) => {
+                          return (
+                            <Modal1 show={show} onHide={handleClose} animation={false}>
+                              <Modal1.Header>
+                                <img className='closeImg' src={CloseButton} onClick={handleClose}></img>
 
-                <button onClick={() => { propertyDetails(item.id) }} className='propsBtn'>Property details</button>
-                <button onClick={() => { deleteProp(item.id) }} className='deleteBtn'>Delete Property</button>
-                </div>
-                </div>
-              </>
+                              </Modal1.Header>
+                              <Modal1.Body>
+                                <Carousel style={{ width: '600px' }} interval={null} >
+                                  {
+                                    ownerPropsDetails[0].image.map(url => {
+                                      return (
+                                        url.length === 1 ?
+                                          <img className='zoomImages' alt='images' src={url}></img> :
+                                          <Carousel.Item>
+                                            <img className='zoomImages' alt='images' src={url}></img>
+                                          </Carousel.Item>
+                                      )
+                                    })
+                                  }
+                                </Carousel  >
 
-            )
-          })
-        }
+                              </Modal1.Body>
+                            </Modal1>
+                          )
+                        })
+                      }
+                      <button onClick={() => { propertyDetails(item.id) }} className='propsBtn'>Property details</button>
+                      <button onClick={() => { deleteProp(item.id) }} className='deleteBtn'>Delete Property</button>
+                    </div>
+                  </div>
+                </>
+
+              )
+            })
+          }
         </div>
       </div>
     </>

@@ -24,12 +24,13 @@ const Tenantdetails = () => {
     const [owner, setOwner] = useState([]);
     const [cityDetails, setCityDetails] = useState([]);
     const [filterDetails, setfilterDetails] = useState([]);
+    const [imageDetails, setImageDetails] = useState([]);
     const [modal2Open, setModal2Open] = useState(false);
     const [show, setShow] = useState(false);
     const [key, setKey] = useState('home');
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    // const handleShow = () => setShow(true);
 
 
 
@@ -163,6 +164,22 @@ const Tenantdetails = () => {
 
     }
 
+   
+   const client3= axios.create({
+    baseURL: "http://localhost:8080/ownerpropertydetails"
+  });
+
+  const getImage = (id) => {
+    client3.post('', {
+      propid: id
+    })
+      .then((response) => {
+        let ImageData = JSON.parse(response.data.data)
+        console.log(ImageData)
+        setImageDetails(ImageData)
+      })
+
+  };
     return (
         <>
             <Modal
@@ -246,36 +263,48 @@ const Tenantdetails = () => {
                                                                 url.length === 1 ?
                                                                     <img className='tenantImages' key={index} src={url} alt='images'></img> :
                                                                     <Carousel.Item  >
-                                                                        <img className='tenantImages' key={index} src={url} alt='images' onClick={handleShow}></img>
+                                                                        <img className='tenantImages' key={index} src={url} alt='images' onClick={()=>{
+                                                                            setShow(true)
+                                                                            getImage(props.id)
+                                                                        }}></img>
                                                                     </Carousel.Item>
                                                             )
                                                         })
                                                     }
                                                 </Carousel>
+                                                {
+                                                            imageDetails.map((prop,index)=>{
+                                                                return(
                                                 <Modal1 show={show} onHide={handleClose} animation={false}>
-                                                    <Modal1.Header >
+                                                    <Modal1.Header>
                                                         <img className='closeImg' src={CloseButton} onClick={handleClose}></img>
+                                                        <div>
+                                                        <p id='modalText'><i class="fa fa-inr" aria-hidden="true"></i> {prop.rent} /- M +</p>
+                                                        {/* <button className='modalOwnerBtn' onClick={() => getOwnerDetails(props.ownerid)}>Get Owner Details</button> */}
+                                                        <button className='modalOwnerBtn'>Get Owner Details</button>
+                                                        </div>
+                                                       
                                                     </Modal1.Header>
                                                     <Modal1.Body>
-                                                        <Carousel style={{ width: '600px' }} interval={null} >
-
-                                                            {
-                                                                props.image.map((url, index) => {
-                                                                    return (
-                                                                        url.length === 1 ?
-                                                                            <img className='zoomImages' key={index} src={url} alt='images' onClick={handleShow}></img> :
-                                                                            <Carousel.Item  >
-                                                                                <img className='zoomImages' key={index} src={url} alt='images' onClick={handleShow}></img>
-                                                                            </Carousel.Item>
-
-                                                                    )
-                                                                })
-                                                            }
+                                                    <Carousel style={{ width: '600px' }} interval={null} >
+                                                          {
+                                                            imageDetails[0].image.map(url=>{
+                                                                return(
+                                                                    url.length === 1?
+                                                                    <img className='zoomImages' alt='images' src={url}></img>:
+                                                                    <Carousel.Item>
+                                                                    <img className='zoomImages' alt='images' src={url}></img>
+                                                                    </Carousel.Item>
+                                                                )
+                                                            })
+                                                          }
                                                         </Carousel  >
-
+                                                       
                                                     </Modal1.Body>
-
                                                 </Modal1>
+                                                     )
+                                                    })
+                                                  }
                                                 <ListGroup variant="flush" className='gridItems1'>
                                                     <div className='item1'>
                                                         <ListGroup.Item>  <Card.Title>Furnished</Card.Title><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;{props.furnish}</ListGroup.Item>

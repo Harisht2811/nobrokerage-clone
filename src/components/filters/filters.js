@@ -8,6 +8,8 @@ const Filters = ({ filterDetails  }) => {
 
   
   const [rentRange, setRentRange] = useState('');
+  const [min, setMin] = useState('');
+  const [max, setMax] = useState('');
   const [checkbox, setCheckBox] = useState({
     "Apartment":false,
     "IVilla":false,
@@ -29,8 +31,7 @@ const Filters = ({ filterDetails  }) => {
     "full":false,
     "semi":false,
     "none":false,
-    "rentRange":rentRange
-  },
+  }
   );
 
 console.log(rentRange)
@@ -45,7 +46,8 @@ console.log(rentRange)
   
 useEffect(()=>{
   filterDetails (
-    checkbox
+    checkbox,
+    
   )
 },[JSON.stringify(checkbox)])
 
@@ -57,7 +59,9 @@ rangeInput.forEach(input=>{
   input.addEventListener("input",()=>{
     let minVal = parseInt(rangeInput[0].value),
      maxVal = parseInt(rangeInput[1].value);
-     console.log(minVal,maxVal)
+     setMin(minVal)
+     setMax(maxVal)
+    //  console.log(minVal,maxVal)
 
      progress.style.left=minVal;
      progress.style.right=maxVal;
