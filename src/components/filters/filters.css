@@ -82,6 +82,10 @@ input[type="range"]::-moz-slider-thumb{
 .nav-item{
     width: 50%;
 }
+.nav-tabs .nav-link{
+    font-size: 16px;
+    font-weight: 500;
+}
 .nav-tabs .nav-link.active {
     color:#009587;
     width: 100%;

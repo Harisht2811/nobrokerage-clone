@@ -7,9 +7,11 @@ const Filters = ({ filterDetails  }) => {
 
 
   
-  const [rentRange, setRentRange] = useState('');
   const [min, setMin] = useState('');
   const [max, setMax] = useState('');
+  console.log("values",min,max)
+  let minRent = min;
+  let maxRent = max;
   const [checkbox, setCheckBox] = useState({
     "Apartment":false,
     "IVilla":false,
@@ -34,10 +36,8 @@ const Filters = ({ filterDetails  }) => {
   }
   );
 
-console.log(rentRange)
 
   const handleChange =(e)=>{
-    setRentRange(e.target.value)
     const { name , value} = e.target
      setCheckBox({
         ...checkbox,[name]:!checkbox[name]
@@ -46,10 +46,10 @@ console.log(rentRange)
   
 useEffect(()=>{
   filterDetails (
-    checkbox,
+    checkbox,min,max
     
   )
-},[JSON.stringify(checkbox)])
+},[JSON.stringify(checkbox,minRent,maxRent)])
 
 
 const rangeInput =  document.querySelectorAll(".range-input input"),
@@ -82,22 +82,21 @@ rangeInput.forEach(input=>{
         <div className='bhkType'>
           <Card.Title>BHK Type</Card.Title>
           <div className='gridBhk'>
-            <p> <input type="checkbox" checked={checkbox["1BHK"]} onChange={handleChange}  name='1BHk' value="1" /> &nbsp;1 BHK</p>
-            <p> <input type="checkbox" checked={checkbox["2BHK"]} onChange={handleChange}  name='2BHk' value="2" /> &nbsp;2 BHK</p>
+            <p> <input type="checkbox" checked={checkbox["1BHK"]} onChange={handleChange}  name='1BHK' value="1" /> &nbsp;1 BHK</p>
+            <p> <input type="checkbox" checked={checkbox["2BHK"]} onChange={handleChange}  name='2BHK' value="2" /> &nbsp;2 BHK</p>
             <p> <input type="checkbox" checked={checkbox["3BHK"]} onChange={handleChange} name='3BHK' value="3" /> &nbsp;3 BHK</p>
-            <p> <input type="checkbox" checked={checkbox["4BHK"]} onChange={handleChange}  name='4BHk' value="4" /> &nbsp;4 BHK</p>
-            <p> <input type="checkbox" checked={checkbox["4+BHK"]} onChange={handleChange} name='4+BHk' value="4+" /> &nbsp;4+ BHK</p>
+            <p> <input type="checkbox" checked={checkbox["4BHK"]} onChange={handleChange}  name='4BHK' value="4" /> &nbsp;4 BHK</p>
+            <p> <input type="checkbox" checked={checkbox["4+BHK"]} onChange={handleChange} name='4+BHK' value="4+" /> &nbsp;4+ BHK</p>
           </div>
         </div>
     <hr></hr>
       <div className='rent'>
-        <Card.Title>Rent - <label>{rentRange}/-</label></Card.Title>
-        {/* <input type="range" id="rentRange" onChange={handleChange}  min="0" max="5000" /> */}
+        <Card.Title>Rent - <label>{min}</label> to <label>{max}</label></Card.Title>
         <div className='slider'>
           <div className='progress'></div>
           <div className='range-input'>
-          <input type='range' className='range_min' min='0' max='1000' ></input>
-          <input type='range' className='range_max' min='0' max='1000' ></input>
+          <input type='range' className='range_min' min='0' max='5000' ></input>
+          <input type='range' className='range_max' min='0' max='5000' ></input>
         </div>
         </div>
        
