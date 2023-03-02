@@ -9,7 +9,7 @@ const Filters = ({ filterDetails  }) => {
   
   const [min, setMin] = useState('');
   const [max, setMax] = useState('');
-  console.log("values",min,max)
+  // console.log("values",min,max)
   let minRent = min;
   let maxRent = max;
   const [checkbox, setCheckBox] = useState({

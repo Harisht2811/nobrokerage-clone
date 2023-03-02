@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import { Button, Modal } from 'antd';
+import {  Modal } from 'antd';
 import Modal1 from 'react-bootstrap/Modal';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Button1 from 'react-bootstrap/Button';
-import { Table } from 'antd';
 import "./tenantdetails.css"
 import axios from 'axios';
 import { selectloginUser, } from '../createslice'
@@ -67,38 +65,43 @@ const Tenantdetails = () => {
         }
 
         const filterArray = filterDetails.filter((item, index) => {
-            console.log(item.rent)
+          console.log(parseInt(rentMin))
             let trueKeys = {};
+            
             for (let key in data) {
 
                 if (data[key]) {
-                    if (((key === 'Apartment') && (item.apartment === 'Apartment')) || ((key === 'GVilla') && (item.apartment === 'Gated Community Villa')) || (key === 'IVilla') && (item.apartment === "Independant Villa")) {
+                    if ((((key === 'Apartment') && (item.apartment === 'Apartment'))) || (((key === 'GVilla') && (item.apartment === 'Gated Community Villa'))) || ((key === 'IVilla') && (item.apartment === "Independant Villa"))) {
                         trueKeys[key] = data[key]
                     }
-                    if (((key === '1BHK') && (item.bhk === '1')) || ((key === '2BHK') && (item.bhk === '2')) || (key === '3BHK') && (item.bhk === "3") || (key === '4BHK') && (item.bhk === "4") || (key === '4+BHK') && (item.bhk === "4+")) {
+                    if ((((key === '1BHK') && (item.bhk === '1'))) || (((key === '2BHK') && (item.bhk === '2'))) || ((key === '3BHK') && (item.bhk === "3")) || ((key === '4BHK') && (item.bhk === "4")) || ((key === '4+BHK') && (item.bhk === "4+"))) {
+                        console.log(trueKeys[key]= data[key])
+                       
                         trueKeys[key] = data[key]
                     }
-                    if (((key === 'immediate') && (item.availability === 'Immediate')) || ((key === 'within15') && (item.availability === 'Within 15 Days')) || (key === 'within30') && (item.availability === "Within 30 Days") || (key === 'after30') && (item.availability === "After 30 Days")) {
+                    if ((((key === 'immediate') && (item.availability === 'Immediate'))) || (((key === 'within15') && (item.availability === 'Within 15 Days'))) || ((key === 'within30') && (item.availability === "Within 30 Days")) || ((key === 'after30') && (item.availability === "After 30 Days"))) {
+                       console.log(trueKeys[key]= data[key])
                         trueKeys[key] = data[key]
                     }
-                    if (((key === 'all') && (item.prefered === 'All')) || ((key === 'family') && (item.prefered === 'Family')) || (key === 'bachelor') && (item.prefered === "Bachelor")) {
+                    if ((((key === 'all') && (item.prefered === 'All'))) || (((key === 'family') && (item.prefered === 'Family')) )|| ((key === 'bachelor') && (item.prefered === "Bachelor"))) {
                         trueKeys[key] = data[key]
                     }
                     if (((key === '2parking') && (item.parking === '2')) || ((key === '4parking') && (item.parking === '4'))) {
                         trueKeys[key] = data[key]
                     }
-                    if (((key === 'full') && (item.furnish === 'Full')) || ((key === 'semi') && (item.furnish === 'Semi')) || (key === 'none') && (item.furnish === "None")) {
+                    if ((((key === 'full') && (item.furnish === 'Full'))) || (((key === 'semi') && (item.furnish === 'Semi'))) || ((key === 'none') && (item.furnish === "None"))) {
                         trueKeys[key] = data[key]
                     }
                     
 
                 }
+                if(rentMin >= 5000){
+                    console.log("ihihih")
+                    console.log( parseInt(item.rent) === rentMin)
+                }
             }
-            if(rentMin >= 5000){
-                console.log(item.rent)
-                console.log(item.rent === rentMin)
-               return item.rent === rentMin
-            }
+
+            
             return Object.keys(trueKeys).length > 0
 
         });
@@ -111,13 +114,7 @@ const Tenantdetails = () => {
         console.log(city)
         getProperty()
     }
-    const contentStyle = {
-        height: '160px',
-        color: '#fff',
-        lineHeight: '160px',
-        textAlign: 'center',
-        background: '#364d79',
-    };
+  
 
 
     const client1 = axios.create({
@@ -212,7 +209,7 @@ const Tenantdetails = () => {
 
                 <div className='property'>
                     <div className='propertyForm'>
-                        <p id="choose">Choose your city</p>
+                        <p id="choose">Select your city</p>
                         <select id='city' onChange={(e) => setCity(e.target.value)}>
                             {
                                 cityOptions.map(item => {
@@ -242,6 +239,7 @@ const Tenantdetails = () => {
                             <Tab eventKey="profile" title="Premium Filters">
                                 <Premium />
                             </Tab>
+
                         </Tabs>
                     </div>
                     <div style={{ display: 'block', width: '50%', height: '30%', margin: '0 0 5% 10%' }}>
@@ -250,7 +248,7 @@ const Tenantdetails = () => {
                             cityDetails.map(props => {
                                 return (
                                     <>
-                                        <Card style={{ margin: '0 0 3% 0' }}>
+                                        <Card style={{ margin: '0 0 3% 0',boxShadow:'rgba(0, 0, 0, 0.24) 0px 3px 8px'}}>
 
                                             <ListGroup variant="flush" className='gridItems' style={{ width: '100%' }}>
                                                 <ListGroup.Item >  <Card.Title>Rent Amount</Card.Title> {IndianRupees.format(Math.round(parseInt(props.rent)))} /- <p>(Rent Negotiable)</p></ListGroup.Item>
@@ -284,7 +282,7 @@ const Tenantdetails = () => {
                                                         return (
                                                             <Modal1 show={show} onHide={handleClose} animation={false}>
                                                                 <Modal1.Header>
-                                                                    <img className='closeImg' src={CloseButton} onClick={handleClose}></img>
+                                                                    <img className='closeImg' src={CloseButton} onClick={handleClose} alt ='images'></img>
                                                                     <div>
                                                                         <p id='modalText'><i class="fa fa-inr" aria-hidden="true"></i> {prop.rent} /- M +</p>
                                                                         {/* <button className='modalOwnerBtn' onClick={() => getOwnerDetails(props.ownerid)}>Get Owner Details</button> */}

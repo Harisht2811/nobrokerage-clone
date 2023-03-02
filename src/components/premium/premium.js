@@ -2,7 +2,7 @@ import React from 'react'
 
 function premium() {
   return (
-    <div>You need to buy a Plan</div>
+    <div>You need to buy a plan</div>
   )
 }
 

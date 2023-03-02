@@ -2,6 +2,8 @@
 .filters .card{
     padding: 2% 3%;
     height: 30%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
 }
 input[type=radio]{
     accent-color: #009587;

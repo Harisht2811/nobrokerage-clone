@@ -50,6 +50,7 @@ const Header=()=>{
               details.map(item=>{
                 return(
                   <>
+                 <p  id='nameText'><i className="fa fa-user" aria-hidden="true"></i>  {item.name}</p> 
                  <p id='roleText'> Role: {item.role}</p>
                  {
                   item.role === 'Owner' || 'Tenant'?

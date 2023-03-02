@@ -172,7 +172,7 @@ const Details = () => {
         <p id='detailsTitle'>Property Details</p>
         <div className='apartment'>
           <label for="apartment">Apartment Type*
-            <select name="apartment" id="apartment" defaultValue={data?.apartment} onChange={(e) => { setApartment(e.target.value) }}>
+            <select name="apartment" id="apartment" defaultValue={data?.apartment} onChange={(e) => { setApartment(e.target.value) }} required>
               <option value="">------</option>
               <option value="Apartment">Apartment</option>
               <option value="Independant Villa">Independant Villa</option>
