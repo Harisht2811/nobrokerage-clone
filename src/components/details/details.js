@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { login, selectloginUser, selectuserDetails } from '../createslice'
 import { useSelector } from 'react-redux'
@@ -126,7 +127,8 @@ const Details = () => {
 
       })
     })
-    alert('Posted Successfully ')
+    // alert('Posted Successfully ')
+    toast.success('Posted Successfully')
   };
 
   useEffect(() => {
@@ -152,7 +154,7 @@ const Details = () => {
     else{
       setdetails(apartment, BHK, floor, totalFloor, age, direction, area, city);
     }
-    alert('Updated Successfully')
+    toast.success('Posted Successfully')
     navigate("/city")
   }
 
@@ -163,6 +165,7 @@ const Details = () => {
   const deleteImages =(url)=>{
     console.log(url)
     setImageList(imageList.filter(imageList=>url!==imageList))
+    toast.error('Deleted Successfully')
   }
 
   return (

@@ -12,6 +12,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Carousel from 'react-bootstrap/Carousel';
 import CloseButton from '../../images/owner/close.svg';
+import { toast } from 'react-hot-toast';
 
 
 const Property = () => {
@@ -131,6 +132,7 @@ const Property = () => {
       .then((response) => {
         console.log("after then", response)
       })
+    toast.error('Deleted Successfully')
     window.location.reload();
   };
   return (
