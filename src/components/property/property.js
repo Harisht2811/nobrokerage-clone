@@ -48,6 +48,7 @@ const Property = () => {
   const client1 = axios.create({
     baseURL: "http://localhost:8080/ownerproperty"
   });
+  
 
   const getProperty = () => {
     client1.post('', {

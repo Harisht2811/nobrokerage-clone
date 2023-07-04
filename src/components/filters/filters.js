@@ -13,7 +13,7 @@ const Filters = ({ filterDetails  }) => {
   let minRent = min;
   let maxRent = max;
   const [checkbox, setCheckBox] = useState({
-    "Apartment":false,
+    "Apartment":true,
     "IVilla":false,
     "GVilla":false,
     "1BHK":false,
@@ -105,7 +105,7 @@ rangeInput.forEach(input=>{
       <div className='availability'>
         <Card.Title>Availability</Card.Title>
         <div className='gridDays'>
-          <p> <input type="radio" onChange={handleChange} value="Immediate" name='immediate' />&nbsp;Immediate</p>
+          <p> <input type="radio"  onChange={handleChange} value="Immediate" name='immediate' />&nbsp;Immediate</p>
           <p>  <input type="radio" onChange={handleChange} value="Within 15 Days" name='within15' /> &nbsp;Within 15 Days</p>
         </div>
         <div className='gridDays'>

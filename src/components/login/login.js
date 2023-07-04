@@ -7,10 +7,15 @@ import {  useDispatch } from 'react-redux'
 import {  useSelector } from 'react-redux'
 import axios from 'axios';
 import Header from '../header/header';
+import {auth} from '../firebase'
+import { useUserAuth } from '../userAuth';
+// import { v4 } from "uuid";
+
 
 const Login=()=>{
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { logIn } = useUserAuth();
   const [loginEmail,setloginEmail]=useState('');
   const [loginPassword,setloginPassword]=useState('');
   const [details,setDetails]=useState([]);
@@ -20,6 +25,7 @@ const Login=()=>{
 
   useEffect(()=>{
    
+
   },[])
   
 
@@ -36,6 +42,12 @@ const Login=()=>{
     }).then(data=>{
       console.log("loginData",data[0].id)
       setDetails(data)
+      // let uid = auth.currentUser.uid
+      // console.log(uid)
+    
+      // auth.setCustomUserClaims(uid, { owner: true ,tenant:true}).then((data) => {
+      //   console.log(data)
+      // });
       if(data[0].role ==='Owner'){
         navigate("/city")
       }
@@ -97,7 +109,7 @@ const handleSubmit=(e)=>{
   <div className="form-group row">
     <label  className="col-sm-2 col-form-label">Email</label>
     <div className="col-sm-10">
-      <input type="email" className="form-control" id="inputEmail3" placeholder="Email" onChange={(e)=>setloginEmail(e.target.value)}></input>
+      <input type="email" className="form-control" id="inputEmail3"  placeholder="Email" onChange={(e)=>setloginEmail(e.target.value)}></input>
     </div>
   </div>
   <div className="form-group row">

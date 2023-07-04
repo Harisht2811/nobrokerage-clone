@@ -67,6 +67,15 @@ const onClicksignup=async(e)=>{
 
 }
 
+// var admin = require("firebase-admin");
+
+//     admin
+//       .auth()
+//       .setCustomUserClaims(uid, { admin: true })
+//       .then(() => {
+    
+//       }); 
+
 const onClicklogin=()=>{
   navigate('/')
 }

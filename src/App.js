@@ -5,7 +5,8 @@ import Login from '../src/components/login/login'
 import Tenant from '../src/components/tenant/tenant'
 import Property from './components/property/property';
 import Details from './components/details/details';
-import Carousel from './components/carousel'
+import {RoleManagement} from './RoleManagement.js'
+import { RoleManagement1 } from './RoleManagement1.js';
 import { UserAuthContextProvider } from './components/userAuth';
 
 
@@ -22,7 +23,10 @@ function App() {
     <Route exact path='/tenant' element={<Tenant/>}></Route>
     <Route exact path='/city' element={<Property/>}></Route>
     <Route exact path='/details' element={<Details/>}></Route>
-    <Route exact path='/carousel' element={<Carousel/>}></Route>
+    <Route exact path='/role' element={<RoleManagement/>}></Route>
+    <Route exact path='/role1' element={<RoleManagement1/>}></Route>
+
+
    </Routes>
    </UserAuthContextProvider>
    </BrowserRouter>

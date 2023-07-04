@@ -28,20 +28,20 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
-app.get('/details/:id',async(req,res)=>{
+app.get('/details/:id', async (req, res) => {
   let currentUser = req.params.id
   res.setHeader('Content-Type', 'application/json');
-client.query(`SELECT * FROM users where id=${currentUser}`,(err,result)=>{
-  
-if(result){
-    console.log((typeof result.rows))
-    resu = JSON.stringify(result.rows)
-    res.status(200).send(resu);
-}
-else{
-  console.log(err.message)
-}
-});
+  client.query(`SELECT * FROM users where id=${currentUser}`, (err, result) => {
+
+    if (result) {
+      console.log((typeof result.rows))
+      resu = JSON.stringify(result.rows)
+      res.status(200).send(resu);
+    }
+    else {
+      console.log(err.message)
+    }
+  });
 })
 
 
@@ -79,35 +79,35 @@ app.post("/login", (req, res) => {
     if (err) throw err;
     if (result.rows.length === 0) {
       console.log("Check your Email and Password")
-      res.status(404).send({'status':'Not Found'});
+      res.status(404).send({ 'status': 'Not Found' });
     }
     else {
       console.log("login result", result);
       let userData = JSON.stringify(result.rows[0])
-      res.status(200).send({'status':'Found','data':userData});
+      res.status(200).send({ 'status': 'Found', 'data': userData });
     }
   });
 }
 )
 
 
- 
 
 
 
-app.post("/getproperty",(req,res)=>{
+
+app.post("/getproperty", (req, res) => {
   tenantCity = req.body
   console.log(tenantCity)
-  let postgres = `SELECT * FROM "propertydetails" WHERE city=$1` 
+  let postgres = `SELECT * FROM "propertydetails" WHERE city=$1`
   client.query(
-    postgres,[tenantCity.city],function(err,result){
-      if(result.rows.length === 0){
-        res.status(404).send({'status':'Not Found'})
+    postgres, [tenantCity.city], function (err, result) {
+      if (result.rows.length === 0) {
+        res.status(404).send({ 'status': 'Not Found' })
       }
-      else{
+      else {
         console.log("prop result", result);
         let tenantData = JSON.stringify(result.rows)
-        res.status(200).send({'status':'Found','data':tenantData});
+        res.status(200).send({ 'status': 'Found', 'data': tenantData });
       }
     }
   )
@@ -115,74 +115,74 @@ app.post("/getproperty",(req,res)=>{
 )
 
 
-app.post("/ownerproperty",(req,res)=>{
+app.post("/ownerproperty", (req, res) => {
   ownerProps = req.body
   let ownerid = ownerProps.ownerid
-  let postgres = `SELECT * FROM "propertydetails" WHERE ownerid=${ownerid}` 
+  let postgres = `SELECT * FROM "propertydetails" WHERE ownerid=${ownerid}`
   client.query(
-    postgres,function(err,result){
-      if(result.rows.length === 0){
-        res.status(404).send({'status':'Not Found'})
+    postgres, function (err, result) {
+      if (result.rows.length === 0) {
+        res.status(404).send({ 'status': 'Not Found' })
       }
-      else{
+      else {
         console.log("prop result", result);
         let ownerPropData = JSON.stringify(result.rows)
-        res.status(200).send({'status':'Found','data':ownerPropData});
+        res.status(200).send({ 'status': 'Found', 'data': ownerPropData });
       }
     }
   )
 }
 )
 
-app.post("/ownerdetails",(req,res)=>{
+app.post("/ownerdetails", (req, res) => {
   ownerdata = req.body
   console.log(ownerdata)
-  let postgres = `SELECT * FROM "users" WHERE id=${ownerdata.ownerid}` 
+  let postgres = `SELECT * FROM "users" WHERE id=${ownerdata.ownerid}`
   client.query(
-    postgres,function(err,result){
-      if(result.rows.length === 0){
-        res.status(404).send({'status':'Not Found'})
+    postgres, function (err, result) {
+      if (result.rows.length === 0) {
+        res.status(404).send({ 'status': 'Not Found' })
       }
-      else{
+      else {
         console.log("prop result", result);
         let ownerData = JSON.stringify(result.rows)
-        res.status(200).send({'status':'Found','data':ownerData});
+        res.status(200).send({ 'status': 'Found', 'data': ownerData });
       }
     }
   )
 }
 )
 
-app.post("/ownerpropertydetails",(req,res)=>{
+app.post("/ownerpropertydetails", (req, res) => {
   propdata = req.body
   console.log(propdata)
-  let postgres = `SELECT * FROM "propertydetails" WHERE id=${propdata.propid}` 
+  let postgres = `SELECT * FROM "propertydetails" WHERE id=${propdata.propid}`
   client.query(
-    postgres,function(err,result){
-      if(result.rows.length === 0){
-        res.status(404).send({'status':'Not Found'})
+    postgres, function (err, result) {
+      if (result.rows.length === 0) {
+        res.status(404).send({ 'status': 'Not Found' })
       }
-      else{
+      else {
         console.log("prop result", result);
         let ownerData = JSON.stringify(result.rows)
-        res.status(200).send({'status':'Found','data':ownerData});
+        res.status(200).send({ 'status': 'Found', 'data': ownerData });
       }
     }
   )
 }
 )
 
-app.get("/getbookedprops",(req,res)=>{
-  let postgres = `SELECT * FROM "propertydetails"` 
+app.get("/getbookedprops", (req, res) => {
+  let postgres = `SELECT * FROM "propertydetails"`
   client.query(
-    postgres,function(err,result){
-      if(result.rows.length === 0){
-        res.status(404).send({'status':'Not Found'})
+    postgres, function (err, result) {
+      if (result.rows.length === 0) {
+        res.status(404).send({ 'status': 'Not Found' })
       }
-      else{
+      else {
         console.log("prop result", result);
         let bookedData = JSON.stringify(result.rows)
-        res.status(200).send({'status':'Found','data':bookedData});
+        res.status(200).send({ 'status': 'Found', 'data': bookedData });
       }
     }
   )
@@ -196,9 +196,9 @@ app.post("/propertydetails", (req, res) => {
   client.query(
     `INSERT INTO "propertydetails" ("city","apartment", "bhk","floor","totalfloor","direction","age","area","image","rent","ownerdetails","ownerid","deposit","prefered",
     "parking","furnish","availability")  
-                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`, [userpropertyData.city,userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
-                    userpropertyData.direction,userpropertyData.age,userpropertyData.area,userpropertyData.imageurl,userpropertyData.rent,userpropertyData.ownerdetails,userpropertyData.ownerId,
-                  userpropertyData.deposit,userpropertyData.prefered,userpropertyData.parking,userpropertyData.furnish,userpropertyData.available]); 
+                   VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`, [userpropertyData.city, userpropertyData.apartment, userpropertyData.BHK, userpropertyData.floor, userpropertyData.totalfloor,
+  userpropertyData.direction, userpropertyData.age, userpropertyData.area, userpropertyData.imageurl, userpropertyData.rent, userpropertyData.ownerdetails, userpropertyData.ownerId,
+  userpropertyData.deposit, userpropertyData.prefered, userpropertyData.parking, userpropertyData.furnish, userpropertyData.available]);
   res.end()
 }
 )
@@ -206,7 +206,7 @@ client.connect();
 
 app.post("/editpropertydetails", (req, res) => {
   editedData = req.body
-  let id=editedData.id
+  let id = editedData.id
   let apartment = editedData.apartment
   let BHK = editedData.BHK
   let floor = editedData.floor
@@ -222,37 +222,37 @@ app.post("/editpropertydetails", (req, res) => {
   let availability = editedData.available
   let deposit = editedData.deposit
 
-  console.log("dataproperty",editedData)
+  console.log("dataproperty", editedData)
   console.log(id)
   const postgres = `UPDATE "propertydetails" SET apartment=$1,bhk=$2,floor=$3,totalfloor=$4,age=$5,direction=$6,area=$7,rent=$8,image=$9,prefered=$10,
   furnish=$11,parking=$12,availability=$13,deposit=$14 WHERE id=${id}`
   client.query(
-    postgres,[apartment,BHK,floor,totalfloor,age,direction,area,rent,imageUrl,prefered,furnish,parking,
-    availability,deposit],function(err,result){
-      if(!err){
+    postgres, [apartment, BHK, floor, totalfloor, age, direction, area, rent, imageUrl, prefered, furnish, parking,
+    availability, deposit], function (err, result) {
+      if (!err) {
         console.log(result)
       }
-      else{
+      else {
         console.log(err)
       }
     }
-    ); 
+  );
   res.end()
 }
 )
 
 
-app.delete("/deleteimage/:id",(req,res)=>{
+app.delete("/deleteimage/:id", (req, res) => {
   const removeId = req.params.id
   console.log(removeId)
   const postgres = `DELETE FROM "propertydetails" WHERE id=${removeId}`
   console.log(postgres)
   client.query(
-    postgres,function(result,err){
-      if(!err){
+    postgres, function (result, err) {
+      if (!err) {
         console.log(result)
       }
-      else{
+      else {
         console.log(err)
       }
     }
@@ -261,15 +261,15 @@ app.delete("/deleteimage/:id",(req,res)=>{
 
 
 app.post("/booking", (req, res) => {
-   bookingStatus = req.body
+  bookingStatus = req.body
   console.log("dataproperty", bookingStatus)
   const postgres = `UPDATE "propertydetails" SET status=$1 WHERE id='${bookingStatus.bookingId}'`
   client.query(
-    postgres,[bookingStatus.status],function(err,result){
-      if(!err){
+    postgres, [bookingStatus.status], function (err, result) {
+      if (!err) {
         console.log(result)
       }
-      else{
+      else {
         console.log(err)
       }
     }
